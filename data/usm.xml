@@ -4,28 +4,26 @@
 
 This document describes structure and content of an User Story Map.
 
-The map is defined within the tags <usm />
+The map is defined within the element <usm />
 
 At first you define the structure of the map by defining releases.
-Each release has at leas a <name />, which summarizes the scope of the release
-and an <id /> which will be used in the items to assign a story to a realease.
+Each release has at least a <name />, which summarizes the scope of the release
+and an <id />, which will be used in the body to assign a card to a realease.
 
-Next section is <items /> which contains the content of the User Story Map.
-The base element is the <epic />, which defines the timeline of the map.
-The order of the <epic />s defineds the order in which they are rendered on the timeline.
+Next section is <backbone />, which defines the structure of the User Story Map.
+The base element is the <step />, which is a card above the timeline.
+The order of the <step />s defineds the order in which they are rendered on the horizontal axis.
 
-Each <epic /> can contain different kinds of backlog items which are grouped in the <items /> section.
-The <items /> section is structured in <release />s, that resemble the <release />s
-that we have previously defined in the <roadmap /> section.
-To name the spcific release, a <release /> need to have the attribute "id" that refers to the <id /> defined before.
+Each <step /> has a <body />, wich contains all <card />s in this <step />.
+The <card />s will be rendered on a vertical axis below the <step /> starting below the timeline.
+A <card /> can be assigned to a spcific release by adding an attribute "release" whose value
+is the <id /> of one of the <release />s whe have defined in the <roadmap /> section.
+The order of the cards with the same "release" attribute determines the order in wich they
+will be rendered.
+<card />s without a specified release or with a specified release that doesn't exist
+will rendered at the bottom of the User Story Map.
 
-Inside the <release />s the backlog items are defined.
-The different items have the same structure but are rendered different according to the stylesheet.
-Right now there's only the <story /> item.
-The order if the items within each <release /> defines their priority
-and therefore the order in which they will be rendered.
-
-Each item has a <title />, which will be rendered on the card and a <description />, which will be
+Each <card /> has a <title />, which will be rendered on the card and a <description />, which will be
 rendered as the card is selected.
 
 -->
@@ -55,119 +53,110 @@ rendered as the card is selected.
 
     </roadmap>
 
-    <steps>
+    <backbone>
 
-        <epic>
+        <step>
             <title>Introduction to CI/CD</title>
             <description>
                 Lorem ipsum dolor sit amet ...
             </description>
-            <release>mvp2019</release>
-            <items>
-                <release id="basics">
-                    <story>
-                        <title>Disambiguation</title>
-                        <description>
-                            Participants know the meaning of the terms "Continuous Integration", "Continuouis Delivery" and "Continuous Deployment".
-                        </description>
-                    </story>
-                </release>
-            </items>
-        </epic>
+            <body>
+                <card release="basics">
+                    <title>Disambiguation</title>
+                    <description>
+                        Participants know the meaning of the terms "Continuous Integration", "Continuouis Delivery" and "Continuous Deployment".
+                    </description>
+                </card>
+            </body>
+        </step>
 
-        <epic>
+        <step>
             <title>Living Architecture</title>
             <description>
                 Lorem ipsum dolor sit amet ...
             </description>
-            <items>
-                <release id="basics">
-                    <story>
-                        <title>Microservice Architecture</title>
-                        <description>
-                            Lorem ipsum dolor sit amet ...
-                        </description>
-                    </story>
-                </release>
-            </items>
-        </epic>
+            <body>
+                <card release="basics">
+                    <title>Microservice Architecture</title>
+                    <description>
+                        Lorem ipsum dolor sit amet ...
+                    </description>
+                </card>
+            </body>
+        </step>
 
-        <epic>
+        <step>
             <title>Build Automation</title>
             <description>
                 Lorem ipsum dolor sit amet ...
             </description>
-            <items>
-                <release id="basics">
-                    <story>
-                        <title>Automation with Jenkins</title>
-                        <description>
-                            Lorem ipsum dolor sit amet ...
-                        </description>
-                    </story>
-                </release>
-                <release id="advanceda">
-                    <story>
-                        <title>Infrastructure as Code</title>
-                        <description>
-                            Lorem ipsum dolor sit amet ...
-                        </description>
-                    </story>
-                </release>
-                <release id="advancedb">
-                    <story>
-                        <title>Deep dive Gradle</title>
-                        <description>
-                            Lorem ipsum dolor sit amet ...
-                        </description>
-                    </story>
-                    <story>
-                        <title>Deep dive Maven</title>
-                        <description>
-                            Lorem ipsum dolor sit amet ...
-                        </description>
-                    </story>
-                </release>
-            </items>
-        </epic>
+            <body>
+                <card release="basics">
+                    <title>Automation with Jenkins</title>
+                    <description>
+                        Lorem ipsum dolor sit amet ...
+                    </description>
+                </card>
+                <card release="advanceda">
+                    <title>Infrastructure as Code</title>
+                    <description>
+                        Lorem ipsum dolor sit amet ...
+                    </description>
+                </card>
+                <card release="advancedb">
+                    <title>Deep dive Gradle</title>
+                    <description>
+                        Lorem ipsum dolor sit amet ...
+                    </description>
+                </card>
+                <card release="advancedb">
+                    <title>Deep dive Maven</title>
+                    <description>
+                        Lorem ipsum dolor sit amet ...
+                    </description>
+                </card>
+                <card>
+                    <title>Some idea</title>
+                    <description>
+                        Might be done in the future. Or not. Who knows?
+                    </description>
+                </card>
+            </body>
+        </step>
 
-        <epic>
+        <step>
             <title>Continuous Deployment</title>
             <description>
                 Lorem ipsum dolor sit amet ...
             </description>
-            <items>
-                <release id="advanceda">
-                    <story>
-                        <title>Cloud Services</title>
-                        <description>
-                            Lorem ipsum dolor sit amet ...
-                        </description>
-                    </story>
-                </release>
-                <release id="advancedb">
-                    <story>
-                        <title>Deep dive AWS</title>
-                        <description>
-                            Lorem ipsum dolor sit amet ...
-                        </description>
-                    </story>
-                    <story>
-                        <title>Deep dive Azure</title>
-                        <description>
-                            Lorem ipsum dolor sit amet ...
-                        </description>
-                    </story>
-                    <story>
-                        <title>Deep dive Bosch IoT Cloud</title>
-                        <description>
-                            Lorem ipsum dolor sit amet ...
-                        </description>
-                    </story>
-                </release>
-            </items>
-        </epic>
+            <body>
+                <card release="advanceda">
+                    <title>Cloud Services</title>
+                    <description>
+                        Lorem ipsum dolor sit amet ...
+                    </description>
+                </card>
+                <card release="advancedb">
+                    <title>Deep dive AWS</title>
+                    <description>
+                        Lorem ipsum dolor sit amet ...
+                    </description>
+                </card>
+                <card release="advancedb">
+                    <title>Deep dive Azure</title>
+                    <description>
+                        Lorem ipsum dolor sit amet ...
+                    </description>
+                </card>
+                <card release="advancedb">
+                    <title>Deep dive Bosch IoT Cloud</title>
+                    <description>
+                        Lorem ipsum dolor sit amet ...
+                    </description>
+                </card>
+            </body>
+        </step>
 
-    </steps>
+    </backbone>
 
 </usm>

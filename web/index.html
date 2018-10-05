@@ -27,10 +27,10 @@
 
     <script type="text/javascript">
         /**
-         * Renders the given jsonStory into a story card and
+         * Renders the given jsonItem into a story card and
          * attaches it to the given snapObject.
          */
-        function renderStory(snapObject, jsonStory, xOffset = 0, yOffset = 0) {
+        function renderCard(snapObject, jsonItem, xOffset = 0, yOffset = 0) {
 
             var svgCard = snapObject.rect(0, 0, 100, 60)
             svgCard.attr({
@@ -39,7 +39,7 @@
                 fill: '#fff'
             })
 
-            var svgText = snapObject.text(50, 30, jsonStory.title[0])
+            var svgText = snapObject.text(50, 30, jsonItem.title[0])
 
             var svgStory = snapObject.g(
                 svgCard,
@@ -55,26 +55,34 @@
         }
 
         /**
-         * Renders the given jsonEpics above the timeline
+         * Renders the given jsonSteps above the timeline
          * of the given snapObject
          */
-        function renderEpics(snapObject, jsonEpics, xOffset = 0, yOffset = 0) {
+        function renderSteps(snapObject, jsonSteps, xOffset = 0, yOffset = 0) {
 
-
-            var svgEpics = snapObject.g()
-            svgEpics
+            var svgSteps = snapObject.g()
+            svgSteps
                 .attr({
-                    class: 'epics'
+                    class: 'steps'
                 })
                 .transform('translate(' + xOffset + ',' + yOffset + ')')
 
-            $.each(jsonEpics, function (index, jsonEpic) {
-                var svgStory = renderStory(snapObject, jsonEpic, index * 110, 20)
+            $.each(jsonSteps, function (index, jsonStep) {
+                var svgStory = renderCard(snapObject, jsonStep, index * 110, 20)
 
-                svgStory.appendTo(svgEpics)
+                svgStory.appendTo(svgSteps)
             })
 
-            return svgEpics
+            return svgSteps
+        }
+
+        /**
+         * Renders the given jsonStep with the Step itself on top and the Storys
+         * on a vertical axis below it.
+         * Attaches the whole thing to the given snapObject.
+         */
+        function renderStep(snapObject, jsonStep, xOffset = 0, yOffset = 0) {
+            renderCard(snapObject, jsonStep, xOffset, yOffset)
         }
 
         /**
@@ -110,7 +118,7 @@
 
             renderTimeline(snapObject)
 
-            var svgEpics = renderEpics(snapObject, jsonUsm.usm.steps[0].epic, 40, 40)
+            var svgSteps = renderSteps(snapObject, jsonUsm.usm.backbone[0].step, 40, 40)
 
             return snapObject
 
