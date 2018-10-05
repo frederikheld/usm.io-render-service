@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>User Story Map</title>
+    <script type="text/javascript" src="lib/snap.svg/snap.svg-min.js"></script>
+    <style type="text/css">
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #usm {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+
+    <script type="text/javascript">
+        /* Returns a xml object parsed from the xml file at the given url */
+        function loadXMLFile(url, callback) {
+
+            if (window.XMLHttpRequest) {
+
+                var xhr = new XMLHttpRequest()
+
+                xhr.callback = callback
+                xhr.arguments = Array.prototype.slice.call(arguments, 2)
+
+                xhr.onload = function () {
+                    this.callback(this.responseXML)
+                }
+                xhr.onerror = function () {
+                    console.error(this.statusText)
+                }
+
+                xhr.open("GET", url, true)
+                xhr.send(null)
+
+            } else {
+                console.error(
+                    "Your browser doesn't have an appropriate XML parser. Seems like you are using an ancient browser. Get rid of it!"
+                )
+                return false
+            }
+
+        }
+
+        loadXMLFile("usm.xml", function (result) {
+            console.log(result)
+        })
+    </script>
+
+    <script type="text/javascript">
+        var margin = {
+            top: 40,
+            right: 40,
+            bottom: 40,
+            left: 40
+        }
+
+        window.onload = function () {
+
+            var s = Snap("#usm")
+            var c = s.rect(margin.left, margin.top, window.innerWidth - margin.left - margin.right, window.innerHeight -
+                margin.top - margin.bottom)
+            c.attr({
+                fill: "#eee"
+            })
+
+            var timeline = s.g(
+                s.rect(0 + margin.left, 100 + margin.top, window.innerWidth - margin.left - margin.right - 20,
+                    4),
+                s.path("M0 0 L20 6 L0 12 Z").transform("translate(" + (window.innerWidth - margin.right - 20) +
+                    ", " + (margin.top + 96) + ")")
+            )
+
+            timeline.attr({
+                fill: "#666",
+                class: "timeline"
+            })
+
+            var Story = function (name) {
+                this.name = name
+                this.width = 100
+                this.height = 60
+                this.padding = 20
+            }
+            Story.prototype.draw = function (offset, margin) {
+                s.g(
+                    s.rect(this.width * offset + margin * offset, 0, this.width, this.height).attr({
+                        fill: "#fff",
+                        stroke: "#000",
+                        strokeWidth: 2
+                    }),
+                    s.text(this.padding + this.width * offset + margin * offset, 35, this.name).attr({
+                        fill: "#000"
+                    }))
+            }
+
+            var story1 = new Story("test1")
+            story1.draw(0, 10)
+
+            var story2 = new Story("test2")
+            story2.draw(1, 10)
+
+            var story3 = new Story("test3")
+            story3.draw(2, 10)
+        }
+    </script>
+
+</head>
+
+<body>
+    <svg id="usm"></svg>
+</body>
+
+</html>

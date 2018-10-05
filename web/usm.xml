@@ -26,7 +26,7 @@ The order if the items within each <release /> defines their priority
 and therefore the order in which they will be rendered.
 
 Each item has a <title />, which will be rendered on the card and a <description />, which will be
-rendered if the card is selected.
+rendered as the card is selected.
 
 -->
 <usm>

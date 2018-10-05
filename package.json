@@ -1,0 +1,20 @@
+{
+  "name": "usm.io",
+  "version": "1.0.0",
+  "description": "Renders User Story Maps from XML to SVG.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js --port 8080",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "usm",
+    "svg"
+  ],
+  "author": "Frederik S. Held (kontakt@frederikheld.de)",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.3",
+    "minimist": "^1.2.0"
+  }
+}
