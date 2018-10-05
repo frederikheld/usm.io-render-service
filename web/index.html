@@ -27,27 +27,6 @@
 
     <script type="text/javascript">
         /**
-         * Renders a timeline arrow and
-         * attaches it to the given snapObject.
-         */
-        function renderTimeline(snapObject) {
-            var svgTimeline = snapObject.g(
-                snapObject.rect(0 + margin.left, 100 + margin.top, window.innerWidth - margin.left - margin.right -
-                    20,
-                    4),
-                snapObject.path("M0 0 L20 6 L0 12 Z").transform("translate(" + (window.innerWidth - margin.right -
-                        20) +
-                    ", " + (margin.top + 96) + ")")
-            )
-            svgTimeline.attr({
-                fill: "#666",
-                class: "timeline"
-            })
-
-            return svgTimeline
-        }
-
-        /**
          * Renders the given jsonStory into a story card and
          * attaches it to the given snapObject.
          */
@@ -76,22 +55,64 @@
         }
 
         /**
-         * Renders the given jsonData into an SVG
+         * Renders the given jsonEpics above the timeline
+         * of the given snapObject
+         */
+        function renderEpics(snapObject, jsonEpics, xOffset = 0, yOffset = 0) {
+
+
+            var svgEpics = snapObject.g()
+            svgEpics
+                .attr({
+                    class: 'epics'
+                })
+                .transform('translate(' + xOffset + ',' + yOffset + ')')
+
+            $.each(jsonEpics, function (index, jsonEpic) {
+                var svgStory = renderStory(snapObject, jsonEpic, index * 110, 20)
+
+                svgStory.appendTo(svgEpics)
+            })
+
+            return svgEpics
+        }
+
+        /**
+         * Renders a timeline arrow and
+         * attaches it to the given snapObject.
+         */
+        function renderTimeline(snapObject) {
+            var svgTimeline = snapObject.g(
+                snapObject.rect(0 + margin.left, 100 + margin.top, window.innerWidth - margin.left - margin.right -
+                    20,
+                    4),
+                snapObject.path("M0 0 L20 6 L0 12 Z").transform("translate(" + (window.innerWidth - margin.right -
+                        20) +
+                    ", " + (margin.top + 96) + ")")
+            )
+            svgTimeline.attr({
+                fill: "#666",
+                class: "timeline"
+            })
+
+            return svgTimeline
+        }
+
+        /**
+         * Renders the given jsonUsm into a SVG object
          * which is attached to the given domElement.
          */
         function renderUSM(domElement, jsonUsm) {
 
-            var s = Snap(domElement)
+            var snapObject = Snap(domElement)
 
             console.log("USM:", jsonUsm) // DEBUG
 
-            renderTimeline(s)
+            renderTimeline(snapObject)
 
-            $.each(jsonUsm.usm.steps[0].epic, function (index, epic) {
-                var story = renderStory(s, epic, index * 110)
-            })
+            var svgEpics = renderEpics(snapObject, jsonUsm.usm.steps[0].epic, 40, 40)
 
-            return s
+            return snapObject
 
         }
     </script>
@@ -103,8 +124,11 @@
             $.ajax({
                 url: apiEndpoint + "/data"
             }).then(function (data) {
+
                 console.log("data:", data)
+
                 renderUSM("#usm", data.data)
+
             })
         })
     </script>
