@@ -1,0 +1,219 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>User Story Map</title>
+    <script type="text/javascript" src="lib/jquery/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="lib/snap.svg/snap.svg-min.js"></script>
+    <style type="text/css">
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #usm,
+        #lab {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        #lab {
+            display: none
+        }
+    </style>
+
+    <script type="text/javascript">
+        /**
+         * Renders the given jsonItem into a story card and
+         * attaches it to the given snapObject.
+         */
+        function renderCard(snapObject, jsonItem, xOffset = 0, yOffset = 0) {
+
+            var width = 100
+            var height = 60
+
+            var svgCard = snapObject.rect(0, 0, width, height)
+            svgCard.attr({
+                stroke: '#000',
+                strokeWidth: '2',
+                fill: '#fff'
+            })
+
+            console.log(svgCard.width, svgCard.height)
+            console.log(svgCard)
+
+            var svgText = snapObject.text(width / 2, height / 2, jsonItem.title._text)
+            svgText.attr({
+                alignmentBaseline: 'middle',
+                textAnchor: 'middle'
+            })
+
+            var svgStory = snapObject.g(
+                svgCard,
+                svgText
+            )
+            svgStory
+                .transform('translate(' + xOffset + ', ' + yOffset + ')')
+                .attr({
+                    class: 'card'
+                })
+
+            return svgStory
+        }
+
+        /**
+         * Renders the given jsonBackbone above the timeline
+         * of the given snapObject
+         */
+        function renderBackbone(snapObject, jsonBackbone, xOffset = 0, yOffset = 0) {
+
+            var svgSteps = snapObject.g()
+            svgSteps
+                .attr({
+                    class: 'steps'
+                })
+                .transform('translate(' + xOffset + ',' + yOffset + ')')
+
+            $.each(jsonBackbone.step, function (index, jsonStep) {
+                var svgStory = renderCard(snapObject, jsonStep, index * 110, 20)
+
+                svgStory.appendTo(svgSteps)
+            })
+
+            return svgSteps
+        }
+
+        /**
+         * Renders the given jsonStep with the Step itself on top and the Storys
+         * on a vertical axis below it.
+         * Attaches the whole thing to the given snapObject.
+         */
+        function renderStep(snapObject, jsonStep, xOffset = 0, yOffset = 0) {
+            renderCard(snapObject, jsonStep, xOffset, yOffset)
+        }
+
+        /**
+         * Renders a timeline arrow and
+         * attaches it to the given snapObject.
+         */
+        function renderTimeline(snapObject) {
+            var svgTimeline = snapObject.g(
+                snapObject.rect(0 + margin.left, 100 + margin.top, window.innerWidth - margin.left - margin.right -
+                    20,
+                    4),
+                snapObject.path("M0 0 L20 6 L0 12 Z").transform("translate(" + (window.innerWidth - margin.right -
+                        20) +
+                    ", " + (margin.top + 96) + ")")
+            )
+            svgTimeline.attr({
+                fill: "#666",
+                class: "timeline"
+            })
+
+            return svgTimeline
+        }
+
+        /**
+         * Renders the given jsonUsm into a SVG object
+         * which is attached to the given domElement.
+         */
+        function renderUSM(domElement, jsonUsm) {
+
+            var snapObject = Snap(domElement)
+
+            console.log("USM:", jsonUsm) // DEBUG
+
+            renderTimeline(snapObject)
+
+            var svgSteps = renderBackbone(snapObject, jsonUsm.usm.backbone, 40, 40)
+
+            return snapObject
+
+        }
+    </script>
+
+    <script type="text/javascript">
+        const apiEndpoint = "http://localhost:8080"
+
+        $(document).ready(function () {
+            $.ajax({
+                url: apiEndpoint + "/data"
+            }).then(function (data) {
+
+                console.log("data:", data)
+
+                renderUSM("#usm", data.data)
+
+            })
+        })
+    </script>
+
+    <script type="text/javascript">
+        var margin = {
+            top: 40,
+            right: 40,
+            bottom: 40,
+            left: 40
+        }
+
+        window.onload = function () {
+
+            var s = Snap("#lab")
+            var c = s.rect(margin.left, margin.top, window.innerWidth - margin.left - margin.right, window.innerHeight -
+                margin.top - margin.bottom)
+            c.attr({
+                fill: "#eee"
+            })
+
+            var timeline = s.g(
+                s.rect(0 + margin.left, 100 + margin.top, window.innerWidth - margin.left - margin.right - 20,
+                    4),
+                s.path("M0 0 L20 6 L0 12 Z").transform("translate(" + (window.innerWidth - margin.right - 20) +
+                    ", " + (margin.top + 96) + ")")
+            )
+
+            timeline.attr({
+                fill: "#666",
+                class: "timeline"
+            })
+
+            var Story = function (name) {
+                this.name = name
+                this.width = 100
+                this.height = 60
+                this.padding = 20
+            }
+            Story.prototype.draw = function (offset, margin) {
+                s.g(
+                    s.rect(this.width * offset + margin * offset, 0, this.width, this.height).attr({
+                        fill: "#fff",
+                        stroke: "#000",
+                        strokeWidth: 2
+                    }),
+                    s.text(this.padding + this.width * offset + margin * offset, 35, this.name).attr({
+                        fill: "#000"
+                    }))
+            }
+
+            var story1 = new Story("test1")
+            story1.draw(0, 10)
+
+            var story2 = new Story("test2")
+            story2.draw(1, 10)
+
+            var story3 = new Story("test3")
+            story3.draw(2, 10)
+        }
+    </script>
+
+</head>
+
+<body>
+    <svg id="usm"></svg>
+    <svg id="lab"></svg>
+</body>
+
+</html>
