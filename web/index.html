@@ -39,7 +39,7 @@
                 fill: '#fff'
             })
 
-            var svgText = snapObject.text(50, 30, jsonItem.title[0])
+            var svgText = snapObject.text(50, 30, jsonItem.title._text)
 
             var svgStory = snapObject.g(
                 svgCard,
@@ -55,10 +55,10 @@
         }
 
         /**
-         * Renders the given jsonSteps above the timeline
+         * Renders the given jsonBackbone above the timeline
          * of the given snapObject
          */
-        function renderSteps(snapObject, jsonSteps, xOffset = 0, yOffset = 0) {
+        function renderBackbone(snapObject, jsonBackbone, xOffset = 0, yOffset = 0) {
 
             var svgSteps = snapObject.g()
             svgSteps
@@ -67,7 +67,7 @@
                 })
                 .transform('translate(' + xOffset + ',' + yOffset + ')')
 
-            $.each(jsonSteps, function (index, jsonStep) {
+            $.each(jsonBackbone.step, function (index, jsonStep) {
                 var svgStory = renderCard(snapObject, jsonStep, index * 110, 20)
 
                 svgStory.appendTo(svgSteps)
@@ -118,7 +118,7 @@
 
             renderTimeline(snapObject)
 
-            var svgSteps = renderSteps(snapObject, jsonUsm.usm.backbone[0].step, 40, 40)
+            var svgSteps = renderBackbone(snapObject, jsonUsm.usm.backbone, 40, 40)
 
             return snapObject
 

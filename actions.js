@@ -1,8 +1,7 @@
 'use strict'
 
 const fs = require('fs')
-// const xmlParser = require('xml-js')
-const xmlParser = require('xml2js')
+const xmlParser = require('xml-js')
 
 module.exports = Actions
 
@@ -24,22 +23,13 @@ function Actions(xmlUrl) {
 
                 if (error) return reject(error)
 
-                // var json = xmlParser.xml2js(result, {
-                //     compact: false,
-                //     ignoreComment: true
-                // })
+                var json = xmlParser.xml2js(result, {
+                    compact: true,
+                    ignoreComment: true
+                })
 
-                // console.log(json)
-                // return resolve(JSON.stringify(json))
-
-                xmlParser.parseString(result, {
-                        preserveChildrenOrder: true
-                    },
-                    (error, result) => {
-                        console.log(result)
-                        return resolve(result)
-                    })
-
+                console.log(json)
+                return resolve(json)
 
             })
 
