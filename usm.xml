@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+
+This document describes structure and content of an User Story Map.
+
+The map is defined within the tags <usm />
+
+At first you define the structure of the map by defining releases.
+Each release has at leas a <name />, which summarizes the scope of the release
+and an <id /> which will be used in the items to assign a story to a realease.
+
+Next section is <items /> which contains the content of the User Story Map.
+The base element is the <epic />, which defines the timeline of the map.
+The order of the <epic />s defineds the order in which they are rendered on the timeline.
+
+Each <epic /> can contain different kinds of backlog items which are grouped in the <items /> section.
+The <items /> section is structured in <release />s, that resemble the <release />s
+that we have previously defined in the <roadmap /> section.
+To name the spcific release, a <release /> need to have the attribute "id" that refers to the <id /> defined before.
+
+Inside the <release />s the backlog items are defined.
+The different items have the same structure but are rendered different according to the stylesheet.
+Right now there's only the <story /> item.
+The order if the items within each <release /> defines their priority
+and therefore the order in which they will be rendered.
+
+Each item has a <title />, which will be rendered on the card and a <description />, which will be
+rendered if the card is selected.
+
+-->
+<usm>
+
+    <roadmap>
+
+        <release>
+            <name>MVP 2019</name>
+            <id>mvp2019</id>
+        </release>
+
+        <release>
+            <name>Basic Level</name>
+            <id>basic</id>
+        </release>
+
+        <release>
+            <name>Advanced Level A</name>
+            <id>advanceda</id>
+        </release>
+
+        <release>
+            <name>Advanced Level B</name>
+            <id>advancedb</id>
+        </release>
+
+    </roadmap>
+
+    <steps>
+
+        <epic>
+            <title>Introduction to CI/CD</title>
+            <description>
+                Lorem ipsum dolor sit amet ...
+            </description>
+            <release>mvp2019</release>
+            <items>
+                <release id="basics">
+                    <story>
+                        <title>Disambiguation</title>
+                        <description>
+                            Participants know the meaning of the terms "Continuous Integration", "Continuouis Delivery" and "Continuous Deployment".
+                        </description>
+                    </story>
+                </release>
+            </items>
+        </epic>
+
+        <epic>
+            <title>Living Architecture</title>
+            <description>
+                Lorem ipsum dolor sit amet ...
+            </description>
+            <items>
+                <release id="basics">
+                    <story>
+                        <title>Microservice Architecture</title>
+                        <description>
+                            Lorem ipsum dolor sit amet ...
+                        </description>
+                    </story>
+                </release>
+            </items>
+        </epic>
+
+        <epic>
+            <title>Build Automation</title>
+            <description>
+                Lorem ipsum dolor sit amet ...
+            </description>
+            <items>
+                <release id="basics">
+                    <story>
+                        <title>Automation with Jenkins</title>
+                        <description>
+                            Lorem ipsum dolor sit amet ...
+                        </description>
+                    </story>
+                </release>
+                <release id="advanceda">
+                    <story>
+                        <title>Infrastructure as Code</title>
+                        <description>
+                            Lorem ipsum dolor sit amet ...
+                        </description>
+                    </story>
+                </release>
+                <release id="advancedb">
+                    <story>
+                        <title>Deep dive Gradle</title>
+                        <description>
+                            Lorem ipsum dolor sit amet ...
+                        </description>
+                    </story>
+                    <story>
+                        <title>Deep dive Maven</title>
+                        <description>
+                            Lorem ipsum dolor sit amet ...
+                        </description>
+                    </story>
+                </release>
+            </items>
+        </epic>
+
+        <epic>
+            <title>Continuous Deployment</title>
+            <description>
+                Lorem ipsum dolor sit amet ...
+            </description>
+            <items>
+                <release id="advanceda">
+                    <story>
+                        <title>Cloud Services</title>
+                        <description>
+                            Lorem ipsum dolor sit amet ...
+                        </description>
+                    </story>
+                </release>
+                <release id="advancedb">
+                    <story>
+                        <title>Deep dive AWS</title>
+                        <description>
+                            Lorem ipsum dolor sit amet ...
+                        </description>
+                    </story>
+                    <story>
+                        <title>Deep dive Azure</title>
+                        <description>
+                            Lorem ipsum dolor sit amet ...
+                        </description>
+                    </story>
+                    <story>
+                        <title>Deep dive Bosch IoT Cloud</title>
+                        <description>
+                            Lorem ipsum dolor sit amet ...
+                        </description>
+                    </story>
+                </release>
+            </items>
+        </epic>
+
+    </steps>
+
+</usm>
