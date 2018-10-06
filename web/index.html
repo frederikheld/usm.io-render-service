@@ -35,55 +35,92 @@
     </style>
 
     <script type="text/javascript">
-        var USM = function (domSelector, jsonData, margins) {
+        var USM = function (jsonUSM) {
 
-            // store params:
+            this.jsonData = jsonUSM
 
-            this.domSelector = domSelector
-            this.jsonData = jsonData
-            this.margins = margins
+            this.timeline = new Timeline()
+            this.backbone = new Backbone(this.jsonData.usm.backbone)
 
+        }
+        USM.prototype.render = function (domElement, margins, debug = false) {
 
-            // create svg element as canvas:
+            // create canvas as base element for all children to append their elements to:
 
-            this.canvas = d3.select(this.domSelector)
+            var svgUSM = domElement
                 .append("svg")
                 .attrs({
-                    xmlns: "http://www.w3.org/2000/svg",
+                    class: "usm",
+                    x: 0,
+                    y: 0
+                })
+
+            var canvas = svgUSM
+                .append("g")
+                .attrs({
+                    transform: "translate(" + margins.left + "," + margins.top + ")"
                 })
 
 
-            // store canvas dimensions:
+            // calculate dimensions to pass to child objects:
 
-            this.canvasWidth = parseInt(this.canvas.style("width"))
-            this.canvasHeight = parseInt(this.canvas.style("height"))
+            svgWidth = parseInt(svgUSM.style("width"))
+            svgHeight = parseInt(svgUSM.style("height"))
+
+            canvasWidth = svgWidth - margins.left - margins.right
+            canvasHeight = svgHeight - margins.top - margins.bottom
+
+            console.log("svgWidth svgHeight:", svgWidth, svgHeight) // DEBUG
+            console.log("canvasWidth canvasHeight:", canvasWidth, canvasHeight) // DEBUG
 
 
-            // render the whole thing:
+            // render children:
 
-            this.render(true)
-        }
+            this.timeline.render(canvas, canvasWidth, 70)
+            this.backbone.render(canvas)
 
-        USM.prototype.render = function (debug = false) {
 
-            this.renderTimeline()
-            this.renderBackbone()
+            // render debug information:
+
+            var renderBoundingBox = function (domElement, margins, svgWidth, svgHeight) {
+
+                var svgBoundingBox = domElement
+                    .append("rect")
+                    .attrs({
+                        x: 0,
+                        y: 0,
+                        width: svgWidth - margins.left - margins.right,
+                        height: svgHeight - margins.top - margins.bottom,
+                    })
+                    .styles({
+                        "stroke": "#f00",
+                        "stroke-width": 1,
+                        "stroke-dasharray": "10,10",
+                        "fill": "none"
+                    })
+            }
 
             if (debug) {
-                this.renderBoundingBox()
+                var svgDebugElements = canvas
+                    .append("g")
+                    .attrs({
+                        class: "debug"
+                    })
+
+                renderBoundingBox(svgDebugElements, margins, svgWidth, svgHeight)
             }
+
         }
 
-        /**
-         * Renders the given jsonItem into a story card and
-         * attaches it to the given snapObject.
-         */
-        USM.prototype.renderCard = function (jsonCard, offsetX = 0, offsetY = 0) {
+        var Card = function (jsonCard) {
+            this.jsonCard = jsonCard
+        }
+        Card.prototype.render = function (domElement, offsetX = 0, offsetY = 0) {
 
             var width = 100
             var height = 60
 
-            var svgCard = this.canvas
+            var svgCard = domElement
                 .append("g")
                 .attrs({
                     class: "card",
@@ -104,7 +141,7 @@
 
             svgCard
                 .append("text")
-                .text(jsonCard.title._text)
+                .text(this.jsonCard.title._text)
                 .attrs({
                     x: width / 2,
                     y: height / 2
@@ -115,109 +152,50 @@
                 })
 
             return svgCard
-
         }
 
-        USM.prototype.renderStep = function (jsonStep, offsetX = 0, offsetY = 0) {
+        var Backbone = function (jsonBackbone) {
+            this.jsonBackbone = jsonBackbone
+        }
+        Backbone.prototype.render = function (domElement) {
 
-            var svgStep = this.canvas
+            var svgBackbone = domElement
                 .append("g")
                 .attrs({
-                    class: "step"
+                    class: "backbone"
                 })
 
-            var svgCard = svgStep
-                .append(function () {
-                    return d3.select("#svg").append("g").attr("class", "debug")
-                }, this)
-
-            // svgCard
-            //     .append("rect")
-            //     .attrs({
-            //         x: offsetX,
-            //         y: offsetY,
-            //         width: 40,
-            //         height: 20
-            //     })
-
-            // svgCard
-            //     .append("text")
-            //     .text("Hello World!")
-
-
-            // render backbone card above timeline:
-
-            // svgStep
-            // .append(function () {
-            // return function () {
-            //     return this.renderCard(jsonStep, offsetX, offsetY)
-            // }
-            // })
-
-
-            // render all body cards on a horizontal axis below timeline:
-
-            return svgStep
-
-        }
-
-        /**
-         * Renders the given jsonBackbone above the timeline
-         * of the given snapObject
-         */
-        USM.prototype.renderBackbone = function () {
-
-            this.jsonData.usm.backbone.step.forEach(function (jsonStep, index) {
-
-                this.renderStep(jsonStep, index * 110)
-
+            this.jsonBackbone.step.forEach(function (jsonStep, index) {
+                var step = new Card(jsonStep)
+                step.render(svgBackbone, index * 110)
             }, this)
 
-
+            return svgBackbone
         }
 
-        USM.prototype.renderTimeline = function () {
+        var Timeline = function () {}
+        Timeline.prototype.render = function (domElement, width, offsetY = 0) {
 
-            var offsetX = this.margins.left
-            var offsetY = 100
-
-            var svgTimeline = this.canvas
+            var svgTimeline = domElement
                 .append("polygon")
                 .attrs({
                     points: [
                         [0, 0],
-                        [this.canvasWidth - this.margins.left - this.margins.right - 20, 0],
-                        [this.canvasWidth - this.margins.left - this.margins.right - 20, -4],
-                        [this.canvasWidth - this.margins.left - this.margins.right, 2],
-                        [this.canvasWidth - this.margins.left - this.margins.right - 20, 8],
-                        [this.canvasWidth - this.margins.left - this.margins.right - 20, 4],
+                        [width - 20, 0],
+                        [width - 20, -4],
+                        [width, 2],
+                        [width - 20, 8],
+                        [width - 20, 4],
                         [0, 4]
                     ],
-                    transform: "translate(" + offsetX + ", " + offsetY + ")",
+                    transform: "translate(0, " + offsetY + ")",
                     class: "timeline"
                 })
                 .styles({
-                    "fill": "#666"
+                    "fill": "#000"
                 })
 
-        }
-
-        USM.prototype.renderBoundingBox = function () {
-
-            var svgBoundingBox = this.canvas
-                .append("rect")
-                .attrs({
-                    x: this.margins.left,
-                    y: this.margins.top,
-                    width: this.canvasWidth - this.margins.left - this.margins.right,
-                    height: this.canvasHeight - this.margins.top - this.margins.bottom,
-                })
-                .styles({
-                    "stroke": "#f00",
-                    "stroke-width": 1,
-                    "stroke-dasharray": "10,10",
-                    "fill": "none"
-                })
+            return svgTimeline
 
         }
     </script>
@@ -236,9 +214,10 @@
                 url: apiEndpoint + "/data"
             }).then(function (data) {
 
-                console.log("data:", data)
+                console.log("data.data", data.data)
 
-                var usm = new USM("#usm", data.data, margins)
+                var usm = new USM(data.data)
+                usm.render(d3.select("#usm"), margins, true)
 
             })
         })

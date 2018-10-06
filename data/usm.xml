@@ -157,6 +157,21 @@ rendered as the card is selected.
             </body>
         </step>
 
+        <step>
+            <title>Handle user feedback</title>
+            <description>
+                Lorem ipsum dolor sit amet ...
+            </description>
+            <body>
+                <card release="advanceda">
+                    <title>How to handle bug tickets in a Scrum sprint</title>
+                    <description>
+                        Lorem ipsum dolor sit amet ...
+                    </description>
+                </card>
+            </body>
+        </step>
+
     </backbone>
 
 </usm>
