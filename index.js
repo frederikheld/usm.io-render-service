@@ -32,7 +32,7 @@ var app = express()
 app.use(express.static(path.join(__dirname, "web")))
 
 app.get("/", (request, result) => {
-    result.sendFile(path.join(__dirname, "web", "index.html"))
+    result.sendFile(path.join(__dirname, "web", "experiment.html"))
 })
 
 app.get("/data", (req, res) => {

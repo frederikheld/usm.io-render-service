@@ -35,11 +35,12 @@
     </style>
 
     <script type="text/javascript">
-        var USM = function (domSelector, margins) {
+        var USM = function (domSelector, jsonData, margins) {
 
             // store params:
 
             this.domSelector = domSelector
+            this.jsonData = jsonData
             this.margins = margins
 
 
@@ -73,12 +74,114 @@
             }
         }
 
+        /**
+         * Renders the given jsonItem into a story card and
+         * attaches it to the given snapObject.
+         */
+        USM.prototype.renderCard = function (jsonCard, offsetX = 0, offsetY = 0) {
+
+            var width = 100
+            var height = 60
+
+            var svgCard = this.canvas
+                .append("g")
+                .attrs({
+                    class: "card",
+                    transform: "translate(" + offsetX + ", " + offsetY + ")"
+                })
+
+            svgCard
+                .append("rect")
+                .attrs({
+                    width: width,
+                    height: height
+                })
+                .styles({
+                    stroke: "#000",
+                    strokeWidth: 1,
+                    fill: "#fff"
+                })
+
+            svgCard
+                .append("text")
+                .text(jsonCard.title._text)
+                .attrs({
+                    x: width / 2,
+                    y: height / 2
+                })
+                .styles({
+                    "alignment-baseline": "middle",
+                    "text-anchor": "middle",
+                })
+
+            return svgCard
+
+        }
+
+        USM.prototype.renderStep = function (jsonStep, offsetX = 0, offsetY = 0) {
+
+            var svgStep = this.canvas
+                .append("g")
+                .attrs({
+                    class: "step"
+                })
+
+            var svgCard = svgStep
+                .append(function () {
+                    return d3.select("#svg").append("g").attr("class", "debug")
+                }, this)
+
+            // svgCard
+            //     .append("rect")
+            //     .attrs({
+            //         x: offsetX,
+            //         y: offsetY,
+            //         width: 40,
+            //         height: 20
+            //     })
+
+            // svgCard
+            //     .append("text")
+            //     .text("Hello World!")
+
+
+            // render backbone card above timeline:
+
+            // svgStep
+            // .append(function () {
+            // return function () {
+            //     return this.renderCard(jsonStep, offsetX, offsetY)
+            // }
+            // })
+
+
+            // render all body cards on a horizontal axis below timeline:
+
+            return svgStep
+
+        }
+
+        /**
+         * Renders the given jsonBackbone above the timeline
+         * of the given snapObject
+         */
+        USM.prototype.renderBackbone = function () {
+
+            this.jsonData.usm.backbone.step.forEach(function (jsonStep, index) {
+
+                this.renderStep(jsonStep, index * 110)
+
+            }, this)
+
+
+        }
+
         USM.prototype.renderTimeline = function () {
 
             var offsetX = this.margins.left
             var offsetY = 100
 
-            var timeline = this.canvas
+            var svgTimeline = this.canvas
                 .append("polygon")
                 .attrs({
                     points: [
@@ -90,7 +193,8 @@
                         [this.canvasWidth - this.margins.left - this.margins.right - 20, 4],
                         [0, 4]
                     ],
-                    transform: "translate(" + offsetX + ", " + offsetY + ")"
+                    transform: "translate(" + offsetX + ", " + offsetY + ")",
+                    class: "timeline"
                 })
                 .styles({
                     "fill": "#666"
@@ -99,7 +203,8 @@
         }
 
         USM.prototype.renderBoundingBox = function () {
-            var boundingBox = this.canvas
+
+            var svgBoundingBox = this.canvas
                 .append("rect")
                 .attrs({
                     x: this.margins.left,
@@ -113,6 +218,7 @@
                     "stroke-dasharray": "10,10",
                     "fill": "none"
                 })
+
         }
     </script>
 
@@ -132,7 +238,7 @@
 
                 console.log("data:", data)
 
-                var usm = new USM("#usm", margins)
+                var usm = new USM("#usm", data.data, margins)
 
             })
         })
