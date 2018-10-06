@@ -4,7 +4,6 @@
 <head>
     <meta charset="utf-8">
     <title>User Story Map</title>
-    <script type="text/javascript" src="lib/jquery/jquery-3.3.1.js"></script>
     <script type="text/javascript" src="lib/d3/d3.v5.min.js"></script>
     <script type="text/javascript" src="lib/d3/d3-selection-multi.v1.min.js"></script>
     <script type="text/javascript" src="lib/d3/d3-polygon.v1.min.js"></script>
@@ -209,17 +208,22 @@
             left: 20
         }
 
-        $(document).ready(function () {
-            $.ajax({
-                url: apiEndpoint + "/data"
-            }).then(function (data) {
+        document.addEventListener("DOMContentLoaded", function (event) {
 
-                console.log("data.data", data.data)
+            var url = apiEndpoint + "/data"
 
-                var usm = new USM(data.data)
-                usm.render(d3.select("#usm"), margins, true)
+            d3.json(url)
+                .then((result) => {
 
-            })
+                    console.log("result.data", result.data)
+                    var usm = new USM(result.data)
+                    usm.render(d3.select("#usm"), margins, true)
+
+                })
+                .catch((error) => {
+                    console.error("Error:", error)
+                })
+
         })
     </script>
 
