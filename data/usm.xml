@@ -38,7 +38,7 @@ rendered as the card is selected.
 
         <release>
             <name>Basic Level</name>
-            <id>basic</id>
+            <id>basics</id>
         </release>
 
         <release>
@@ -61,13 +61,13 @@ rendered as the card is selected.
                 Lorem ipsum dolor sit amet ...
             </description>
             <body>
-                <card release="basics">
+                <card release="mvp2019">
                     <title>Disambiguation</title>
                     <description>
                         Participants know the meaning of the terms "Continuous Integration", "Continuouis Delivery" and "Continuous Deployment".
                     </description>
                 </card>
-                <card release="basics">
+                <card release="mvp2019">
                     <title>Bullshit Bingo</title>
                     <description>
                         Participants know how to most effectively throw those words onto others during budget discussions.
@@ -82,7 +82,7 @@ rendered as the card is selected.
                 Lorem ipsum dolor sit amet ...
             </description>
             <body>
-                <card release="basics">
+                <card release="mvp2019">
                     <title>Microservice Architecture</title>
                     <description>
                         Lorem ipsum dolor sit amet ...
@@ -97,7 +97,7 @@ rendered as the card is selected.
                 Lorem ipsum dolor sit amet ...
             </description>
             <body>
-                <card release="basics">
+                <card release="mvp2019">
                     <title>Automation with Jenkins</title>
                     <description>
                         Lorem ipsum dolor sit amet ...
