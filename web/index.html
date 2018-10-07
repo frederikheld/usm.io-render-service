@@ -153,8 +153,49 @@
             return svgCard
         }
 
+        var Step = function (jsonStep) {
+            this.jsonStep = jsonStep
+        }
+        Step.prototype.render = function (domElement, offsetX = 0) {
+
+            var svgStep = domElement
+                .append("g")
+                .attrs({
+                    class: "step"
+                })
+
+            // render step card:
+            var card = new Card(this.jsonStep)
+            card.render(svgStep, offsetX)
+
+            // render cards below timeline:
+            var jsonCards = {}
+            if (Array.isArray(this.jsonStep.body.card)) {
+                jsonCards = this.jsonStep.body.card
+            } else {
+                jsonCards[0] = this.jsonStep.body.card
+            }
+
+            var svgCards = svgStep
+                .append("g")
+                .attrs({
+                    class: "cards",
+                    transform: "translate(" + offsetX + "," + 84 + ")"
+                })
+
+            this.renderCards(svgCards, jsonCards)
+        }
+        Step.prototype.renderCards = function (domElement, jsonCards, offsetY = 0) {
+
+            Object.keys(jsonCards).forEach(function (key, index) {
+                var card = new Card(jsonCards[key])
+                card.render(domElement, 0, index * 70)
+            }, this)
+
+        }
         var Backbone = function (jsonBackbone) {
             this.jsonBackbone = jsonBackbone
+
         }
         Backbone.prototype.render = function (domElement) {
 
@@ -165,7 +206,7 @@
                 })
 
             this.jsonBackbone.step.forEach(function (jsonStep, index) {
-                var step = new Card(jsonStep)
+                var step = new Step(jsonStep)
                 step.render(svgBackbone, index * 110)
             }, this)
 

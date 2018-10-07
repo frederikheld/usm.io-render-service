@@ -67,6 +67,12 @@ rendered as the card is selected.
                         Participants know the meaning of the terms "Continuous Integration", "Continuouis Delivery" and "Continuous Deployment".
                     </description>
                 </card>
+                <card release="basics">
+                    <title>Bullshit Bingo</title>
+                    <description>
+                        Participants know how to most effectively throw those words onto others during budget discussions.
+                    </description>
+                </card>
             </body>
         </step>
 
