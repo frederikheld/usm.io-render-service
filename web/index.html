@@ -18,8 +18,8 @@
             position: absolute;
             background: lightgrey;
             width: 100%;
-            height: 100%;
-            overflow: hidden;
+            /* height: 100%;
+            overflow: scroll; */
             /*  "overflow: hidden" is a fix for the little gap
                 at the bottom, that appears in combination with
                 "height: 100%" on the svg element.
@@ -29,119 +29,111 @@
         #usm svg {
             width: 100%;
             height: 100%;
-            background: lightblue
+            background: lightblue;
+        }
+
+        #usm svg g.step:nth-child(1) g.card rect {
+            fill: #0f6 !important;
+        }
+
+        #usm svg g.step:nth-child(2) g.card rect {
+            fill: #0fa !important;
+        }
+
+        #usm svg g.step:nth-child(3) g.card rect {
+            fill: #0ff !important;
+        }
+
+        #usm svg g.step:nth-child(4) g.card rect {
+            fill: #0cf !important;
+        }
+
+        #usm svg g.step:nth-child(5) g.card rect {
+            fill: #09f !important;
         }
     </style>
 
     <script type="text/javascript">
+        /*
+            A map
+                consists of the timeline (represented by an arrow)
+                and the roadmap
+                    wich consists of releases (represented by dividers)
+                and a backbone
+                    which consists of multiple activities
+                        which consist of multiple steps
+                            which consist of a card and the body
+                                which consist of multiple releases
+                                    which consist of multiple cards
+        */
+
+        /*
+            Each type of element has it's own class.
+            Feed data into constructor.
+            Feed svgElement to append to in prototype.render()
+        */
         var USM = function (jsonUSM) {
 
             this.jsonData = jsonUSM
 
             this.timeline = new Timeline()
+            this.backbone = new Backbone(this.jsonData.usm.backbone, this.jsonData.usm.roadmap)
             this.roadmap = new Roadmap(this.jsonData.usm.roadmap)
-            this.backbone = new Backbone(this.jsonData.usm.backbone)
 
+            this.optimizeDataStructure()
+            this.generateMetaData()
 
-            // console.log("USM::jsonData", this.jsonData) // DEBUG
-
-            // prepare roadmap to add max number of cards in each release:
-            Object.keys(this.jsonData.usm.roadmap.release).forEach(function (releaseKey, index) {
-                this.jsonData.usm.roadmap.release[releaseKey].maxCards = 0
-            }, this)
-
-            // optimize data:
-            Object.keys(this.jsonData.usm.backbone.step).forEach(function (stepKey, index) {
-
-                // console.log("step", this.jsonData.usm.backbone.step[stepKey].title._text) // DEBUG
-
-                // put single cards inside a step.body.card into an array
-                // as multiple cards already are. This makes further processing cleaner:
-                if (!Array.isArray(this.jsonData.usm.backbone.step[stepKey].body.card)) {
-                    var tempCard = this.jsonData.usm.backbone.step[stepKey].body.card
-                    this.jsonData.usm.backbone.step[stepKey].body.card = []
-                    this.jsonData.usm.backbone.step[stepKey].body.card[0] = tempCard
-                }
-
-                // add max number of related cards to each release:
-
-                // count occurences in step:
-                var occurences = {}
-                Object.keys(this.jsonData.usm.backbone.step[stepKey].body.card).forEach(function (
-                    cardKey,
-                    index) {
-
-                    if ("_attributes" in this.jsonData.usm.backbone.step[stepKey].body.card[cardKey]) {
-
-                        var release = this.jsonData.usm.backbone.step[stepKey].body.card[cardKey]._attributes
-                            .release
-
-                        if (release in occurences) {
-                            occurences[release] += 1
-                        } else {
-                            occurences[release] = 1
-                        }
-
-                    }
-
-                }, this)
-
-                // update maxCards in each release with collected number of occurences in this step:
-                Object.keys(this.jsonData.usm.roadmap.release).forEach(function (releaseKey, index) {
-                    var releaseId = this.jsonData.usm.roadmap.release[releaseKey].id._text
-                    if (occurences[releaseId] > this.jsonData.usm.roadmap.release[releaseKey].maxCards) {
-                        this.jsonData.usm.roadmap.release[releaseKey].maxCards = occurences[
-                            releaseId]
-                    }
-                }, this)
-
-            }, this)
-
-            console.log("USM::jsonData", this.jsonData) // DEBUG
-
+            console.log("USM::jsonData optimized", this.jsonData) // DEBUG
 
         }
-        USM.prototype.render = function (domElement, margins, debug = false) {
+        USM.prototype.render = function (domElement, margins, doDebug = false) {
 
             // create canvas as base element for all children to append their elements to:
-
             var svgUSM = domElement
                 .append("svg")
                 .attrs({
                     class: "usm",
                     x: 0,
-                    y: 0
+                    y: 0,
+                    viewBox: "0 0 1000 1000",
+                    preserveAspectRatio: "xMinYMin meet"
                 })
 
             var canvas = svgUSM
                 .append("g")
                 .attrs({
+                    class: "canvas",
                     transform: "translate(" + margins.left + "," + margins.top + ")"
                 })
 
 
             // calculate dimensions to pass to child objects:
-
             svgWidth = parseInt(svgUSM.style("width"))
             svgHeight = parseInt(svgUSM.style("height"))
-
             canvasWidth = svgWidth - margins.left - margins.right
             canvasHeight = svgHeight - margins.top - margins.bottom
 
-            console.log("svgWidth svgHeight:", svgWidth, svgHeight) // DEBUG
-            console.log("canvasWidth canvasHeight:", canvasWidth, canvasHeight) // DEBUG
-
-
             // render children:
-
-            this.timeline.render(canvas, canvasWidth, 70)
             this.backbone.render(canvas)
-            this.roadmap.render(canvas, canvasWidth)
-
+            this.timeline.render(canvas, canvasWidth, 70)
+            this.roadmap.render(canvas, canvasWidth, 90)
 
             // render debug information:
+            this.renderDebug(canvas, margins, svgWidth, svgHeight, doDebug)
 
-            var renderBoundingBox = function (domElement, margins, svgWidth, svgHeight) {
+        }
+        USM.prototype.renderDebug = function (domElement, margin, svgWidth, svgHeight, doRender = false) {
+            if (doRender) {
+                var svgDebug = domElement
+                    .append("g")
+                    .attrs({
+                        class: "debug"
+                    })
+
+                renderBoundingBox(svgDebug, margins, svgWidth, svgHeight)
+            }
+
+            function renderBoundingBox(domElement, margins, svgWidth, svgHeight) {
 
                 var svgBoundingBox = domElement
                     .append("rect")
@@ -158,49 +150,111 @@
                         "fill": "none"
                     })
             }
+        }
+        USM.prototype.optimizeDataStructure = function () {
 
-            if (debug) {
-                var svgDebugElements = canvas
-                    .append("g")
-                    .attrs({
-                        class: "debug"
+            this.jsonData.usm.backbone.step.forEach(function (jsonStep, indexStep) {
+
+                // put single releases inside a step.body.release into an array
+                // as multiple releases already are. This makes further processing cleaner:
+                if (!Array.isArray(jsonStep.body.release)) {
+
+                    // var tempRelease = jsonStep.body.release
+                    var tempRelease = this.jsonData.usm.backbone.step[indexStep].body.release
+                    this.jsonData.usm.backbone.step[indexStep].body.release = []
+                    this.jsonData.usm.backbone.step[indexStep].body.release[0] = tempRelease
+
+                }
+
+                jsonStep.body.release.forEach(function (jsonRelease, indexRelease) {
+
+                    // put single releases inside a step.body.release.card into an array
+                    // as multiple cards already are. This makes further processing cleaner:
+                    if (!Array.isArray(jsonRelease.card)) {
+
+                        var tempCard = jsonRelease.card
+                        this.jsonData.usm.backbone.step[indexStep].body.release[indexRelease].card = []
+                        this.jsonData.usm.backbone.step[indexStep].body.release[indexRelease].card[0] = tempCard
+
+                    }
+                }, this)
+            }, this)
+
+        }
+        USM.prototype.generateMetaData = function () {
+
+            // prepare new fields:
+            this.jsonData.usm.roadmap.release.forEach(function (jsonRelease, indexRelease) {
+                this.jsonData.usm.roadmap.release[indexRelease].maxCards = 0
+                this.jsonData.usm.roadmap.release[indexRelease].maxCardsBefore = 0
+                this.jsonData.usm.roadmap.release[indexRelease].releasesBefore = 0
+            }, this)
+
+            this.jsonData.usm.backbone.step.forEach(function (jsonStep, indexStep) {
+
+                // count occurences in step:
+                var occurences = {}
+                jsonStep.body.release.forEach(function (jsonRelease, indexRelease) {
+
+                    var releaseKey = jsonRelease._attributes.id
+
+                    jsonRelease.card.forEach(function (jsonCard, indexCard) {
+
+                        if ("_attributes" in jsonRelease) {
+                            if (releaseKey in occurences) {
+                                occurences[releaseKey] += 1
+                            } else {
+                                occurences[releaseKey] = 1
+                            }
+                        }
+
                     })
+                })
 
-                renderBoundingBox(svgDebugElements, margins, svgWidth, svgHeight)
-            }
+                // update maxCards in release:
+                this.jsonData.usm.roadmap.release.forEach(function (release, indexRelease) {
 
+                    if (occurences[release.id._text] > this.jsonData.usm.roadmap.release[indexRelease].maxCards) {
+                        this.jsonData.usm.roadmap.release[indexRelease].maxCards = occurences[release.id._text]
+                    }
+
+                }, this)
+
+            }, this)
+
+            // update accumulated number of maxCards before this release:
+            this.jsonData.usm.roadmap.release.forEach(function (release, indexRelease) {
+
+                for (var n = 0; n < indexRelease; n++) {
+                    this.jsonData.usm.roadmap.release[indexRelease].maxCardsBefore += this.jsonData.usm.roadmap.release[n].maxCards
+                    this.jsonData.usm.roadmap.release[indexRelease].releasesBefore += 1
+                }
+
+            }, this)
         }
 
         var Roadmap = function (jsonRoadmap) {
             this.jsonRoadmap = jsonRoadmap
         }
-        Roadmap.prototype.render = function (domElement, width) {
-            console.log("Roadmap::render() -> this.jsonRoadmap", this.jsonRoadmap) // DEBUG
+        Roadmap.prototype.render = function (domElement, width, offsetY = 0) {
 
             var svgRoadmap = domElement
                 .append("g")
                 .attrs({
                     class: "roadmap",
-                    transform: "translate(0,80)"
+                    transform: "translate(0," + offsetY + ")"
                 })
 
-            Object.keys(this.jsonRoadmap.release).forEach(function (releaseKey, index) {
+            this.jsonRoadmap.release.forEach(function (release, releaseIndex) {
 
                 // calculate y-offset for this release:
-                var offsetY = 0
-                for (var i = 0; i <= releaseKey; i++) {
-                    if (this.jsonRoadmap.release[i].maxCards === 0) {
-                        offsetY += 24
-                    } else {
-                        offsetY += this.jsonRoadmap.release[i].maxCards * 70 + 4
-                    }
-                }
+                var releaseOffsetY = release.maxCardsBefore * 70 + release.releasesBefore * 20 + release.maxCards * 70
 
                 var svgRelease = svgRoadmap
                     .append("g")
                     .attrs({
                         class: "release",
-                        transform: "translate(0," + offsetY + ")"
+                        transform: "translate(0," + releaseOffsetY + ")"
                     })
 
                 svgRelease
@@ -214,7 +268,7 @@
 
                 svgRelease
                     .append("text")
-                    .text(this.jsonRoadmap.release[releaseKey].name._text + " (" + this.jsonRoadmap.release[releaseKey].maxCards + ")")
+                    .text(release.name._text + " (" + release.maxCards + ")")
                     .attrs({
                         x: 0,
                         y: -5,
@@ -222,6 +276,103 @@
                         height: 1
                     })
             }, this)
+
+        }
+
+        var Backbone = function (jsonBackbone, jsonRoadmap) {
+            this.jsonBackbone = jsonBackbone
+            this.jsonRoadmap = jsonRoadmap
+        }
+        Backbone.prototype.render = function (domElement) {
+            var svgBackbone = domElement
+                .append("g")
+                .attrs({
+                    class: "backbone"
+                })
+
+            this.jsonBackbone.step.forEach(function (jsonStep, indexStep) {
+                var step = new Step(jsonStep, this.jsonRoadmap)
+                step.render(svgBackbone, indexStep * 110)
+            }, this)
+
+        }
+
+        var Step = function (jsonStep, jsonRoadmap) {
+            this.jsonStep = jsonStep
+            this.jsonRoadmap = jsonRoadmap
+        }
+        Step.prototype.render = function (domElement, offsetX = 0) {
+            var svgStep = domElement
+                .append("g")
+                .attrs({
+                    class: "step",
+                    transform: "translate(" + offsetX + ", 0)"
+                })
+
+            // render step card:
+            var stepCard = new Card(this.jsonStep)
+            stepCard.render(svgStep)
+
+            // render step body:
+            var offsetY = 85 // TODO: Calculate offset
+            var body = new Body(this.jsonStep.body, this.jsonRoadmap)
+            body.render(svgStep, offsetY)
+
+        }
+
+        var Body = function (jsonBody, jsonRoadmap) {
+            this.jsonBody = jsonBody
+            this.jsonRoadmap = jsonRoadmap
+        }
+        Body.prototype.render = function (domElement, offsetY = 0) {
+            var svgBody = domElement
+                .append("g")
+                .attrs({
+                    class: "body",
+                    transform: "translate(0, " + offsetY + ")"
+                })
+
+            this.jsonBody.release.forEach(function (jsonRelease, indexRelease) {
+
+                function getReleaseKey(jsonRoadmap, releaseId) {
+                    var result = undefined
+                    jsonRoadmap.release.forEach(function (jsRel, i) {
+                        if (jsRel.id._text == releaseId) {
+                            result = i
+                        }
+                    })
+                    return result
+                }
+
+                var releaseId = jsonRelease._attributes.id
+                var releaseKey = getReleaseKey(this.jsonRoadmap, releaseId)
+
+                var offsetY = this.jsonRoadmap.release[releaseKey].maxCardsBefore * 70
+                offsetY += this.jsonRoadmap.release[releaseKey].releasesBefore * 20
+
+                var release = new Release(jsonRelease)
+                release.render(svgBody, offsetY)
+            }, this)
+        }
+
+        var Release = function (jsonRelease) {
+            this.jsonRelease = jsonRelease
+        }
+        Release.prototype.render = function (domElement, offsetY = 0) {
+            var svgRelease = domElement
+                .append("g")
+                .attrs({
+                    class: "release",
+                    transform: "translate(0, " + offsetY + ")"
+                })
+
+            this.jsonRelease.card.forEach(function (jsonCard, indexCard) {
+
+                var offsetY = indexCard * 70 // TODO: Calculate card offset
+
+                var card = new Card(jsonCard)
+                card.render(svgRelease, 0, offsetY)
+            })
         }
 
         var Card = function (jsonCard) {
@@ -236,19 +387,20 @@
                 .append("g")
                 .attrs({
                     class: "card",
-                    transform: "translate(" + offsetX + ", " + offsetY + ")"
+                    transform: "translate(" + offsetX + "," + offsetY + ")"
                 })
 
             svgCard
                 .append("rect")
                 .attrs({
+                    x: 0,
+                    y: 0,
                     width: width,
                     height: height
                 })
                 .styles({
-                    stroke: "#000",
-                    strokeWidth: 1,
-                    fill: "#fff"
+                    stroke: "black",
+                    fill: "white"
                 })
 
             // render title of card:
@@ -264,80 +416,19 @@
                     "text-anchor": "middle",
                 })
 
-            // render id of release this card belongs to:
-            if ("_attributes" in this.jsonCard && "release" in this.jsonCard._attributes) {
-                svgCard
-                    .append("text")
-                    .text("[" + this.jsonCard._attributes.release + "]")
-                    .attrs({
-                        x: width / 2,
-                        y: height / 2 + 16
-                    })
-                    .styles({
-                        "alignment-baseline": "middle",
-                        "text-anchor": "middle",
-                    })
-            }
-
-            return svgCard
-        }
-
-        var Step = function (jsonStep) {
-            this.jsonStep = jsonStep
-        }
-        Step.prototype.render = function (domElement, offsetX = 0) {
-
-            var svgStep = domElement
-                .append("g")
-                .attrs({
-                    class: "step"
-                })
-
-            // render step card:
-            var card = new Card(this.jsonStep)
-            card.render(svgStep, offsetX)
-
-            var svgCards = svgStep
-                .append("g")
-                .attrs({
-                    class: "cards",
-                    transform: "translate(" + offsetX + "," + 84 + ")"
-                })
-
-            this.renderCards(svgCards, this.jsonStep.body.card)
-        }
-        Step.prototype.renderCards = function (domElement, jsonCards, offsetY = 0) {
-
-            Object.keys(jsonCards).forEach(function (key, index) {
-                var card = new Card(jsonCards[key])
-                card.render(domElement, 0, index * 70)
-            })
-
-        }
-        var Backbone = function (jsonBackbone) {
-            this.jsonBackbone = jsonBackbone
-
-        }
-        Backbone.prototype.render = function (domElement) {
-
-            var svgBackbone = domElement
-                .append("g")
-                .attrs({
-                    class: "backbone"
-                })
-
-            this.jsonBackbone.step.forEach(function (jsonStep, index) {
-                var step = new Step(jsonStep)
-                step.render(svgBackbone, index * 110)
-            }, this)
-
-            return svgBackbone
         }
 
         var Timeline = function () {}
         Timeline.prototype.render = function (domElement, width, offsetY = 0) {
 
             var svgTimeline = domElement
+                .append("g")
+                .attrs({
+                    class: "timeline",
+                    transform: "translate(0, " + offsetY + ")"
+                })
+
+            svgTimeline
                 .append("polygon")
                 .attrs({
                     points: [
@@ -348,9 +439,7 @@
                         [width - 20, 8],
                         [width - 20, 4],
                         [0, 4]
-                    ],
-                    transform: "translate(0, " + offsetY + ")",
-                    class: "timeline"
+                    ]
                 })
                 .styles({
                     "fill": "#000"
@@ -378,7 +467,7 @@
                 .then((result) => {
 
                     var usm = new USM(result.data)
-                    usm.render(d3.select("#usm"), margins, true)
+                    usm.render(d3.select("#usm"), margins, false)
 
                 })
                 .catch((error) => {

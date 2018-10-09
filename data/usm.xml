@@ -38,7 +38,7 @@ rendered as the card is selected.
 
         <release>
             <name>Basic Level</name>
-            <id>basics</id>
+            <id>basic</id>
         </release>
 
         <release>
@@ -51,6 +51,11 @@ rendered as the card is selected.
             <id>advancedb</id>
         </release>
 
+        <release>
+            <name>Future</name>
+            <id>future</id>
+        </release>
+
     </roadmap>
 
     <backbone>
@@ -61,18 +66,29 @@ rendered as the card is selected.
                 Lorem ipsum dolor sit amet ...
             </description>
             <body>
-                <card release="mvp2019">
-                    <title>Disambiguation</title>
-                    <description>
-                        Participants know the meaning of the terms "Continuous Integration", "Continuouis Delivery" and "Continuous Deployment".
-                    </description>
-                </card>
-                <card release="mvp2019">
-                    <title>Bullshit Bingo</title>
-                    <description>
-                        Participants know how to most effectively throw those words onto others during budget discussions.
-                    </description>
-                </card>
+                <release id="mvp2019">
+                    <card>
+                        <title>Disambiguation</title>
+                        <description>
+                            Participants know the meaning of the terms "Continuous Integration", "Continuouis Delivery" and "Continuous Deployment".
+                        </description>
+                    </card>
+                    <card>
+                        <title>Bullshit Bingo</title>
+                        <description>
+                            Participants know how to most effectively throw those words onto others during budget discussions.
+                        </description>
+                    </card>
+                </release>
+
+                <release id="advancedb">
+                    <card>
+                        <title>Debating</title>
+                        <description>
+                            Lorem ipsum dolor sit amet ...
+                        </description>
+                    </card>
+                </release>
             </body>
         </step>
 
@@ -82,12 +98,14 @@ rendered as the card is selected.
                 Lorem ipsum dolor sit amet ...
             </description>
             <body>
-                <card release="mvp2019">
-                    <title>Microservice Architecture</title>
-                    <description>
-                        Lorem ipsum dolor sit amet ...
-                    </description>
-                </card>
+                <release id="mvp2019">
+                    <card>
+                        <title>Microservice Architecture</title>
+                        <description>
+                            Lorem ipsum dolor sit amet ...
+                        </description>
+                    </card>
+                </release>
             </body>
         </step>
 
@@ -97,36 +115,44 @@ rendered as the card is selected.
                 Lorem ipsum dolor sit amet ...
             </description>
             <body>
-                <card release="mvp2019">
-                    <title>Automation with Jenkins</title>
-                    <description>
-                        Lorem ipsum dolor sit amet ...
-                    </description>
-                </card>
-                <card release="advanceda">
-                    <title>Infrastructure as Code</title>
-                    <description>
-                        Lorem ipsum dolor sit amet ...
-                    </description>
-                </card>
-                <card release="advancedb">
-                    <title>Deep dive Gradle</title>
-                    <description>
-                        Lorem ipsum dolor sit amet ...
-                    </description>
-                </card>
-                <card release="advancedb">
-                    <title>Deep dive Maven</title>
-                    <description>
-                        Lorem ipsum dolor sit amet ...
-                    </description>
-                </card>
-                <card>
-                    <title>Some idea</title>
-                    <description>
-                        Might be done in the future. Or not. Who knows?
-                    </description>
-                </card>
+                <release id="mvp2019">
+                    <card>
+                        <title>Automation with Jenkins</title>
+                        <description>
+                            Lorem ipsum dolor sit amet ...
+                        </description>
+                    </card>
+                </release>
+                <release id="advanceda">
+                    <card>
+                        <title>Infrastructure as Code</title>
+                        <description>
+                            Lorem ipsum dolor sit amet ...
+                        </description>
+                    </card>
+                </release>
+                <release id="advancedb">
+                    <card>
+                        <title>Deep dive Gradle</title>
+                        <description>
+                            Lorem ipsum dolor sit amet ...
+                        </description>
+                    </card>
+                    <card>
+                        <title>Deep dive Maven</title>
+                        <description>
+                            Lorem ipsum dolor sit amet ...
+                        </description>
+                    </card>
+                </release>
+                <release id="future">
+                    <card>
+                        <title>Some idea</title>
+                        <description>
+                            Might be done in the future. Or not. Who knows?
+                        </description>
+                    </card>
+                </release>
             </body>
         </step>
 
@@ -136,30 +162,46 @@ rendered as the card is selected.
                 Lorem ipsum dolor sit amet ...
             </description>
             <body>
-                <card release="advanceda">
-                    <title>Cloud Services</title>
-                    <description>
-                        Lorem ipsum dolor sit amet ...
-                    </description>
-                </card>
-                <card release="advancedb">
-                    <title>Deep dive AWS</title>
-                    <description>
-                        Lorem ipsum dolor sit amet ...
-                    </description>
-                </card>
-                <card release="advancedb">
-                    <title>Deep dive Azure</title>
-                    <description>
-                        Lorem ipsum dolor sit amet ...
-                    </description>
-                </card>
-                <card release="advancedb">
-                    <title>Deep dive Bosch IoT Cloud</title>
-                    <description>
-                        Lorem ipsum dolor sit amet ...
-                    </description>
-                </card>
+                <release id="advanceda">
+                    <card>
+                        <title>Cloud Services</title>
+                        <description>
+                            Lorem ipsum dolor sit amet ...
+                        </description>
+                    </card>
+                    <card>
+                        <title>Another one</title>
+                        <description>
+                            Lorem ipsum dolor sit amet ...
+                        </description>
+                    </card>
+                    <card>
+                        <title>More if it</title>
+                        <description>
+                            Lorem ipsum dolor sit amet ...
+                        </description>
+                    </card>
+                </release>
+                <release id="advancedb">
+                    <card>
+                        <title>Deep dive AWS</title>
+                        <description>
+                            Lorem ipsum dolor sit amet ...
+                        </description>
+                    </card>
+                    <card>
+                        <title>Deep dive Azure</title>
+                        <description>
+                            Lorem ipsum dolor sit amet ...
+                        </description>
+                    </card>
+                    <card>
+                        <title>Deep dive Bosch IoT Cloud</title>
+                        <description>
+                            Lorem ipsum dolor sit amet ...
+                        </description>
+                    </card>
+                </release>
             </body>
         </step>
 
@@ -169,12 +211,14 @@ rendered as the card is selected.
                 Lorem ipsum dolor sit amet ...
             </description>
             <body>
-                <card release="advanceda">
-                    <title>How to handle bug tickets in a Scrum sprint</title>
-                    <description>
-                        Lorem ipsum dolor sit amet ...
-                    </description>
-                </card>
+                <release id="advanceda">
+                    <card>
+                        <title>How to handle bug tickets in a Scrum sprint</title>
+                        <description>
+                            Lorem ipsum dolor sit amet ...
+                        </description>
+                    </card>
+                </release>
             </body>
         </step>
 
