@@ -60,168 +60,232 @@ rendered as the card is selected.
 
     <backbone>
 
-        <step>
-            <title>Introduction to CI/CD</title>
+        <activity>
+            <title>Basic Knowledge</title>
             <description>
                 Lorem ipsum dolor sit amet ...
             </description>
             <body>
-                <release id="mvp2019">
-                    <card>
-                        <title>Disambiguation</title>
-                        <description>
-                            Participants know the meaning of the terms "Continuous Integration", "Continuouis Delivery" and "Continuous Deployment".
-                        </description>
-                    </card>
-                    <card>
-                        <title>Bullshit Bingo</title>
-                        <description>
-                            Participants know how to most effectively throw those words onto others during budget discussions.
-                        </description>
-                    </card>
-                </release>
 
-                <release id="advancedb">
-                    <card>
-                        <title>Debating</title>
-                        <description>
-                            Lorem ipsum dolor sit amet ...
-                        </description>
-                    </card>
-                </release>
+                <step>
+                    <title>Introduction to CI/CD</title>
+                    <description>
+                        Lorem ipsum dolor sit amet ...
+                    </description>
+                    <body>
+                        <release id="mvp2019">
+                            <card>
+                                <title>Disambiguation</title>
+                                <description>
+                                    Participants know the meaning of the terms "Continuous Integration", "Continuouis Delivery" and "Continuous Deployment".
+                                </description>
+                            </card>
+                            <card>
+                                <title>Bullshit Bingo</title>
+                                <description>
+                                    Participants know how to most effectively throw those words onto others during budget discussions.
+                                </description>
+                            </card>
+                        </release>
+
+                        <release id="advancedb">
+                            <card>
+                                <title>Debating</title>
+                                <description>
+                                    Lorem ipsum dolor sit amet ...
+                                </description>
+                            </card>
+                        </release>
+                    </body>
+                </step>
+
+                <step>
+                    <title>Living Architecture</title>
+                    <description>
+                        Lorem ipsum dolor sit amet ...
+                    </description>
+                    <body>
+                        <release id="mvp2019">
+                            <card>
+                                <title>Microservice Architecture</title>
+                                <description>
+                                    Lorem ipsum dolor sit amet ...
+                                </description>
+                            </card>
+                        </release>
+                    </body>
+                </step>
+
+                <step>
+                    <title>Continuous Testing</title>
+                    <description>
+                        Lorem ipsum dolor sit amet ...
+                    </description>
+                    <body>
+                        <release id="advanceda">
+                            <card>
+                                <title>This</title>
+                                <description>
+                                    Lorem ipsum dolor sit amet ...
+                                </description>
+                            </card>
+                            <card>
+                                <title>That</title>
+                                <description>
+                                    Lorem ipsum dolor sit amet ...
+                                </description>
+                            </card>
+                        </release>
+
+                        <release id="advancedb">
+                            <card>
+                                <title>Something else</title>
+                                <description>
+                                    Lorem ipsum dolor sit amet ...
+                                </description>
+                            </card>
+                        </release>
+                    </body>
+                </step>
+
             </body>
-        </step>
 
-        <step>
-            <title>Living Architecture</title>
+        </activity>
+
+        <activity>
+            <title>The build pipeline</title>
             <description>
                 Lorem ipsum dolor sit amet ...
             </description>
-            <body>
-                <release id="mvp2019">
-                    <card>
-                        <title>Microservice Architecture</title>
-                        <description>
-                            Lorem ipsum dolor sit amet ...
-                        </description>
-                    </card>
-                </release>
-            </body>
-        </step>
 
-        <step>
-            <title>Build Automation</title>
+            <body>
+
+                <step>
+                    <title>Build Automation</title>
+                    <description>
+                        Lorem ipsum dolor sit amet ...
+                    </description>
+                    <body>
+                        <release id="mvp2019">
+                            <card>
+                                <title>Automation with Jenkins</title>
+                                <description>
+                                    Lorem ipsum dolor sit amet ...
+                                </description>
+                            </card>
+                        </release>
+                        <release id="advanceda">
+                            <card>
+                                <title>Infrastructure as Code</title>
+                                <description>
+                                    Lorem ipsum dolor sit amet ...
+                                </description>
+                            </card>
+                        </release>
+                        <release id="advancedb">
+                            <card>
+                                <title>Deep dive Gradle</title>
+                                <description>
+                                    Lorem ipsum dolor sit amet ...
+                                </description>
+                            </card>
+                            <card>
+                                <title>Deep dive Maven</title>
+                                <description>
+                                    Lorem ipsum dolor sit amet ...
+                                </description>
+                            </card>
+                        </release>
+                        <release id="future">
+                            <card>
+                                <title>Some idea</title>
+                                <description>
+                                    Might be done in the future. Or not. Who knows?
+                                </description>
+                            </card>
+                        </release>
+                    </body>
+                </step>
+
+                <step>
+                    <title>Continuous Deployment</title>
+                    <description>
+                        Lorem ipsum dolor sit amet ...
+                    </description>
+                    <body>
+                        <release id="advanceda">
+                            <card>
+                                <title>Cloud Services</title>
+                                <description>
+                                    Lorem ipsum dolor sit amet ...
+                                </description>
+                            </card>
+                            <card>
+                                <title>Another one</title>
+                                <description>
+                                    Lorem ipsum dolor sit amet ...
+                                </description>
+                            </card>
+                            <card>
+                                <title>More if it</title>
+                                <description>
+                                    Lorem ipsum dolor sit amet ...
+                                </description>
+                            </card>
+                        </release>
+                        <release id="advancedb">
+                            <card>
+                                <title>Deep dive AWS</title>
+                                <description>
+                                    Lorem ipsum dolor sit amet ...
+                                </description>
+                            </card>
+                            <card>
+                                <title>Deep dive Azure</title>
+                                <description>
+                                    Lorem ipsum dolor sit amet ...
+                                </description>
+                            </card>
+                            <card>
+                                <title>Deep dive Bosch IoT Cloud</title>
+                                <description>
+                                    Lorem ipsum dolor sit amet ...
+                                </description>
+                            </card>
+                        </release>
+                    </body>
+                </step>
+
+            </body>
+        </activity>
+
+        <activity>
+            <title>DevOps</title>
             <description>
                 Lorem ipsum dolor sit amet ...
             </description>
-            <body>
-                <release id="mvp2019">
-                    <card>
-                        <title>Automation with Jenkins</title>
-                        <description>
-                            Lorem ipsum dolor sit amet ...
-                        </description>
-                    </card>
-                </release>
-                <release id="advanceda">
-                    <card>
-                        <title>Infrastructure as Code</title>
-                        <description>
-                            Lorem ipsum dolor sit amet ...
-                        </description>
-                    </card>
-                </release>
-                <release id="advancedb">
-                    <card>
-                        <title>Deep dive Gradle</title>
-                        <description>
-                            Lorem ipsum dolor sit amet ...
-                        </description>
-                    </card>
-                    <card>
-                        <title>Deep dive Maven</title>
-                        <description>
-                            Lorem ipsum dolor sit amet ...
-                        </description>
-                    </card>
-                </release>
-                <release id="future">
-                    <card>
-                        <title>Some idea</title>
-                        <description>
-                            Might be done in the future. Or not. Who knows?
-                        </description>
-                    </card>
-                </release>
-            </body>
-        </step>
 
-        <step>
-            <title>Continuous Deployment</title>
-            <description>
-                Lorem ipsum dolor sit amet ...
-            </description>
             <body>
-                <release id="advanceda">
-                    <card>
-                        <title>Cloud Services</title>
-                        <description>
-                            Lorem ipsum dolor sit amet ...
-                        </description>
-                    </card>
-                    <card>
-                        <title>Another one</title>
-                        <description>
-                            Lorem ipsum dolor sit amet ...
-                        </description>
-                    </card>
-                    <card>
-                        <title>More if it</title>
-                        <description>
-                            Lorem ipsum dolor sit amet ...
-                        </description>
-                    </card>
-                </release>
-                <release id="advancedb">
-                    <card>
-                        <title>Deep dive AWS</title>
-                        <description>
-                            Lorem ipsum dolor sit amet ...
-                        </description>
-                    </card>
-                    <card>
-                        <title>Deep dive Azure</title>
-                        <description>
-                            Lorem ipsum dolor sit amet ...
-                        </description>
-                    </card>
-                    <card>
-                        <title>Deep dive Bosch IoT Cloud</title>
-                        <description>
-                            Lorem ipsum dolor sit amet ...
-                        </description>
-                    </card>
-                </release>
-            </body>
-        </step>
 
-        <step>
-            <title>Handle user feedback</title>
-            <description>
-                Lorem ipsum dolor sit amet ...
-            </description>
-            <body>
-                <release id="advanceda">
-                    <card>
-                        <title>How to handle bug tickets in a Scrum sprint</title>
-                        <description>
-                            Lorem ipsum dolor sit amet ...
-                        </description>
-                    </card>
-                </release>
-            </body>
-        </step>
+                <step>
+                    <title>Handle user feedback</title>
+                    <description>
+                        Lorem ipsum dolor sit amet ...
+                    </description>
+                    <body>
+                        <release id="advanceda">
+                            <card>
+                                <title>How to handle bug tickets in a Scrum sprint</title>
+                                <description>
+                                    Lorem ipsum dolor sit amet ...
+                                </description>
+                            </card>
+                        </release>
+                    </body>
+                </step>
 
+            </body>
+        </activity>
     </backbone>
 
 </usm>

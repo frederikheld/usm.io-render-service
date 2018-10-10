@@ -43,7 +43,7 @@ So if you would like to take the challenge, feel free to send me pull requests w
 Next steps are:
 
 - [x] Implement word wrap for card titles
-- [ ] Implement activities above steps
+- [x] Implement activities above steps
 - [ ] Implement tagging to visually emphasize groups of cards
 - [ ] Add display of card details when clicking on a card
 - [ ] Fix scaling of SVG
