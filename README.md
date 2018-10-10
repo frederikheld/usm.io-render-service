@@ -44,9 +44,11 @@ Next steps are:
 
 - [x] Implement word wrap for card titles
 - [x] Implement activities above steps
-- [ ] Implement tagging to visually emphasize groups of cards
-- [ ] Add display of card details when clicking on a card
 - [ ] Fix scaling of SVG
+- [ ] Add display of card details when clicking on a card
+- [ ] Make Activities optional
+- [ ] Implement tagging to visually emphasize groups of cards
+- [ ] Get rid of bodies do make xml and implementation less complicated?
 - [ ] Implement a way to store the SVG as PNG or JPG
 - [ ] Add a command line interface so that usm.io can be used in a build pipeline
 - [ ] Implement interactive editing
