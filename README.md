@@ -42,8 +42,8 @@ So if you would like to take the challenge, feel free to send me pull requests w
 
 Next steps are:
 
-- [x] Implement word wrap for card titles
-- [x] Implement activities above steps
+### To Do
+
 - [ ] Fix scaling of SVG
 - [ ] Add display of card details when clicking on a card
 - [ ] Make Activities optional
@@ -52,5 +52,10 @@ Next steps are:
 - [ ] Implement a way to store the SVG as PNG or JPG
 - [ ] Add a command line interface so that usm.io can be used in a build pipeline
 - [ ] Implement interactive editing
+
+### Done
+
+- [x] Implement word wrap for card titles
+- [x] Implement activities above steps
 
 The overall challenge is to structure the code in a more readable and maintainable way by applying common design patterns.
