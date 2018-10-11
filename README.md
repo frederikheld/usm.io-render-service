@@ -57,5 +57,6 @@ Next steps are:
 
 - [x] Implement word wrap for card titles
 - [x] Implement activities above steps
+- [x] Modularized JS
 
 The overall challenge is to structure the code in a more readable and maintainable way by applying common design patterns.
