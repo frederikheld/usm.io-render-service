@@ -44,24 +44,14 @@ function USM(jsonUSM) {
 USM.prototype.render = function (domElement, dimensions, doDebug = false) {
 
     // create canvas as base element for all children to append their elements to:
-    // var viewboxDimensions = d3.select("body").node().getBoundingClientRect()
-    // var viewboxDimensions = {
-    //     // width: window.innerWidth,
-    //     // height: window.innerHeight
-    //     // width: d3.select("#usm").node().getBoundingClientRect().width,
-    //     // height: d3.select("#usm").node().getBoundingClientRect().height
-    //     width: dimensions.width,
-    //     height: dimensions.height
-    // }
     console.log(dimensions)
     var svgUSM = domElement
         .append("svg")
         .attrs({
+            xmlns: "http://www.w3.org/2000/svg",
             class: "usm",
             x: 0,
-            y: 0,
-            viewBox: "0 0 " + dimensions.width + " " + dimensions.height,
-            preserveAspectRatio: "xMinYMin meet"
+            y: 0
         })
 
     var canvas = svgUSM
@@ -71,20 +61,48 @@ USM.prototype.render = function (domElement, dimensions, doDebug = false) {
             transform: "translate(" + dimensions.marginLeft + "," + dimensions.marginTop + ")"
         })
 
-
-    // calculate dimensions to pass to child objects:
-    // svgWidth = parseInt(svgUSM.style("width"))
-    // svgHeight = parseInt(svgUSM.style("height"))
-    var canvasWidth = dimensions.width - dimensions.marginLeft - dimensions.marginRight
-    var canvasHeight = dimensions.height - dimensions.marginTop - dimensions.marginBottom
-
     // render children:
     this.backbone.render(canvas)
-    this.timeline.render(canvas, canvasWidth, 140)
-    this.roadmap.render(canvas, canvasWidth, 160)
+
+    // get space that is occupied by rendered children:
+    dimensions.canvasWidth = canvas.node().getBoundingClientRect().width
+    dimensions.canvasHeight = canvas.node().getBoundingClientRect().height
+
+    // render content that depends on the space that the children occupy:
+    this.timeline.render(canvas, dimensions.canvasWidth, 140)
+    this.roadmap.render(canvas, dimensions.canvasWidth, 160)
+
+    // update canvas dimensions:
+    dimensions.canvasWidth = canvas.node().getBoundingClientRect().width
+    dimensions.canvasHeight = canvas.node().getBoundingClientRect().height
 
     // render debug information:
     this.renderDebug(canvas, dimensions, doDebug)
+
+    // calculate svg deminesions:
+    var svgViewBoxWidth = dimensions.canvasWidth + dimensions.marginRight + dimensions.marginLeft
+    var svgViewBoxHeight = dimensions.canvasHeight + dimensions.marginTop + dimensions.marginBottom
+
+    if (typeof dimensions.scaleToWidth !== 'undefined') {
+        var svgWidth = dimensions.scaleToWidth
+    } else {
+        var svgWidth = dimensions.canvasWidth
+    }
+
+    if (typeof dimensions.scaleToHeight !== 'undefined') {
+        var svgHeight = dimensions.scaleToHeight
+    } else {
+        var svgHeight = dimensions.canvasHeight
+    }
+
+    // set svg dimensions:
+    svgUSM
+        .attrs({
+            width: svgWidth + "px",
+            height: svgHeight + "px",
+            viewBox: "0 0 " + svgViewBoxWidth + " " + svgViewBoxHeight,
+            preserveAspectRatio: "xMinYMin meet"
+        })
 
 }
 USM.prototype.renderDebug = function (domElement, dimensions, doRender = false) {
@@ -105,8 +123,8 @@ USM.prototype.renderDebug = function (domElement, dimensions, doRender = false) 
             .attrs({
                 x: 0,
                 y: 0,
-                width: dimensions.width - dimensions.marginLeft - dimensions.marginRight,
-                height: dimensions.height - dimensions.marginTop - dimensions.marginBottom,
+                width: dimensions.canvasWidth,
+                height: dimensions.canvasHeight,
             })
             .styles({
                 "stroke": "#f00",

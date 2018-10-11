@@ -18,9 +18,13 @@
         #usm {
             position: absolute;
             background: lightcoral;
-            width: 80%;
-            height: 100%;
-            overflow: hidden;
+            /* width: 80%;
+            height: 60%; */
+            width: 100%;
+            height: 400px;
+            top: 50px;
+            overflow-y: scroll;
+            /* overflow: hidden; */
             /*  "overflow: hidden" is a fix for the little gap
                 at the bottom, that appears in combination with
                 "height: 100%" on the svg element.
@@ -28,9 +32,8 @@
         }
 
         #usm svg {
-            width: 100%;
-            height: 100%;
-            overflow: scroll;
+            /* width: 100%; */
+            /* height: 100%; */
             background: lightblue;
         }
 
@@ -73,9 +76,18 @@
             d3.json(url)
                 .then((result) => {
 
+                    console.log("#usm (width x height)", parseInt(d3.select("#usm").style("width")) + " x " + parseInt(d3.select("#usm").style("height")))
+
+                    /**
+                     * scaleToWidth and scaleToHeight are optional.
+                     * If given,the svg is scaled to fit the box defined by
+                     * the given hight and/or width.
+                     * If not given, it's rendered to it's original size.
+                     * Use "overflow: scroll" on the container!
+                     */
                     var dimensions = {
-                        width: parseInt(d3.select("#usm").style("width")),
-                        height: 1000, // TODO: Set height according to svg contents
+                        scaleToWidth: parseInt(d3.select("#usm").style("width")),
+                        // scaleToHeight: parseInt(d3.select("#usm").style("height")),
                         marginTop: 40,
                         marginRight: 20,
                         marginBottom: 40,
@@ -83,7 +95,7 @@
                     }
 
                     var usm = new USM(result.data)
-                    usm.render(d3.select("#usm"), dimensions, false)
+                    usm.render(d3.select("#usm"), dimensions, true)
 
                 })
                 .catch((error) => {
