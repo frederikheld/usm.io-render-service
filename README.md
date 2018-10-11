@@ -44,7 +44,6 @@ Next steps are:
 
 ### To Do
 
-- [ ] Fix scaling of SVG
 - [ ] Add display of card details when clicking on a card
 - [ ] Make Activities optional
 - [ ] Implement tagging to visually emphasize groups of cards
@@ -58,5 +57,6 @@ Next steps are:
 - [x] Implement word wrap for card titles
 - [x] Implement activities above steps
 - [x] Modularized JS
+- [x] Fix scaling of SVG
 
 The overall challenge is to structure the code in a more readable and maintainable way by applying common design patterns.
