@@ -1,9 +1,17 @@
 pipeline {
   agent any
   stages {
+    stage('Test') {
+      steps {
+        echo "Testing ..."
+        npm test
+      }
+    }
     stage('Minify') {
       steps {
+        echo "Building ..."
         sh 'echo "minified js" > usmio.min.js'
+        npm run-script build
       }
     }
     stage('Deploy to FTP') {
