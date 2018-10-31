@@ -4,13 +4,13 @@ pipeline {
     stage('Test') {
       steps {
         echo "Testing ..."
-        npm test
+        sh 'npm test'
       }
     }
     stage('Build') {
       steps {
         echo "Building ..."
-        npm run build
+        sh 'npm run build'
       }
     }
     stage('Deploy to apis.frederikheld.de/usmio') {
