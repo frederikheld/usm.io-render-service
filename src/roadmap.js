@@ -1,4 +1,6 @@
-export default Roadmap
+export {
+    Roadmap
+}
 
 function Roadmap(jsonRoadmap) {
     this.jsonRoadmap = jsonRoadmap

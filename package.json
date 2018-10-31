@@ -4,8 +4,9 @@
   "description": "Renders User Story Maps from XML to SVG.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js --port 8080",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "echo NOTE: If no USM is showing up, run [ $ npm run build ] first! && echo && node index.js --port 8080",
+    "test": "echo \"running tests ...\"",
+    "build": "webpack --config webpack.config.js && mkdir -p web/3rdparty/usm.io && cp -rf dist/usmio.min.js web/3rdparty/usm.io/usmio.min.js"
   },
   "keywords": [
     "usm",
@@ -17,5 +18,9 @@
     "express": "^4.16.3",
     "minimist": "^1.2.0",
     "xml-js": "^1.6.8"
+  },
+  "devDependencies": {
+    "webpack": "^4.23.1",
+    "webpack-cli": "^3.1.2"
   }
 }

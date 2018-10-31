@@ -1,4 +1,6 @@
-export default Timeline
+export {
+    Timeline
+}
 
 function Timeline() {}
 Timeline.prototype.render = function (domElement, width, offsetY = 0) {

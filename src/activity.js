@@ -1,7 +1,13 @@
-import Step from './step.js'
-import Card from './card.js'
+import {
+    Step
+} from './step.js'
+import {
+    Card
+} from './card.js'
 
-export default Activity
+export {
+    Activity
+}
 
 function Activity(jsonActivity, jsonRoadmap) {
     this.jsonActivity = jsonActivity
