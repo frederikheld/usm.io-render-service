@@ -3,25 +3,25 @@ pipeline {
   stages {
     stage('Install dependencies') {
       steps {
-        echo "Running '\$ npm install'"
+        echo "Run '\$ npm install' ..."
         sh 'npm install'
       }
     }
-    stage('Test') {
+    stage('Run tests') {
       steps {
-        echo "Testing ..."
+        echo "Run tests ..."
         sh 'npm test'
       }
     }
     stage('Build') {
       steps {
-        echo "Building ..."
+        echo "Running build ..."
         sh 'npm run build'
       }
     }
     stage('Deploy to apis.frederikheld.de/usmio') {
       steps {
-        echo 'Deploying ...'
+        echo 'Deploying to apis.frederikheld.de ...'
         withCredentials([usernamePassword(credentialsId: 'deploy-usm.io', usernameVariable: 'FTP_USER', passwordVariable: 'FTP_PW')]) {
             sh 'curl -T dist/usmio.min.js ftp://apis.frederikheld.de/ -u $FTP_USER:$FTP_PW --ftp-ssl --insecure'
         }
