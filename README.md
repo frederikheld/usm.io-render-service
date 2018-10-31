@@ -38,6 +38,10 @@ After building you can copy the bundled version from `dist/` to your own app.
 
 You have to include it in your browser via a script tag. Then you can create the User Story Map as shown in `index.html` of the example app.
 
+If you don't want to build the library yourself, you can use the pre-built library instead. Just link to https://apis.frederikheld.de/usmio/usmio.min.js in the script tag.
+
+Beware: This is the latest build, so it might behave unexpected!
+
 ## But why?
 
 I was looking for a way to maintain an User Story Map directly in my repository. To achieve this I needed a easy way to create a map that is diffable and does not focus on the graphical representation but on the inforation in the map. There was no such tool so I wrote this one.
