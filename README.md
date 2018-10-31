@@ -4,19 +4,43 @@
 
 usm.io can render a User Story Map described in XML into a SVG graphic.
 
-## But why?
-
-I was looking for a way to maintain an User Story Map directly in my repository. To achieve this I needed a easy way to create a map that is diffable and does not focus on the graphical representation but on the inforation in the map. There was no such tool so I wrote this one.
-
 ## How do I use it?
 
-You need to have `Node.js` and `npm` installed. Go to the root of the repository and run
+You need to have `Node.js` and `npm` installed globally.
+
+### Build it
+
+To build the library, run
+
+`$ npm run build`
+
+from the root of this repository.
+
+This will create a bundled version of the library in `dist/`.
+
+This will also copy the bundle to the folder `web/3rdparty/usm.io` of the example app. So you can re-build the library while running the example app in the browser as explained in the next section. Just re-load the page after the build has finished.
+
+### Run the example app
+
+This library comes with an example app. To start it, run
 
 `$ npm start`
 
-Then navigate to `localhost:8080` with your webbrowser. You see a rendered User Story Map.
+from the root of this repository.
 
-You can edit this User Story Map by editing the file `data/usm.xml` in your favorite text editor.
+The app will be available at `localhost:8080` via your webbrowser. Open the page and you will see a rendered User Story Map.
+
+The example app is served by a webserver that also serves the example data located at `data/`. You can edit the User Story Map by editing the file `data/usm.xml` in your favorite text editor while the app is running. Just re-load the web page after saving the changes to `usm.xml`.
+
+### Use the library in your own app
+
+After building you can copy the bundled version from `dist/` to your own app.
+
+You have to include it in your browser via a script tag. Then you can create the User Story Map as shown in `index.html` of the example app.
+
+## But why?
+
+I was looking for a way to maintain an User Story Map directly in my repository. To achieve this I needed a easy way to create a map that is diffable and does not focus on the graphical representation but on the inforation in the map. There was no such tool so I wrote this one.
 
 ## What is an User Story Map?
 
@@ -49,11 +73,12 @@ Next steps are:
 - [ ] Implement tagging to visually emphasize groups of cards
 - [ ] Get rid of bodies do make xml and implementation less complicated?
 - [ ] Implement a way to store the SVG as PNG or JPG
-- [ ] Add a command line interface so that usm.io can be used in a build pipeline
 - [ ] Implement interactive editing
 
 ### Done
 
+- [x] Bundle library for use in browsers
+- [x] Add a command line interface so that usm.io can be used in a build pipeline
 - [x] Implement word wrap for card titles
 - [x] Implement activities above steps
 - [x] Modularized JS

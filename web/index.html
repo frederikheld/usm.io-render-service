@@ -4,10 +4,11 @@
 <head>
     <meta charset="utf-8">
     <title>User Story Map</title>
-    <script src="lib/d3/d3.v5.min.js"></script>
-    <script src="lib/d3/d3-selection-multi.v1.min.js"></script>
-    <script src="lib/d3/d3-polygon.v1.min.js"></script>
-    <script src="lib/d3/d3-textwrap.min.js"></script>
+    <script src="3rdparty/d3/d3.v5.min.js"></script>
+    <script src="3rdparty/d3/d3-selection-multi.v1.min.js"></script>
+    <script src="3rdparty/d3/d3-polygon.v1.min.js"></script>
+    <script src="3rdparty/d3/d3-textwrap.min.js"></script>
+    <script src="3rdparty/usm.io/usmio.min.js"></script>
     <style type="text/css">
         html,
         body {
@@ -58,9 +59,7 @@
         }
     </style>
 
-    <script type="module">
-        import USM from './usm.io/usm.js'
-
+    <script>
         const apiEndpoint = "http://localhost:8080"
         const margins = {
             top: 40,
@@ -94,8 +93,8 @@
                         marginLeft: 20
                     }
 
-                    var usm = new USM(result.data)
-                    usm.render(d3.select("#usm"), dimensions, true)
+                    var myUsm = new usm.USM(result.data)
+                    myUsm.render(d3.select("#usm"), dimensions, true)
 
                 })
                 .catch((error) => {

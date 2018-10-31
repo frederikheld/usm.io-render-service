@@ -1,7 +1,13 @@
-import Card from './card.js'
-import Release from './release.js'
+import {
+    Card
+} from './card.js'
+import {
+    Release
+} from './release.js'
 
-export default Step
+export {
+    Step
+}
 
 function Step(jsonStep, jsonRoadmap) {
     this.jsonStep = jsonStep

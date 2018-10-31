@@ -1,6 +1,10 @@
-import Activity from './activity.js'
+import {
+    Activity
+} from './activity.js'
 
-export default Backbone
+export {
+    Backbone
+}
 
 function Backbone(jsonBackbone, jsonRoadmap) {
     this.jsonBackbone = jsonBackbone

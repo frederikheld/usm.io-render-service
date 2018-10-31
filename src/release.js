@@ -1,6 +1,10 @@
-import Card from './card.js'
+import {
+    Card
+} from './card.js'
 
-export default Release
+export {
+    Release
+}
 
 function Release(jsonRelease) {
     this.jsonRelease = jsonRelease

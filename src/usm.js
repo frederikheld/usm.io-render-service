@@ -1,8 +1,16 @@
-import Timeline from './timeline.js'
-import Roadmap from './roadmap.js'
-import Backbone from './backbone.js'
+import {
+    Timeline
+} from './timeline.js'
+import {
+    Roadmap
+} from './roadmap.js'
+import {
+    Backbone
+} from './backbone.js'
 
-export default USM
+export {
+    USM
+}
 
 /*
     A map
@@ -24,6 +32,7 @@ export default USM
     Feed data into constructor.
     Feed svgElement to append to in prototype.render()
 */
+
 function USM(jsonUSM) {
     // export default function USM(jsonUSM) {
 
