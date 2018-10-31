@@ -7,18 +7,17 @@ pipeline {
         npm test
       }
     }
-    stage('Minify') {
+    stage('Build') {
       steps {
         echo "Building ..."
-        sh 'echo "minified js" > usmio.min.js'
-        npm run-script build
+        npm run build
       }
     }
     stage('Deploy to FTP') {
       steps {
         echo 'Deploying ...'
         withCredentials([usernamePassword(credentialsId: 'deploy-usm.io', usernameVariable: 'FTP_USER', passwordVariable: 'FTP_PW')]) {
-            sh 'curl -T usmio.min.js ftp://dev.frederikheld.de/ -u $FTP_USER:$FTP_PW'
+            sh 'curl -T dist/usmio.min.js ftp://dev.frederikheld.de/ -u $FTP_USER:$FTP_PW'
         }
       }
     }
