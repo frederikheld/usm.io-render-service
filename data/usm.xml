@@ -32,23 +32,18 @@ rendered as the card is selected.
     <roadmap>
 
         <release>
-            <name>MVP 2019</name>
-            <id>mvp2019</id>
+            <name>MVP</name>
+            <id>mvp</id>
         </release>
 
         <release>
-            <name>Basic Level</name>
-            <id>basic</id>
+            <name>Release 1</name>
+            <id>r1</id>
         </release>
 
         <release>
-            <name>Advanced Level A</name>
-            <id>advanceda</id>
-        </release>
-
-        <release>
-            <name>Advanced Level B</name>
-            <id>advancedb</id>
+            <name>Release 2</name>
+            <id>r2</id>
         </release>
 
         <release>
@@ -61,38 +56,38 @@ rendered as the card is selected.
     <backbone>
 
         <activity>
-            <title>Basic Knowledge</title>
+            <title>Select Ticket</title>
             <description>
-                Lorem ipsum dolor sit amet ...
+                AS passenger
+                I WANT TO select a ticket for my travel route
+                SO THAT I'm allowed to ride the train to my desired destination.
             </description>
             <body>
 
                 <step>
-                    <title>Introduction to CI/CD</title>
+                    <title>Select destination</title>
                     <description>
                         Lorem ipsum dolor sit amet ...
                     </description>
                     <body>
-                        <release id="mvp2019">
+                        <release id="mvp">
                             <card>
-                                <title>Disambiguation</title>
+                                <title>Search for destination</title>
                                 <description>
-                                    Participants know the meaning of the terms "Continuous Integration", "Continuouis Delivery" and "Continuous Deployment".
-                                </description>
-                            </card>
-                            <card>
-                                <title>Bullshit Bingo</title>
-                                <description>
-                                    Participants know how to most effectively throw those words onto others during budget discussions.
+                                    AS passenger
+                                    I WANT TO be able to search for destinations
+                                    SO THAT I don't have to keep the exact name in mind.
                                 </description>
                             </card>
                         </release>
 
-                        <release id="advancedb">
+                        <release id="r2">
                             <card>
-                                <title>Debating</title>
+                                <title>Select from most used destinations</title>
                                 <description>
-                                    Lorem ipsum dolor sit amet ...
+                                    AS operating company
+                                    I WANT TO allow the user to select from a list of most-used destinations
+                                    SO THAT the overall ticketing process takes less time.
                                 </description>
                             </card>
                         </release>
@@ -100,60 +95,51 @@ rendered as the card is selected.
                 </step>
 
                 <step>
-                    <title>Living Architecture</title>
+                    <title>Select ticket</title>
                     <description>
-                        Lorem ipsum dolor sit amet ...
+                        AS passenger
+                        I WANT TO choose a ticket that fits my personal needs
+                        SO THAT I can ride for the lowest price possible.
                     </description>
                     <body>
-                        <release id="mvp2019">
+                        <release id="mvp">
                             <card>
-                                <title>Microservice Architecture</title>
+                                <title>Standard ticket</title>
                                 <description>
-                                    Lorem ipsum dolor sit amet ...
+                                    AS operator
+                                    I WANT TO issue standard tickets
+                                    SO THAT there's one option that fits for everyone.
+                                </description>
+                            </card>
+                        </release>
+                        <release id="r1">
+                            <card>
+                                <title>Children tickets</title>
+                                <description>
+                                    AS operator
+                                    I WANT TO issue tickets with a reduced price for children
+                                    SO THAT using the train is more interesting for families.
+                                </description>
+                            </card>
+                            <card>
+                                <title>One month pass</title>
+                                <description>
+                                    AS operator
+                                    I WANT TO one month passes with a reduced price
+                                    SO THAT people are more interested in using the train on a regular basis.
                                 </description>
                             </card>
                         </release>
                     </body>
                 </step>
 
-                <step>
-                    <title>Continuous Testing</title>
-                    <description>
-                        Lorem ipsum dolor sit amet ...
-                    </description>
-                    <body>
-                        <release id="advanceda">
-                            <card>
-                                <title>This</title>
-                                <description>
-                                    Lorem ipsum dolor sit amet ...
-                                </description>
-                            </card>
-                            <card>
-                                <title>That</title>
-                                <description>
-                                    Lorem ipsum dolor sit amet ...
-                                </description>
-                            </card>
-                        </release>
-
-                        <release id="advancedb">
-                            <card>
-                                <title>Something else</title>
-                                <description>
-                                    Lorem ipsum dolor sit amet ...
-                                </description>
-                            </card>
-                        </release>
-                    </body>
-                </step>
 
             </body>
 
         </activity>
 
         <activity>
-            <title>The build pipeline</title>
+            <title>Payment</title>
             <description>
                 Lorem ipsum dolor sit amet ...
             </description>
@@ -161,46 +147,57 @@ rendered as the card is selected.
             <body>
 
                 <step>
-                    <title>Build Automation</title>
+                    <title>Select payment method</title>
                     <description>
-                        Lorem ipsum dolor sit amet ...
+                        AS passenger
+                        I WANT TO select a payment method
+                        SO THAT I can choose the method that fits my needs
                     </description>
                     <body>
-                        <release id="mvp2019">
+                        <release id="mvp">
                             <card>
-                                <title>Automation with Jenkins</title>
+                                <title>Cash</title>
                                 <description>
-                                    Lorem ipsum dolor sit amet ...
+                                    AS passenger
+                                    I WANT TO pay cash
+                                    BECAUSE I always have some coins in my pocket.
                                 </description>
                             </card>
                         </release>
-                        <release id="advanceda">
+                        <release id="r1">
                             <card>
-                                <title>Infrastructure as Code</title>
+                                <title>Debit Card</title>
                                 <description>
-                                    Lorem ipsum dolor sit amet ...
+                                    AS passenger
+                                    I WANT TO pay with debit card
+                                    BECAUSE that's a card I always have in my purse
                                 </description>
                             </card>
                         </release>
-                        <release id="advancedb">
+                        <release id="r2">
                             <card>
-                                <title>Deep dive Gradle</title>
+                                <title>Credit Card</title>
                                 <description>
-                                    Lorem ipsum dolor sit amet ...
-                                </description>
-                            </card>
-                            <card>
-                                <title>Deep dive Maven</title>
-                                <description>
-                                    Lorem ipsum dolor sit amet ...
+                                    AS passenger
+                                    I WANT TO py with credit card
+                                    BECAUSE that's a card I most likely have in my purse
                                 </description>
                             </card>
                         </release>
                         <release id="future">
                             <card>
-                                <title>Some idea</title>
+                                <title>Paypal</title>
                                 <description>
-                                    Might be done in the future. Or not. Who knows?
+                                </description>
+                            </card>
+                            <card>
+                                <title>Apple Pay</title>
+                                <description>
+                                </description>
+                            </card>
+                            <card>
+                                <title>Google Pay</title>
+                                <description>
                                 </description>
                             </card>
                         </release>
@@ -208,50 +205,35 @@ rendered as the card is selected.
                 </step>
 
                 <step>
-                    <title>Continuous Deployment</title>
+                    <title>Check bill</title>
                     <description>
-                        Lorem ipsum dolor sit amet ...
+                        AS passenger
+                        I WANT TO check the bill before I pay
+                        SO THAT I can be sure that I don't pay for the wrong ticket
                     </description>
                     <body>
-                        <release id="advanceda">
+                        <release id="mvp">
                             <card>
-                                <title>Cloud Services</title>
+                                <title></title>
                                 <description>
-                                    Lorem ipsum dolor sit amet ...
-                                </description>
-                            </card>
-                            <card>
-                                <title>Another one</title>
-                                <description>
-                                    Lorem ipsum dolor sit amet ...
-                                </description>
-                            </card>
-                            <card>
-                                <title>More if it</title>
-                                <description>
-                                    Lorem ipsum dolor sit amet ...
                                 </description>
                             </card>
                         </release>
-                        <release id="advancedb">
+                    </body>
+                </step>
+
+                <step>
+                    <title>Authorize payment</title>
+                    <description>
+
+                    </description>
+                    <body>
+                        <release id="mvp">
                             <card>
-                                <title>Deep dive AWS</title>
+                                <title></title>
                                 <description>
-                                    Lorem ipsum dolor sit amet ...
                                 </description>
-                            </card>
-                            <card>
-                                <title>Deep dive Azure</title>
-                                <description>
-                                    Lorem ipsum dolor sit amet ...
-                                </description>
-                            </card>
-                            <card>
-                                <title>Deep dive Bosch IoT Cloud</title>
-                                <description>
-                                    Lorem ipsum dolor sit amet ...
-                                </description>
-                            </card>
+                            </card> 
                         </release>
                     </body>
                 </step>
@@ -260,24 +242,53 @@ rendered as the card is selected.
         </activity>
 
         <activity>
-            <title>DevOps</title>
+            <title>Give feedback</title>
             <description>
-                Lorem ipsum dolor sit amet ...
+                AS operator
+                I WANT TO get feedback from the users
+                SO THAT we can improve our service
             </description>
 
             <body>
 
                 <step>
-                    <title>Handle user feedback</title>
+                    <title>Feedback on ticket purchase</title>
                     <description>
-                        Lorem ipsum dolor sit amet ...
+                        AS operator
+                        I WANT TO know what we could do better in the ticket purchase process
+                        SO THAT passenger will more likely choose the train over other transportation options. 
                     </description>
                     <body>
-                        <release id="advanceda">
+                        <release id="r1">
                             <card>
-                                <title>How to handle bug tickets in a Scrum sprint</title>
+                                <title></title>
                                 <description>
-                                    Lorem ipsum dolor sit amet ...
+                                </description>
+                            </card>
+                        </release>
+                    </body>
+                </step>
+
+                <step>
+                    <title>Feedback on service</title>
+                    <description>
+                    </description>
+                    <body>
+                        <release id="r1">
+                            <card>
+                                <title>Destinations served</title>
+                                <description>
+                                    AS operator
+                                    I WANT TO know how passengers feel about the destinations we serve
+                                    SO THAT we can improve our railway network
+                                </description>
+                            </card>
+                            <card>
+                                <title>Frequency of trains</title>
+                                <description>
+                                    AS operator
+                                    I WANT TO know how passengers feel about the frequency trains serve certain destination
+                                    SO THAT we can improve our schedule
                                 </description>
                             </card>
                         </release>

@@ -18,44 +18,38 @@
 
         #usm {
             position: absolute;
-            background: lightcoral;
-            /* width: 80%;
-            height: 60%; */
+            /* width: 300px; */
             width: 100%;
             height: 400px;
-            top: 50px;
+            /* height: 100%; */
+            top: 20px;
             overflow-y: scroll;
             /* overflow: hidden; */
             /*  "overflow: hidden" is a fix for the little gap
                 at the bottom, that appears in combination with
                 "height: 100%" on the svg element.
             */
+            box-sizing: border-box;
         }
 
         #usm svg {
-            /* width: 100%; */
+            width: 100%;
             /* height: 100%; */
-            background: lightblue;
+            background: #ddd;
         }
 
-        #usm svg g.step:nth-child(1) g.card rect {
-            fill: #0f6 !important;
+        #usm .card rect {
+            fill: #ee9 !important;
         }
 
-        #usm svg g.step:nth-child(2) g.card rect {
-            fill: #0fa !important;
+        #usm .activity>.card rect {
+            fill: #9ae !important;
+
         }
 
-        #usm svg g.step:nth-child(3) g.card rect {
-            fill: #0ff !important;
-        }
+        #usm .step>.card rect {
+            fill: #9d9 !important;
 
-        #usm svg g.step:nth-child(4) g.card rect {
-            fill: #0cf !important;
-        }
-
-        #usm svg g.step:nth-child(5) g.card rect {
-            fill: #09f !important;
         }
     </style>
 
@@ -94,7 +88,7 @@
                     }
 
                     var myUsm = new usm.USM(result.data)
-                    myUsm.render(d3.select("#usm"), dimensions, true)
+                    myUsm.render(d3.select("#usm"), dimensions, false)
 
                 })
                 .catch((error) => {
