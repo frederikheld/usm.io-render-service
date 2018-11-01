@@ -34,11 +34,8 @@ export {
 */
 
 function USM(jsonUSM) {
-    // export default function USM(jsonUSM) {
 
     this.jsonData = jsonUSM
-
-    // console.log("USM::jsonData raw", this.jsonData) // DEBUG
 
     this.timeline = new Timeline()
     this.backbone = new Backbone(this.jsonData.usm.backbone, this.jsonData.usm.roadmap)
@@ -46,8 +43,6 @@ function USM(jsonUSM) {
 
     this.optimizeDataStructure()
     this.generateMetaData()
-
-    console.log("USM::jsonData optimized", this.jsonData) // DEBUG
 
 }
 USM.prototype.render = function (domElement, dimensions, doDebug = false) {
