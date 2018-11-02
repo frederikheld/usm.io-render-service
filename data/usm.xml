@@ -139,7 +139,7 @@ rendered as the card is selected.
         </activity>
 
         <activity>
-            <title>Payment</title>
+            <title>Pay</title>
             <description>
                 Lorem ipsum dolor sit amet ...
             </description>
@@ -179,7 +179,7 @@ rendered as the card is selected.
                                 <title>Credit Card</title>
                                 <description>
                                     AS passenger
-                                    I WANT TO py with credit card
+                                    I WANT TO pay with credit card
                                     BECAUSE that's a card I most likely have in my purse
                                 </description>
                             </card>

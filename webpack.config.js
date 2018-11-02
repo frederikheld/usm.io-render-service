@@ -1,6 +1,7 @@
 const path = require('path')
 
 module.exports = {
+    // mode: 'development',
     target: 'web',
     entry: './src/usm.js',
     output: {

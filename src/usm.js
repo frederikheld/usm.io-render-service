@@ -30,7 +30,7 @@ export {
 /*
     Each type of element has it's own class.
     Feed data into constructor.
-    Feed svgElement to append to in prototype.render()
+    Feed svgElement to append to and domContext into prototype.render()
 */
 
 function USM(jsonUSM) {
@@ -45,7 +45,7 @@ function USM(jsonUSM) {
     this.generateMetaData()
 
 }
-USM.prototype.render = function (domElement, dimensions, doDebug = false) {
+USM.prototype.render = function (domElement, domContext, dimensions, doDebug = false) {
 
     // create canvas as base element for all children to append their elements to:
     console.log(dimensions)
@@ -66,7 +66,7 @@ USM.prototype.render = function (domElement, dimensions, doDebug = false) {
         })
 
     // render children:
-    this.backbone.render(canvas)
+    this.backbone.render(canvas, domContext)
 
     // get space that is occupied by rendered children:
     dimensions.canvasWidth = canvas.node().getBoundingClientRect().width

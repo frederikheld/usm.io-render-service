@@ -5,7 +5,7 @@ export {
 function Card(jsonCard) {
     this.jsonCard = jsonCard
 }
-Card.prototype.render = function (domElement, offsetX = 0, offsetY = 0) {
+Card.prototype.render = function (domElement, domContext, offsetX = 0, offsetY = 0) {
 
     var width = 100
     var height = 60
@@ -40,7 +40,7 @@ Card.prototype.render = function (domElement, offsetX = 0, offsetY = 0) {
         })
         .padding(10)
 
-    svgCard
+    var svgCardText = svgCard
         .append("text")
         .text(this.jsonCard.title._text)
         .attrs({
@@ -52,5 +52,31 @@ Card.prototype.render = function (domElement, offsetX = 0, offsetY = 0) {
             "text-anchor": "middle",
         })
         .call(textwrap)
+
+    svgCard.on("click", () => {
+
+        domContext.detailsContainer
+            .html("")
+
+        if (svgCard.classed("active")) {
+            svgCard.classed("active", false)
+        } else {
+            d3.selectAll("#usm .card").classed("active", false)
+            svgCard.classed("active", true)
+
+            if (this.jsonCard.description._text) {
+                var descriptionLines = this.jsonCard.description._text.split("\n")
+                descriptionLines.forEach(function (line, index) {
+                    domContext.detailsContainer
+                        .append("p")
+                        .text(line)
+                })
+            } else {
+                domContext.detailsContainer
+                    .append("p")
+                    .text("<no description>")
+            }
+        }
+    })
 
 }

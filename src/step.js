@@ -13,7 +13,8 @@ function Step(jsonStep, jsonRoadmap) {
     this.jsonStep = jsonStep
     this.jsonRoadmap = jsonRoadmap
 }
-Step.prototype.render = function (domElement, offsetX = 0) {
+Step.prototype.render = function (domElement, domContext, offsetX = 0) {
+
     var svgStep = domElement
         .append("g")
         .attrs({
@@ -23,13 +24,13 @@ Step.prototype.render = function (domElement, offsetX = 0) {
 
     // render step card:
     var stepCard = new Card(this.jsonStep)
-    stepCard.render(svgStep)
+    stepCard.render(svgStep, domContext)
 
 
     // render step body:
     var offsetY = 85
     var stepBody = new StepBody(this.jsonStep.body, this.jsonRoadmap)
-    stepBody.render(svgStep, offsetY)
+    stepBody.render(svgStep, domContext, offsetY)
 
 }
 
@@ -37,7 +38,7 @@ var StepBody = function (jsonStepBody, jsonRoadmap) {
     this.jsonStepBody = jsonStepBody
     this.jsonRoadmap = jsonRoadmap
 }
-StepBody.prototype.render = function (domElement, offsetY = 0) {
+StepBody.prototype.render = function (domElement, domContext, offsetY = 0) {
     var svgStepBody = domElement
         .append("g")
         .attrs({
@@ -64,6 +65,6 @@ StepBody.prototype.render = function (domElement, offsetY = 0) {
         offsetY += this.jsonRoadmap.release[releaseKey].releasesBefore * 20
 
         var release = new Release(jsonRelease)
-        release.render(svgStepBody, offsetY)
+        release.render(svgStepBody, domContext, offsetY)
     }, this)
 }
