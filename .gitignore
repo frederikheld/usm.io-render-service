@@ -3,6 +3,4 @@ node_modules/
 
 dist/
 
-web/3rdparty/usm\.io/
-
 .nyc_output/
