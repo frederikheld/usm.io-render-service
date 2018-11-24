@@ -1,0 +1,623 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<usm>
+
+    <roadmap>
+
+        <release>
+            <name>MVT</name>
+            <id>mvt2019</id>
+        </release>
+
+        <release>
+            <name>Base</name>
+            <id>base</id>
+        </release>
+
+        <release>
+            <name>Beginner</name>
+            <id>beginner</id>
+        </release>
+
+        <release>
+            <name>Intermediate</name>
+            <id>intermediate</id>
+        </release>
+
+        <release>
+            <name>Advanced</name>
+            <id>advanced</id>
+        </release>
+
+        <release>
+            <name>Expert</name>
+            <id>expert</id>
+        </release>
+
+    </roadmap>
+
+    <backbone>
+        
+        <activity>
+            <title>Basic Understanding</title>
+            <description>
+                AS 
+                I WANT TO 
+                SO THAT 
+            </description>
+
+            <body>
+
+                <step>
+                    <title>What is Continuous Deployment?</title>
+                    <description>
+                        AS everyone
+                        I WANT TO understand what the different terms that are revolving around Continuous Development actually mean
+                        SO THAT I so that I can discuss them on a well informed base.
+                    </description>
+                    <body>
+                        <release id="mvt2019">
+                            <card>
+                                <title>Buzzwords</title>
+                                <description>
+                                    AS everyone
+                                    I WANT TO understand the buzzwords revolving around to Continous Development
+                                    SO THAT I can talk about it in a well-informed way.
+                                </description>
+                            </card>
+                            <card>
+                                <title>Schools of Continuous Development</title>
+                                <description>
+                                    AS everyone
+                                    I WANT TO LEARN the history of the different schools of Continuous Development
+                                    SO THAT I understand how they relate to each others.
+
+                                    Learning Objectives:
+                                    
+                                    I know
+                                    * what XP is
+                                    * what Agile Development is
+                                    * what DevOps is
+                                </description>
+                            </card>
+                        </release>
+
+                    </body>
+                </step>
+
+                <step>
+                    <title>Why Continuous Development?</title>
+                    <description>
+                        AS 
+                        I WANT TO 
+                        SO THAT I 
+                    </description>
+                    <body>
+                        <release id="mvt2019">
+                            <card>
+                                <title>VUCA</title>
+                                <description>
+                                    Lorem ipsum...
+                                </description>
+                            </card>
+                            <card>
+                                <title>Stacey Matrix</title>
+                                <description>
+                                    Lorem ipsum...
+                                </description>
+                            </card>
+                        </release>
+                    </body>
+                </step>
+
+            </body>
+        </activity>
+
+<!--
+    ===============================
+        CULTURE & ORGANIZATION
+    ===============================
+//-->
+
+        <activity>
+            <title>Culture &amp; Organization</title>
+            <description></description>
+            <body>
+                <step>
+                    <title>Requirements Engineering</title>
+                    <description>//</description>
+                    <body>
+                        <release id="base">
+                            <card>
+                                <title>User Stories</title>
+                                <description>
+                                    AS Product Owner
+                                    I WANT TO LEARN how to write requirements from the user's point of view instead of an technical point of view
+                                    SO THAT we can maximize the product value and user experience.
+
+                                    Learning Objectives:
+
+                                    I know
+                                    * what a User Story is opposed to a classic requirement
+                                    * how to use User Stories as foundation for communication with Stakeholders
+                                    
+                                    I can
+                                    * write User Stories following the common pattern
+                                    * formulate clear Acceptance Criteria
+                                </description>
+                            </card>
+                            <card>
+                                <title>Prioritized Work</title>
+                                <description>//</description>
+                            </card>
+                        </release>
+                    </body>
+                </step>
+                <step>
+                    <title>Team Setup</title>
+                    <description>//</description>
+                    <body>
+                        <release id="base">
+                            <card>
+                                <title>Cross-Functional Team</title>
+                                <description>//</description>
+                            </card>
+                            <card>
+                                <title>Timeboxing</title>
+                                <description>//</description>
+                            </card>
+                        </release>
+                        <release id="beginner">
+                            <card>
+                                <title>Stable Teams</title>
+                                <description>//</description>
+                            </card>
+                            <card>
+                                <title>Work in Progress Limit</title>
+                                <description>//</description>
+                            </card>
+                            <card>
+                                <title>T-Shaped Pfpeeople</title>
+                                <description>//</description>
+                            </card>
+                            <card>
+                                <title>Dev &amp; Test together</title>
+                                <description>//</description>
+                            </card>
+                        </release>
+                        <release id="intermediate">
+                            <card>
+                                <title>Dev &amp; Ops together</title>
+                                <description></description>
+                            </card>
+                            <card>
+                                <title>Pi-Shaped People</title>
+                                <description>//</description>
+                            </card>
+                        </release>
+                        <release id="advanced">
+                            <card>
+                                <title>Full-Stack Developers</title>
+                                <description></description>
+                            </card>
+                            <card>
+                                <title>Full-Stack Teams</title>
+                                <description></description>
+                            </card>
+                        </release>
+                    </body>
+                </step>
+
+                <step>
+                    <title>Tools &amp; Processes</title>
+                    <description>//</description>
+                    <body>
+                        <release id="base">
+                            <card>
+                                <title>Configuration Management</title>
+                                <description>//</description>
+                            </card>
+                            <card>
+                                <title>Work in Iterations</title>
+                                <description>//</description>
+                            </card>
+                        </release>
+                        <release id="beginner">
+                            <card>
+                                <title>Commit often</title>
+                                <description>//</description>
+                            </card>
+                            <card>
+                                <title>Branching models</title>
+                                <description>//</description>
+                            </card>
+                            <card>
+                                <title>Pull Request and Review</title>
+                                <description>//</description>
+                            </card>
+                        </release>
+                        <release id="intermediate">
+                            <card>
+                                <title>Standardization vs. Freedom of Choice</title>
+                                <description>
+                                </description>
+                            </card>
+                            <card>
+                                <title>Configuration as Code</title>
+                                <description>//</description>
+                            </card>
+                        </release>
+                    </body>
+                </step>
+                <step>
+                    <title>Feedback &amp; Transparency</title>
+                    <description>//</description>
+                    <body>
+                        <release id="base">
+                            <card>
+                                <title>Inspect &amp; Adapt</title>
+                                <description>//</description>
+                            </card>
+                            <card>
+                                <title>Impediment Removal</title>
+                                <description>//</description>
+                            </card>
+                        </release>
+                        <release id="intermediate">
+                            <card>
+                                <title>Act on Metrics</title>
+                                <description>//</description>
+                            </card>
+                            <card>
+                                <title>De-Centralized Decisions</title>
+                                <description>//</description>
+                            </card>
+                        </release>
+                        <release id="advanced">
+                            <card>
+                                <title>Information Radiators</title>
+                                <description>
+                                    AS a developer
+                                    I WANT TO KNOW learn how to make information about the current health status of our software visible for the team
+                                    SO THAT we are always informed and can be confident that our software is shippable.
+
+                                    Learning Objectives:
+                                    * this
+                                    * that
+                                </description>
+                            </card>
+                        </release>
+                    </body>
+                </step>
+            </body>
+        </activity>
+
+<!--
+    ===============================
+        DESIGN & ARCHITECTURE
+    ===============================
+//-->
+
+        <activity>
+            <title>Design &amp; Architecture</title>
+            <description>
+                AS developer, architect, PO
+                I WANT TO KNOW how to build an architecture for our software
+                SO THAT we are able to develop it continuously.
+            </description>
+            <body>
+                <step>
+                    <title>Architecture Patterns</title>
+                    <description>//</description>
+                    <body>
+                        <release id="base">
+                            <card>
+                                <title>Minimize Dependencies</title>
+                                <description></description>
+                            </card>
+                            <card>
+                                <title>Modularization</title>
+                                <description></description>
+                            </card>
+                        </release>
+                        <release id="beginner">
+                            <card>
+                                <title>Microservices</title>
+                                <description>
+                                </description>
+                            </card>
+                        </release>
+                        <release id="intermediate">
+                            <card>
+                                <title>Feature-Oriented Architecture</title>
+                                <description>
+                                    AS architect
+                                    I WANT TO learn how to cut the cake vertically through all layers of the system
+                                    SO THAT each individual team is able to ship their feature on their own.
+                                </description>
+                            </card>
+                            <card>
+                                <title>User-Centric Design</title>
+                                <description>
+                                </description>
+                            </card>
+                        </release>
+                    </body>
+                </step>
+                <step>
+                    <title>Design Patterns</title>
+                    <description>//</description>
+                    <body>
+                        <release id="mvt2019">
+                            <card>
+                                <title>//</title>
+                                <description>//</description>
+                            </card>
+                        </release>
+                    </body>
+                </step>
+                <step>
+                    <title>Versioning</title>
+                    <description>//</description>
+                    <body>
+                        <release id="intermediate">
+                            <card>
+                                <title>Feature Toggles</title>
+                                <description>//</description>
+                            </card>
+                            <card>
+                                <title>Branch by Abstraction</title>
+                                <description>//</description>
+                            </card>
+                            <card>
+                                <title>Semantic Versioning</title>
+                                <description>//</description>
+                            </card>
+                        </release>
+                    </body>
+                </step>
+            </body>
+        </activity>
+
+<!--
+    ===============================
+        TEST & VERIFICATION
+    ===============================
+//-->
+
+        <activity>
+            <title>Test &amp; Verifcation</title>
+            <description></description>
+            <body>
+                <step>
+                    <title>Unit Testing</title>
+                    <description>//</description>
+                    <body>
+                        <release id="base">
+                            <card>
+                                <title>Test First Approach</title>
+                                <description>//</description>
+                            </card>
+                            <card>
+                                <title>Separate Test Environment</title>
+                                <description>//</description>
+                            </card>
+                        </release>
+                    </body>
+                </step>
+                <step>
+                    <title>Integration Testing</title>
+                    <description>//</description>
+                    <body>
+                        <release id="intermediate">
+                            <card>
+                                <title>End-to-End Testing</title>
+                                <description>//</description>
+                            </card>
+                        </release>
+                    </body>
+                </step>
+                <step>
+                    <title>Simulation</title>
+                    <description>//</description>
+                    <body>
+                        <release id="advanced">
+                            <card>
+                                <title>Automated Hardware in the Loop</title>
+                                <description>//</description>
+                            </card>
+                        </release>
+                        <release id="expert">
+                            <card>
+                                <title>Simulated Hardware Test Environment</title>
+                                <description>//</description>
+                            </card>
+                        </release>
+                    </body>
+                </step>
+            </body>
+        </activity>
+
+<!--
+    ===============================
+        BUILD & DEPLOY
+    ===============================
+//-->
+
+        <activity>
+            <title>Build &amp; Deploy</title>
+            <description></description>
+            <body>
+                <step>
+                    <title>Automation</title>
+                    <description>//</description>
+                    <body>
+                        <release id="base">
+                            <card>
+                                <title>Scripted Builds</title>
+                                <description>//</description>
+                            </card>
+                        </release>
+                        <release id="beginner">
+                            <card>
+                                <title>Automated Unit Testing</title>
+                                <description>//</description>
+                            </card>
+                        </release>
+                        <release id="intermediate">
+                            <card>
+                                <title>Commit Hooks</title>
+                                <description>//</description>
+                            </card>
+                            <card>
+                                <title>Infrastructure as Code</title>
+                                <description>//</description>
+                            </card>
+                        </release>
+                        <release id="expert">
+                            <card>
+                                <title>Zero-Touch Deployment</title>
+                                <description>//</description>
+                            </card>
+                        </release>
+                    </body>
+                </step>
+                <step>
+                    <title>Packing / Bundling</title>
+                    <description>//</description>
+                    <body>
+                        <release id="mvt2019">
+                            <card>
+                                <title>//</title>
+                                <description>//</description>
+                            </card>
+                        </release>
+                    </body>
+                </step>
+                <step>
+                    <title>Deployment Strategy</title>
+                    <description>//</description>
+                    <body>
+                        <release id="intermediate">
+                            <card>
+                                <title>Blue / Green</title>
+                                <description>//</description>
+                            </card>
+                        </release>
+                        <release id="intermediate">
+                            <card>
+                                <title>Zero Downtime Deployment</title>
+                                <description>//</description>
+                            </card>
+                        </release>
+                    </body>
+                </step>
+                <step>
+                    <title>Deployment Target</title>
+                    <description>//</description>
+                    <body>
+                        <release id="base">
+                            <card>
+                                <title>Serverless</title>
+                                <description>//</description>
+                            </card>
+                        </release>
+                        <release id="expert">
+                            <card>
+                                <title>Deployment in Field</title>
+                                <description>//</description>
+                            </card>
+                        </release>
+                    </body>
+                </step>
+            </body>
+        </activity>
+
+<!--
+    ===============================
+        INFORMATION & REPORTING
+    ===============================
+//-->
+
+        <activity>
+            <title>Information &amp; Reporting</title>
+            <description></description>
+            <body>
+                <step>
+                    <title>Health Metrics</title>
+                    <description>//</description>
+                    <body>
+                        <release id="beginner">
+                            <card>
+                                <title>Static Code Analysis</title>
+                                <description></description>
+                            </card>
+                        </release>
+                        <release id="advanced">
+                            <card>
+                                <title>Dynamic Code Analysis</title>
+                                <description></description>
+                            </card>
+                        </release>
+                    </body>
+                </step>
+                <step>
+                    <title>Traceability</title>
+                    <description>//</description>
+                    <body>
+                        <release id="mvt2019">
+                            <card>
+                                <title>//</title>
+                                <description></description>
+                            </card>
+                        </release>
+                    </body>
+                </step>
+                <step>
+                    <title>Reporting</title>
+                    <description>//</description>
+                    <body>
+                        <release id="intermediate">
+                            <card>
+                                <title>Report History</title>
+                                <description></description>
+                            </card>
+                        </release>
+                        <release id="advanced">
+                            <card>
+                                <title>Report Trend Analysis</title>
+                                <description></description>
+                            </card>
+                        </release>
+                    </body>
+                </step>
+                <step>
+                    <title>Get User Feedback</title>
+                    <description>//</description>
+                    <body>
+                        <release id="advanced">
+                            <card>
+                                <title>A/B testing</title>
+                                <description></description>
+                            </card>
+                        </release>
+                    </body>
+                </step>
+                <step>
+                    <title>Measure Entrepreneurial Success</title>
+                    <description>//</description>
+                    <body>
+                        <release id="beginner">
+                            <card>
+                                <title>Time to Market</title>
+                                <description></description>
+                            </card>
+                        </release>
+                    </body>
+                </step>
+            </body>
+        </activity>
+    
+    </backbone>
+
+</usm>
