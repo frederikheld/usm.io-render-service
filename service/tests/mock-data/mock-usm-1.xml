@@ -1,0 +1,95 @@
+<usm>
+
+    <roadmap>
+
+        <release>
+            <name>MVP</name>
+            <id>mvp</id>
+        </release>
+
+        <release>
+            <name>Release 1</name>
+            <id>r1</id>
+        </release>
+
+    </roadmap>
+
+    <backbone>
+
+        <activity>
+            <title>activity 1</title>
+            <description>
+                description
+            </description>
+            <body>
+
+                <step>
+                    <title>step 1-1</title>
+                    <description>
+                        description
+                    </description>
+                    <body>
+
+                        <release id="mvp">
+
+                            <card>
+                                <title>card 1-1-1</title>
+                                <description>
+                                    description
+                                </description>
+                            </card>
+                            
+                        </release>
+
+                        <release id="r2">
+
+                            <card>
+                                <title>card 1-1-2</title>
+                                <description>
+                                    description
+                                </description>
+                            </card>
+
+                        </release>
+
+                    </body>
+                </step>
+
+                <step>
+                    <title>step 1-2</title>
+                    <description>
+                        description
+                    </description>
+                    <body>
+
+                        <release id="mvp">
+
+                            <card>
+                                <title>card 1-2-1</title>
+                                <description>
+                                    description
+                                </description>
+                            </card>
+
+                        </release>
+
+                        <release id="r1">
+
+                            <card>
+                                <title>card 1-2-2</title>
+                                <description>
+                                    description
+                                </description>
+                            </card>
+
+                        </release>
+
+                    </body>
+                </step>
+
+            </body>
+        </activity>
+
+    </backbone>
+
+</usm>
