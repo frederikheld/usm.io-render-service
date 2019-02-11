@@ -4,8 +4,11 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node service/server.js --port 8080",
-    "test": "nyc -x \"*/tests/*\" mocha \"*/tests/test-*.js\" --exit"
+    "start": "NODE_ENV=production node service/server.js --port 8080",
+    "test": "NODE_ENV=testing mocha \"**/tests/*.test.js\" --exit",
+    "coverage": "nyc npm test",
+    "dev": "NODE_ENV=testing mocha --watch \"**/tests/*.test.js\"",
+    "dev-coverage": "NODE_ENV=testing nodemon --exec nyc --reporter=text-summary npm test"
   },
   "repository": {
     "type": "git",
@@ -18,16 +21,23 @@
   },
   "homepage": "https://github.com/frederikheld/usm.io#readme",
   "dependencies": {
-    "chai-match": "^1.1.1",
+    "body-parser": "^1.18.3",
     "crypto": "^1.0.1",
+    "d3": "^5.8.0",
     "express": "^4.16.4",
+    "jsdom": "^13.2.0",
     "minimist": "^1.2.0",
-    "multer": "^1.4.1"
+    "multer": "^1.4.1",
+    "xml-js": "^1.6.9"
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "chai-http": "^4.2.0",
+    "chai-fs": "^2.0.0",
+    "chai-http": "^4.2.1",
+    "chai-match": "^1.1.1",
     "mocha": "^5.2.0",
-    "nyc": "^13.1.0"
+    "mock-fs": "^4.8.0",
+    "nyc": "^13.2.0",
+    "sinon": "^7.2.3"
   }
 }
