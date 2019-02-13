@@ -13,6 +13,7 @@ chai.use(chaiMatch)
 const should = chai.should()
 
 const fs = require('fs')
+
 // const mockFs = require('mock-fs')
 
 describe('The usm.io render service', () => {
@@ -70,6 +71,128 @@ describe('The usm.io render service', () => {
 
     })
 
+    describe.only('POST /api/render/html', () => {
+
+        let server
+        let mockData = {
+            json: {}
+        }
+
+        beforeEach((done) => {
+            server = require(__dirname + '/../server')
+
+            const rawUsm = fs.readFileSync(__dirname + '/mock-data/mock-usm-full.json')
+            mockData.json.usmFull = JSON.parse(rawUsm)
+
+            done()
+        })
+
+        afterEach(() => {
+            server.close()
+        })
+
+        it('is accessible', (done) => {
+
+            chai.request(server)
+                .post('/api/render/html')
+                .set('content-type', 'application/json')
+                .send({ usm: {} })
+                .end((err, res) => {
+                    should.not.exist(err)
+
+                    should.exist(res)
+                    res.status.should.equal(200)
+                })
+
+            done()
+        })
+
+        it('answers with 400 (Bad Request) if no data or empty object sent', (done) => {
+
+            chai.request(server)
+                .post('/api/render/html')
+                .end((err, res) => {
+                    should.not.exist(err)
+
+                    should.exist(res)
+                    res.status.should.equal(400)
+                })
+
+            done()
+        })
+
+
+        it('answers with 400 (Bad Request) if no data or empty object sent', (done) => {
+
+            chai.request(server)
+                .post('/api/render/html')
+                .send({})
+                .end((err, res) => {
+                    should.not.exist(err)
+
+                    should.exist(res)
+                    res.status.should.equal(400)
+                })
+
+            done()
+        })
+
+        it('answers with 400 (Bad Request) if field "usm" is missing', (done) => {
+
+            chai.request(server)
+                .post('/api/render/html')
+                .send({ 'foo': 'bar' })
+                .end((err, res) => {
+                    should.not.exist(err)
+
+                    should.exist(res)
+                    res.status.should.equal(400)
+                })
+
+            done()
+        })
+
+        it('takes a json formatted USM', (done) => {
+
+            chai.request(server)
+                .post('/api/render/html')
+                .set('content-type', 'application/json')
+                .send({ usm: mockData.json.usmFull })
+                .end((err, res) => {
+                    should.not.exist(err)
+
+                    should.exist(res)
+                    res.status.should.equal(200)
+
+                    done()
+                })
+
+            context('The JSON data is a valid description of an USM', () => {
+
+                let downloadToken
+
+                it('returns a download token', (done) => {
+
+                    chai.request(server)
+                        .post('/api/render/html')
+                        .set('content-type', 'application/json')
+                        .send({ usm: mockData.json.usmFull })
+                        .end((err, res) => {
+                            should.not.exist(err)
+
+                            should.exist(res.body.token)
+
+                            done()
+                        })
+
+                })
+
+            })
+
+        })
+
+    })
+
     describe('POST /api/render/svg', () => {
 
         let server
@@ -80,7 +203,7 @@ describe('The usm.io render service', () => {
         beforeEach((done) => {
             server = require(__dirname + '/../server')
 
-            fs.readFile(__dirname + '/mock-data/mock-usm-0.json', (err, res) => {
+            fs.readFile(__dirname + '/mock-data/00_mock-usm-empty.json', (err, res) => {
                 if (err) throw err
                 mockData.json.usm0 = JSON.parse(res)
             })
@@ -107,14 +230,13 @@ describe('The usm.io render service', () => {
 
         })
 
-        it('takes json data', (done) => {
+        it('takes a json formatted USM', (done) => {
 
             chai.request(server)
                 .post('/api/render/svg')
                 .set('content-type', 'application/json')
                 .send({ usm: mockData.json.usm0 })
                 .end((err, res) => {
-
                     should.not.exist(err)
 
                     done()
@@ -132,12 +254,11 @@ describe('The usm.io render service', () => {
                         .set('content-type', 'application/json')
                         .send({ usm: mockData.json.usm0 })
                         .end((err, res) => {
-
                             should.not.exist(err)
 
                             should.exist(res.body.token)
 
-                            // store tooken for deeper investigation
+                            // store token for deeper investigation
                             // in upcoming tests:
                             downloadToken = res.body.token
 
@@ -149,15 +270,11 @@ describe('The usm.io render service', () => {
                 describe('The download token', () => {
 
                     it('is exactly 20 characters long', () => {
-
                         downloadToken.length.should.equal(20)
-
                     })
 
                     it('consists only of characters in the set [a-zA-Z0-9]', () => {
-
                         downloadToken.should.match(/^[a-zA-Z0-9]*$/gm)
-
                     })
 
                 })
@@ -196,6 +313,8 @@ describe('The usm.io render service', () => {
             })
 
         })
+
+        // TODO: Finish SVG rendering!
 
 
         // let downloadToken

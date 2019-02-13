@@ -47,6 +47,28 @@
 					]
 				}
 			]
+		},
+		{
+			"title": "Advanced Understanding",
+			"description": "AS\nI WANT TO\nSO THAT",
+			"steps": [
+				{
+					"title": "Why am I doing this?",
+					"description": "AS everyone\nI WANT TO understand what is meant by the term \"Continuous Development\"\nSO THAT I can understand the matter at hand.",
+					"cards": [
+						{
+							"title": "Buzzwords",
+							"description": "AS everyone\nI WANT TO understand the buzwwords revolving around Continuous Development\nSo THAT I can talk about it in a well-informed way.",
+							"learning_objectives": [
+								"I know what XP is",
+								"I know what Agile Development is",
+								"I know what DevOps is"
+							],
+							"in_level": "mvt2019"
+						}
+					]
+				}
+			]
 		}
 	]
 }
