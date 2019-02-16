@@ -31,16 +31,28 @@ actions.render.html = (req, res) => {
     // for debugging and not testet yet!
     const usm = new Usm(usmJson)
     const usmHTML = usm.render()
-    fs.writeFile(__dirname + '/public/usm.html', usmHTML, (err) => {
+    fs.mkdir(__dirname + '/public', {
+        recursive: true
+    }, (err) => {
         if (err) {
-            throw err
+            if (err.code === 'EEXIST') {
+                // don't throw. An existing directory is exactly what we want.
+            } else {
+                throw err
+            }
         }
+
+        fs.writeFile(__dirname + '/public/usm.html', usmHTML, (err) => {
+            if (err) throw err
+        })
     })
     // END
 
     const downloadToken = tokenizer.generateDownloadToken(20)
 
-    res.status(200).send({ token: downloadToken })
+    res.status(200).send({
+        token: downloadToken
+    })
     return
 
 }
@@ -62,7 +74,9 @@ actions.render.svg = (req, res) => {
 
 
     // send result:
-    res.status(200).send({ token: downloadToken })
+    res.status(200).send({
+        token: downloadToken
+    })
 }
 
 actions.hello = (req, res) => {

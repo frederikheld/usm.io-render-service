@@ -96,7 +96,9 @@ describe('The usm.io render service', () => {
             chai.request(server)
                 .post('/api/render/html')
                 .set('content-type', 'application/json')
-                .send({ usm: {} })
+                .send({
+                    usm: {}
+                })
                 .end((err, res) => {
                     should.not.exist(err)
 
@@ -141,7 +143,9 @@ describe('The usm.io render service', () => {
 
             chai.request(server)
                 .post('/api/render/html')
-                .send({ 'foo': 'bar' })
+                .send({
+                    'foo': 'bar'
+                })
                 .end((err, res) => {
                     should.not.exist(err)
 
@@ -157,7 +161,9 @@ describe('The usm.io render service', () => {
             chai.request(server)
                 .post('/api/render/html')
                 .set('content-type', 'application/json')
-                .send({ usm: mockData.json.usmFull })
+                .send({
+                    usm: mockData.json.usmFull
+                })
                 .end((err, res) => {
                     should.not.exist(err)
 
@@ -176,7 +182,9 @@ describe('The usm.io render service', () => {
                     chai.request(server)
                         .post('/api/render/html')
                         .set('content-type', 'application/json')
-                        .send({ usm: mockData.json.usmFull })
+                        .send({
+                            usm: mockData.json.usmFull
+                        })
                         .end((err, res) => {
                             should.not.exist(err)
 
@@ -235,7 +243,9 @@ describe('The usm.io render service', () => {
             chai.request(server)
                 .post('/api/render/svg')
                 .set('content-type', 'application/json')
-                .send({ usm: mockData.json.usm0 })
+                .send({
+                    usm: mockData.json.usm0
+                })
                 .end((err, res) => {
                     should.not.exist(err)
 
@@ -252,7 +262,9 @@ describe('The usm.io render service', () => {
                     chai.request(server)
                         .post('/api/render/svg')
                         .set('content-type', 'application/json')
-                        .send({ usm: mockData.json.usm0 })
+                        .send({
+                            usm: mockData.json.usm0
+                        })
                         .end((err, res) => {
                             should.not.exist(err)
 
@@ -286,7 +298,9 @@ describe('The usm.io render service', () => {
                             chai.request(server)
                                 .post('/api/render/svg')
                                 .set('content-type', 'application/json')
-                                .send({ usm: mockData.json.usm0 })
+                                .send({
+                                    usm: mockData.json.usm0
+                                })
                                 .end((err, res) => {
                                     resolve(res.body.token)
                                 })
