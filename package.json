@@ -8,7 +8,8 @@
     "test": "NODE_ENV=testing mocha \"**/tests/*.test.js\" --exit",
     "coverage": "nyc npm test",
     "dev": "NODE_ENV=testing mocha --watch \"**/tests/*.test.js\"",
-    "dev-coverage": "NODE_ENV=testing nodemon --exec nyc --reporter=text-summary npm test"
+    "dev-coverage": "NODE_ENV=testing nodemon --exec nyc --reporter=text-summary npm test",
+    "version": "node -v && npm -v"
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,7 @@
     "jsdom": "^13.2.0",
     "minimist": "^1.2.0",
     "multer": "^1.4.1",
+    "node": "^10.15.1",
     "xml-js": "^1.6.9"
   },
   "devDependencies": {
