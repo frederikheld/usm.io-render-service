@@ -1,3 +1,3 @@
-export default function hello(name) {
-    console.log("Hello " + name + "!")
+export default function hello (name) {
+    console.log('Hello ' + name + '!')
 }

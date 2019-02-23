@@ -9,29 +9,26 @@ export {
     Step
 }
 
-function Step(jsonStep, jsonRoadmap) {
+function Step (jsonStep, jsonRoadmap) {
     this.jsonStep = jsonStep
     this.jsonRoadmap = jsonRoadmap
 }
 Step.prototype.render = function (domElement, domContext, offsetX = 0) {
-
     var svgStep = domElement
-        .append("g")
+        .append('g')
         .attrs({
-            class: "step",
-            transform: "translate(" + offsetX + ", 0)"
+            class: 'step',
+            transform: 'translate(' + offsetX + ', 0)'
         })
 
     // render step card:
     var stepCard = new Card(this.jsonStep)
     stepCard.render(svgStep, domContext)
 
-
     // render step body:
     var offsetY = 85
     var stepBody = new StepBody(this.jsonStep.body, this.jsonRoadmap)
     stepBody.render(svgStep, domContext, offsetY)
-
 }
 
 var StepBody = function (jsonStepBody, jsonRoadmap) {
@@ -40,15 +37,14 @@ var StepBody = function (jsonStepBody, jsonRoadmap) {
 }
 StepBody.prototype.render = function (domElement, domContext, offsetY = 0) {
     var svgStepBody = domElement
-        .append("g")
+        .append('g')
         .attrs({
-            class: "stepbody",
-            transform: "translate(0, " + offsetY + ")"
+            class: 'stepbody',
+            transform: 'translate(0, ' + offsetY + ')'
         })
 
     this.jsonStepBody.release.forEach(function (jsonRelease, indexRelease) {
-
-        function getReleaseKey(jsonRoadmap, releaseId) {
+        function getReleaseKey (jsonRoadmap, releaseId) {
             var result = undefined
             jsonRoadmap.release.forEach(function (jsRel, i) {
                 if (jsRel.id._text == releaseId) {

@@ -18,14 +18,24 @@
     ],
     "rules": {
         "indent": ["warn", 4],
-        "arrow-parens": 1
+        "arrow-parens": 1,
+        "new-cap": [2, {
+            "newIsCap": true,
+            "capIsNew": true,
+            "newIsCapExceptions": [
+                "d3.textwrap"
+            ],
+            "capIsNewExceptions": [
+                "express.Router"
+            ]
+        }]
     },
     "overrides": [{
         "files": ["**/tests/*.test.js"],
         "rules": {
             "mocha/handle-done-callback": "error",
             "mocha/no-identical-title": "warn",
-            "mocha/no-exclusive-tests": "warn",
+            "mocha/no-exclusive-tests": "error",
             "mocha/no-skipped-tests": "error",
 
             "no-unused-expressions": 0,
@@ -33,6 +43,9 @@
 
             "no-new": 0
         }
-    }]
+    }],
+    "globals": {
+        "d3": "readable"
+    }
 
 }

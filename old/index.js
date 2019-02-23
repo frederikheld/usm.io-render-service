@@ -11,7 +11,6 @@ const path = require('path')
 var Actions = require('./actions.js')
 var actions = new Actions('./data/usm.xml')
 
-
 // -- config
 
 var args = minimist(process.argv.slice(2), {
@@ -24,19 +23,17 @@ var args = minimist(process.argv.slice(2), {
     }
 })
 
-
 // -- publish web interface
 
 var app = express()
 
-app.use(express.static(path.join(__dirname, "web")))
+app.use(express.static(path.join(__dirname, 'web')))
 
-app.get("/", (request, result) => {
-    result.sendFile(path.join(__dirname, "web", "index.html"))
+app.get('/', (request, result) => {
+    result.sendFile(path.join(__dirname, 'web', 'index.html'))
 })
 
-app.get("/data", (req, res) => {
-
+app.get('/data', (req, res) => {
     actions.getJSON()
         .then((result) => {
             return res.status(200).send({
@@ -50,11 +47,10 @@ app.get("/data", (req, res) => {
                 error: error
             })
         })
-
 })
 
 app.listen(args.port, () => {
-    console.log("ui listening on port " + args.port)
+    console.log('ui listening on port ' + args.port)
 }).on('error', function (error) {
     console.error(error)
 })

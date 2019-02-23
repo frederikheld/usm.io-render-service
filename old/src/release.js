@@ -6,19 +6,18 @@ export {
     Release
 }
 
-function Release(jsonRelease) {
+function Release (jsonRelease) {
     this.jsonRelease = jsonRelease
 }
 Release.prototype.render = function (domElement, domContext, offsetY = 0) {
     var svgRelease = domElement
-        .append("g")
+        .append('g')
         .attrs({
-            class: "release",
-            transform: "translate(0, " + offsetY + ")"
+            class: 'release',
+            transform: 'translate(0, ' + offsetY + ')'
         })
 
     this.jsonRelease.card.forEach(function (jsonCard, indexCard) {
-
         var offsetY = indexCard * 70 // TODO: Calculate card offset
 
         var card = new Card(jsonCard)

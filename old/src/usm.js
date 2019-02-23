@@ -33,8 +33,7 @@ export {
     Feed svgElement to append to and domContext into prototype.render()
 */
 
-function USM(jsonUSM) {
-
+function USM (jsonUSM) {
     this.jsonData = jsonUSM
 
     this.timeline = new Timeline()
@@ -43,26 +42,24 @@ function USM(jsonUSM) {
 
     this.optimizeDataStructure()
     this.generateMetaData()
-
 }
 USM.prototype.render = function (domElement, domContext, dimensions, doDebug = false) {
-
     // create canvas as base element for all children to append their elements to:
     console.log(dimensions)
     var svgUSM = domElement
-        .append("svg")
+        .append('svg')
         .attrs({
-            xmlns: "http://www.w3.org/2000/svg",
-            class: "usm",
+            xmlns: 'http://www.w3.org/2000/svg',
+            class: 'usm',
             x: 0,
             y: 0
         })
 
     var canvas = svgUSM
-        .append("g")
+        .append('g')
         .attrs({
-            class: "canvas",
-            transform: "translate(" + dimensions.marginLeft + "," + dimensions.marginTop + ")"
+            class: 'canvas',
+            transform: 'translate(' + dimensions.marginLeft + ',' + dimensions.marginTop + ')'
         })
 
     // render children:
@@ -102,88 +99,74 @@ USM.prototype.render = function (domElement, domContext, dimensions, doDebug = f
     // set svg dimensions:
     svgUSM
         .attrs({
-            width: svgWidth + "px",
-            height: svgHeight + "px",
-            viewBox: "0 0 " + svgViewBoxWidth + " " + svgViewBoxHeight,
-            preserveAspectRatio: "xMinYMin meet"
+            width: svgWidth + 'px',
+            height: svgHeight + 'px',
+            viewBox: '0 0 ' + svgViewBoxWidth + ' ' + svgViewBoxHeight,
+            preserveAspectRatio: 'xMinYMin meet'
         })
-
 }
 USM.prototype.renderDebug = function (domElement, dimensions, doRender = false) {
     if (doRender) {
         var svgDebug = domElement
-            .append("g")
+            .append('g')
             .attrs({
-                class: "debug"
+                class: 'debug'
             })
 
         renderBoundingBox(svgDebug, dimensions)
     }
 
-    function renderBoundingBox(domElement, dimensions) {
-
+    function renderBoundingBox (domElement, dimensions) {
         var svgBoundingBox = domElement
-            .append("rect")
+            .append('rect')
             .attrs({
                 x: 0,
                 y: 0,
                 width: dimensions.canvasWidth,
-                height: dimensions.canvasHeight,
+                height: dimensions.canvasHeight
             })
             .styles({
-                "stroke": "#f00",
-                "stroke-width": 1,
-                "stroke-dasharray": "10,10",
-                "fill": "none"
+                'stroke': '#f00',
+                'stroke-width': 1,
+                'stroke-dasharray': '10,10',
+                'fill': 'none'
             })
     }
 }
 USM.prototype.optimizeDataStructure = function () {
-
     this.jsonData.usm.backbone.activity.forEach(function (jsonActivity, indexActivity) {
-
         // put single steps inside a activity.body.step into an array
         // as multiple steps already are. This makes further processing cleaner:
         if (!Array.isArray(jsonActivity.body.step)) {
-
             // var tempRelease = jsonStep.body.release
             var tempStep = this.jsonData.usm.backbone.activity[indexActivity].body.step
             this.jsonData.usm.backbone.activity[indexActivity].body.step = []
             this.jsonData.usm.backbone.activity[indexActivity].body.step[0] = tempStep
-
         }
 
         jsonActivity.body.step.forEach(function (jsonStep, indexStep) {
-
             // put single releases inside a step.body.release into an array
             // as multiple releases already are. This makes further processing cleaner:
             if (!Array.isArray(jsonStep.body.release)) {
-
                 // var tempRelease = jsonStep.body.release
                 var tempRelease = this.jsonData.usm.backbone.activity[indexActivity].body.step[indexStep].body.release
                 this.jsonData.usm.backbone.activity[indexActivity].body.step[indexStep].body.release = []
                 this.jsonData.usm.backbone.activity[indexActivity].body.step[indexStep].body.release[0] = tempRelease
-
             }
 
             jsonStep.body.release.forEach(function (jsonRelease, indexRelease) {
-
                 // put single releases inside a step.body.release.card into an array
                 // as multiple cards already are. This makes further processing cleaner:
                 if (!Array.isArray(jsonRelease.card)) {
-
                     var tempCard = this.jsonData.usm.backbone.activity[indexActivity].body.step[indexStep].body.release[indexRelease].card
                     this.jsonData.usm.backbone.activity[indexActivity].body.step[indexStep].body.release[indexRelease].card = []
                     this.jsonData.usm.backbone.activity[indexActivity].body.step[indexStep].body.release[indexRelease].card[0] = tempCard
-
                 }
             }, this)
         }, this)
     }, this)
-
 }
 USM.prototype.generateMetaData = function () {
-
     // prepare new fields:
     this.jsonData.usm.roadmap.release.forEach(function (jsonRelease, indexRelease) {
         this.jsonData.usm.roadmap.release[indexRelease].maxCards = 0
@@ -196,7 +179,6 @@ USM.prototype.generateMetaData = function () {
     }, this)
 
     this.jsonData.usm.backbone.activity.forEach(function (jsonActivity, indexActivity) {
-
         // update accumulated number of steps before this activity:
         var stepsBefore = 0
         for (var n = 0; n < indexActivity; n++) {
@@ -204,45 +186,36 @@ USM.prototype.generateMetaData = function () {
         }
 
         jsonActivity.body.step.forEach(function (jsonStep, indexStep) {
-
             // count occurences in step:
             var occurences = {}
             jsonStep.body.release.forEach(function (jsonRelease, indexRelease) {
-
                 var releaseKey = jsonRelease._attributes.id
 
                 jsonRelease.card.forEach(function (jsonCard, indexCard) {
-
-                    if ("_attributes" in jsonRelease) {
+                    if ('_attributes' in jsonRelease) {
                         if (releaseKey in occurences) {
                             occurences[releaseKey] += 1
                         } else {
                             occurences[releaseKey] = 1
                         }
                     }
-
                 })
             })
 
             // update maxCards in release:
             this.jsonData.usm.roadmap.release.forEach(function (release, indexRelease) {
-
                 if (occurences[release.id._text] > this.jsonData.usm.roadmap.release[indexRelease].maxCards) {
                     this.jsonData.usm.roadmap.release[indexRelease].maxCards = occurences[release.id._text]
                 }
-
             }, this)
-
         }, this)
     }, this)
 
     // update accumulated number of maxCards before this release:
     this.jsonData.usm.roadmap.release.forEach(function (release, indexRelease) {
-
         for (var n = 0; n < indexRelease; n++) {
             this.jsonData.usm.roadmap.release[indexRelease].maxCardsBefore += this.jsonData.usm.roadmap.release[n].maxCards
             this.jsonData.usm.roadmap.release[indexRelease].releasesBefore += 1
         }
-
     }, this)
 }

@@ -2,18 +2,17 @@ export {
     Timeline
 }
 
-function Timeline() {}
+function Timeline () {}
 Timeline.prototype.render = function (domElement, width, offsetY = 0) {
-
     var svgTimeline = domElement
-        .append("g")
+        .append('g')
         .attrs({
-            class: "timeline",
-            transform: "translate(0, " + offsetY + ")"
+            class: 'timeline',
+            transform: 'translate(0, ' + offsetY + ')'
         })
 
     svgTimeline
-        .append("polygon")
+        .append('polygon')
         .attrs({
             points: [
                 [0, 0],
@@ -26,9 +25,8 @@ Timeline.prototype.render = function (domElement, width, offsetY = 0) {
             ]
         })
         .styles({
-            "fill": "#000"
+            'fill': '#000'
         })
 
     return svgTimeline
-
 }

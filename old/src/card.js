@@ -2,23 +2,22 @@ export {
     Card
 }
 
-function Card(jsonCard) {
+function Card (jsonCard) {
     this.jsonCard = jsonCard
 }
 Card.prototype.render = function (domElement, domContext, offsetX = 0, offsetY = 0) {
-
     var width = 100
     var height = 60
 
     var svgCard = domElement
-        .append("g")
+        .append('g')
         .attrs({
-            class: "card",
-            transform: "translate(" + offsetX + "," + offsetY + ")"
+            class: 'card',
+            transform: 'translate(' + offsetX + ',' + offsetY + ')'
         })
 
     svgCard
-        .append("rect")
+        .append('rect')
         .attrs({
             x: 0,
             y: 0,
@@ -26,10 +25,9 @@ Card.prototype.render = function (domElement, domContext, offsetX = 0, offsetY =
             height: height
         })
         .styles({
-            stroke: "black",
-            fill: "white"
+            stroke: 'black',
+            fill: 'white'
         })
-
 
     // render title of card:
     var textwrap = new d3.textwrap()
@@ -41,42 +39,40 @@ Card.prototype.render = function (domElement, domContext, offsetX = 0, offsetY =
         .padding(10)
 
     var svgCardText = svgCard
-        .append("text")
+        .append('text')
         .text(this.jsonCard.title._text)
         .attrs({
             x: width / 2,
             y: height / 2
         })
         .styles({
-            "alignment-baseline": "middle",
-            "text-anchor": "middle",
+            'alignment-baseline': 'middle',
+            'text-anchor': 'middle'
         })
         .call(textwrap)
 
-    svgCard.on("click", () => {
-
+    svgCard.on('click', () => {
         domContext.detailsContainer
-            .html("")
+            .html('')
 
-        if (svgCard.classed("active")) {
-            svgCard.classed("active", false)
+        if (svgCard.classed('active')) {
+            svgCard.classed('active', false)
         } else {
-            d3.selectAll("#usm .card").classed("active", false)
-            svgCard.classed("active", true)
+            d3.selectAll('#usm .card').classed('active', false)
+            svgCard.classed('active', true)
 
             if (this.jsonCard.description._text) {
-                var descriptionLines = this.jsonCard.description._text.split("\n")
+                var descriptionLines = this.jsonCard.description._text.split('\n')
                 descriptionLines.forEach(function (line, index) {
                     domContext.detailsContainer
-                        .append("p")
+                        .append('p')
                         .text(line)
                 })
             } else {
                 domContext.detailsContainer
-                    .append("p")
-                    .text("<no description>")
+                    .append('p')
+                    .text('<no description>')
             }
         }
     })
-
 }
