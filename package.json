@@ -7,7 +7,7 @@
     "start": "NODE_ENV=production node service/server.js --port 8080",
     "test": "NODE_ENV=testing mocha \"**/tests/*.test.js\" --exit",
     "coverage": "nyc npm test",
-    "dev": "NODE_ENV=testing mocha --watch \"**/tests/*.test.js\"",
+    "dev": "node -v && NODE_ENV=testing mocha --watch \"**/tests/*.test.js\"",
     "dev-coverage": "NODE_ENV=testing nodemon --exec nyc --reporter=text-summary npm test",
     "version": "node -v && npm -v"
   },
@@ -33,13 +33,19 @@
     "xml-js": "^1.6.9"
   },
   "devDependencies": {
+    "babel-eslint": "^10.0.1",
     "chai": "^4.2.0",
     "chai-files": "^1.4.0",
     "chai-http": "^4.2.1",
     "chai-match": "^1.1.1",
+    "eslint": "^5.14.1",
+    "eslint-plugin-chai-friendly": "^0.4.1",
+    "eslint-plugin-mocha": "^5.3.0",
+    "eslint-plugin-standard": "^4.0.0",
     "mocha": "^5.2.0",
     "mock-fs": "^4.8.0",
     "nyc": "^13.3.0",
-    "sinon": "^7.2.3"
+    "sinon": "^7.2.3",
+    "standard": "^12.0.1"
   }
 }
