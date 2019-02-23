@@ -9,7 +9,9 @@
     "coverage": "nyc npm test",
     "dev": "node -v && NODE_ENV=testing mocha --watch \"**/tests/*.test.js\"",
     "dev-coverage": "NODE_ENV=testing nodemon --exec nyc --reporter=text-summary npm test",
-    "version": "node -v && npm -v"
+    "version": "node -v && npm -v",
+    "lint": "node_modules/eslint/bin/eslint.js \"**/*.js\"",
+    "lint-fix": "node_modules/eslint/bin/eslint.js \"**/*.js\" --fix"
   },
   "repository": {
     "type": "git",
