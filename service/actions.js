@@ -1,6 +1,6 @@
 'use strict'
 
-// const logger = require('../lib/logger/logger')
+const logger = require('../lib/logger/logger')
 const tokenizer = require('../lib/tokenizer/tokenizer')
 
 const fs = require('fs').promises
@@ -25,6 +25,8 @@ actions.render.html = async (req, res) => {
         res.status(400).send()
         return
     }
+
+    // logger.debug(JSON.stringify(req.body.usm))
 
     // const usmJson = req.body.usm
 
@@ -53,54 +55,12 @@ actions.render.html = async (req, res) => {
 
     const downloadToken = tokenizer.generateDownloadToken(20)
 
-    await fs.writeFile(path.join(__dirname, 'download', downloadToken, 'Hello World!'), {
+    await fs.writeFile(path.join(__dirname, 'download', downloadToken), 'Hello World!', {
         encoding: 'utf8'
     }).catch((err) => {
         throw err
     })
 
-    // try {
-    //     await fs.mkdir(__dirname + '/download')
-    // } catch (err) {
-    //     if (err.code === 'EEXIST') {
-    //         // don't throw. An existing directory is exactly what we want.
-    //     } else {
-    //         throw err
-    //     }
-    // }
-
-    // fs.mkdir(__dirname + '/download', {}, (err) => {
-    //     if (err) {
-    //         if (err.code === 'EEXIST') {
-    //             // don't throw. An existing directory is  exactly what we want.
-    //             // } else {
-    //             //     throw err
-    //         }
-    //         // } else {
-    //         //     await fs.writeFile(__dirname + '/download/' + downloadToken)
-    //     }
-    // })
-
-    res.status(200).send()
-    //     token: downloadToken
-    // })
-    // return
-}
-
-actions.render.svg = (req, res) => {
-    // get payload from request:
-    // const usmJson = req.body
-
-    // generate usm:
-
-    // const USM = new usm(usmJson)
-
-    // store usm in download area:
-    const downloadToken = tokenizer.generateDownloadToken(20)
-
-    // TODO: check if there's no file with this token yet!
-
-    // send result:
     res.status(200).send({
         token: downloadToken
     })
