@@ -1,9 +1,9 @@
 'use strict'
 
-const logger = require('../lib/logger/logger')
 const tokenizer = require('../lib/tokenizer/tokenizer')
 
 const fs = require('fs').promises
+const fx = require('mkdir-recursive')
 const fsSync = require('fs')
 const path = require('path')
 
@@ -51,18 +51,14 @@ actions.render.html = async (req, res) => {
     // })
     // END
 
-    mkdirp(path.join(__dirname, 'download'))
+    await fx.mkdir(path.join(__dirname, 'download'), {}, async () => {
+        const downloadToken = tokenizer.generateDownloadToken(20)
 
-    const downloadToken = tokenizer.generateDownloadToken(20)
+        await fs.writeFile(path.join(__dirname, 'download', downloadToken), 'Hello World!', { encoding: 'utf8' })
 
-    await fs.writeFile(path.join(__dirname, 'download', downloadToken), 'Hello World!', {
-        encoding: 'utf8'
-    }).catch((err) => {
-        throw err
-    })
-
-    res.status(200).send({
-        token: downloadToken
+        res.status(200).send({
+            token: downloadToken
+        })
     })
 }
 
@@ -75,19 +71,3 @@ actions.hello = (req, res) => {
 }
 
 module.exports = actions
-
-// This function isn't fully tested for all of its features!
-// TODO: Move to it's own library and write proper unit tests!
-function mkdirp (directory) {
-    if (!path.isAbsolute(directory)) {
-        return
-    }
-    let parent = path.join(directory, '..')
-    if (parent !== path.join('/') && !fsSync.existsSync(parent)) {
-        mkdirp(parent)
-    }
-    if (!fsSync.existsSync(directory)) {
-        fsSync.mkdirSync(directory)
-    }
-}
-// Source: https://gist.github.com/bpedro/742162#gistcomment-2821523

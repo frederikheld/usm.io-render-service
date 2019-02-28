@@ -7,8 +7,7 @@
     "start": "NODE_ENV=production node service/server.js --port 8080",
     "test": "NODE_ENV=testing mocha \"**/tests/*.test.js\" --exit",
     "coverage": "nyc npm test",
-    "dev": "node -v && NODE_ENV=testing mocha --watch \"**/tests/*.test.js\"",
-    "dev-coverage": "NODE_ENV=testing nodemon --exec nyc --reporter=text-summary npm test",
+    "watch-test": "node -v && NODE_ENV=testing mocha --reporter=min --watch \"**/tests/*.test.js\"",
     "version": "node -v && npm -v",
     "lint": "node_modules/eslint/bin/eslint.js \"**/*.js\"",
     "lint-fix": "node_modules/eslint/bin/eslint.js \"**/*.js\" --fix"
@@ -30,6 +29,7 @@
     "express": "^4.16.4",
     "jsdom": "^13.2.0",
     "minimist": "^1.2.0",
+    "mkdir-recursive": "^0.4.0",
     "multer": "^1.4.1",
     "node": "^10.15.1",
     "xml-js": "^1.6.9"
@@ -45,7 +45,6 @@
     "eslint-plugin-chai-friendly": "^0.4.1",
     "eslint-plugin-mocha": "^5.3.0",
     "eslint-plugin-standard": "^4.0.0",
-    "mkdir-recursive": "^0.4.0",
     "mocha": "^5.2.0",
     "mock-fs": "^4.8.0",
     "nyc": "^13.3.0",

@@ -1,7 +1,5 @@
 'use strict'
 
-const logger = require('../../lib/logger/logger')
-
 const path = require('path')
 
 const chai = require('chai')
@@ -15,7 +13,6 @@ chai.use(chaiMatch)
 const chaiFiles = require('chai-files')
 chai.use(chaiFiles)
 
-const file = chaiFiles.file
 const directory = chaiFiles.dir
 
 const should = chai.should()
@@ -24,21 +21,19 @@ const expect = chai.expect
 const fs = require('fs')
 const fx = require('mkdir-recursive')
 const rimraf = require('rimraf')
-// const mockFs = require('mock-fs')
 
 describe('The usm.io render service', () => {
     let server
-
     beforeEach(() => {
-        server = require(path.join(__dirname, '..', 'server'))
+        server = require('./../server')
     })
 
     afterEach(() => {
         server.close()
     })
 
-    describe.only('GET /api/hello', () => {
-        it.only('returns "Hello <name>!" if query parameter "name" is given', (done) => {
+    describe('GET /api/hello', () => {
+        it('returns "Hello <name>!" if query parameter "name" is given', function (done) {
             chai.request(server)
                 .get('/api/hello?name=John')
                 .end((err, res) => {
@@ -54,7 +49,7 @@ describe('The usm.io render service', () => {
                 })
         })
 
-        it('returns "Hello World!" if query parameter "name" is NOT given', (done) => {
+        it('returns "Hello World!" if query parameter "name" is NOT given', function (done) {
             chai.request(server)
                 .get('/api/hello')
                 .end((err, res) => {
@@ -71,21 +66,12 @@ describe('The usm.io render service', () => {
         })
     })
 
-    describe('POST /api/render/html', () => {
-        let server
+    describe('POST /api/render/html', function () {
         let mockData = {
             json: {}
         }
 
-        // beforeEach(() => {
-        //     server = require(path.join(__dirname, '..', 'server'))
-        // })
-
-        // afterEach(() => {
-        //     server.close()
-        // })
-
-        it('is accessible', (done) => {
+        it('is accessible', function (done) {
             chai
                 .request(server)
                 .post('/api/render/html')
@@ -94,7 +80,6 @@ describe('The usm.io render service', () => {
                     usm: {}
                 })
                 .end((err, res) => {
-                    logger.debug(err)
                     should.not.exist(err)
 
                     should.exist(res)
@@ -105,7 +90,7 @@ describe('The usm.io render service', () => {
         })
 
         describe('error states', () => {
-            it('answers with 400 (Bad Request) if no data sent', (done) => {
+            it('answers with 400 (Bad Request) if no data sent', function (done) {
                 chai
                     .request(server)
                     .post('/api/render/html')
@@ -119,7 +104,7 @@ describe('The usm.io render service', () => {
                     })
             })
 
-            it('answers with 400 (Bad Request) if empty object sent', (done) => {
+            it('answers with 400 (Bad Request) if empty object sent', function (done) {
                 chai
                     .request(server)
                     .post('/api/render/html')
@@ -134,7 +119,7 @@ describe('The usm.io render service', () => {
                     })
             })
 
-            it('answers with 400 (Bad Request) if field "usm" is missing', (done) => {
+            it('answers with 400 (Bad Request) if field "usm" is missing', function (done) {
                 chai
                     .request(server)
                     .post('/api/render/html')
@@ -152,10 +137,10 @@ describe('The usm.io render service', () => {
             })
         })
 
-        context('The JSON data is a valid description of an USM', () => {
+        context('The JSON data is a valid description of an USM', function () {
             const outDir = path.join(__dirname, '..', 'download')
 
-            beforeEach((done) => {
+            beforeEach(function (done) {
                 const rawUsm = fs.readFileSync(
                     path.join(__dirname, 'mock-data', 'mock-usm-full.json')
                 )
@@ -173,7 +158,7 @@ describe('The usm.io render service', () => {
                 // Don't forget to delete the directory after each test!
             })
 
-            afterEach((done) => {
+            afterEach(function (done) {
                 rimraf(path.join(outDir, '*'), {}, () => {
                     fx.rmdir(outDir, () => {
                         done()
@@ -181,7 +166,7 @@ describe('The usm.io render service', () => {
                 })
             })
 
-            it('takes a json formatted USM', (done) => {
+            it('takes a json formatted USM', function (done) {
                 chai
                     .request(server)
                     .post('/api/render/html')
@@ -199,10 +184,12 @@ describe('The usm.io render service', () => {
                     })
             })
 
-            it("creates the download directory if it doesn't already exist", (done) => {
+            it('creates the download directory if it doesn\'t already exist', function (done) {
                 // For this test we explicitly expect
                 // the output dir to _not_exist:
-                fs.rmdirSync(path.join(outDir))
+                if (fs.existsSync(outDir)) {
+                    fs.rmdirSync(outDir)
+                }
 
                 expect(directory(outDir)).to.not.exist
 
@@ -223,7 +210,7 @@ describe('The usm.io render service', () => {
                     })
             })
 
-            it('stores the generated usm in a file on the server', (done) => {
+            it('stores the generated usm in a file on the server', function (done) {
                 expect(directory(outDir)).to.be.empty
 
                 chai.request(server)
@@ -243,7 +230,7 @@ describe('The usm.io render service', () => {
                     })
             })
 
-            it('returns a download token', (done) => {
+            it('returns a download token', function (done) {
                 let downloadToken
 
                 chai.request(server)
@@ -263,18 +250,20 @@ describe('The usm.io render service', () => {
                         done()
                     })
 
-                describe('The download token', () => {
-                    it('is exactly 20 characters long', () => {
+                describe('The download token', function () {
+                    it('is exactly 20 characters long', function () {
                         downloadToken.length.should.equal(20)
                     })
 
-                    it('consists only of characters in the set [a-zA-Z0-9]', () => {
+                    it('consists only of characters in the set [a-zA-Z0-9]', function () {
                         downloadToken.should.match(/^[a-zA-Z0-9]*$/gm)
                     })
                 })
             })
 
-            it('returns a different token with every call', async () => {
+            it('returns a different token with every call', async function () {
+                this.slow(200)
+
                 const receiveToken = () => {
                     return new Promise((resolve, reject) => {
                         chai.request(server)

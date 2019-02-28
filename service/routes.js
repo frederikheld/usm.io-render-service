@@ -8,7 +8,7 @@ const router = express.Router()
 
 const actions = require('./actions')
 
-router.route('/render/svg').post(actions.render.svg)
+// router.route('/render/svg').post(actions.render.svg)
 router.route('/render/html').post(actions.render.html)
 // router.route('/download').get(actions.download)
 
