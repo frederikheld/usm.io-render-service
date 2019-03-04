@@ -5,5 +5,7 @@ coverage/
 
 dist/
 
-service/public/
-service/download/
+services/web/public/
+services/web/data/
+
+services/render_service/download/

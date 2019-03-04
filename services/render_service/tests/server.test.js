@@ -18,24 +18,46 @@ const directory = chaiFiles.dir
 const should = chai.should()
 const expect = chai.expect
 
-const fs = require('fs')
+const fs = require('fs').promises
 const fx = require('mkdir-recursive')
 const rimraf = require('rimraf')
 
 describe('The usm.io render service', () => {
+    const outDir = path.join(__dirname, '..', 'download')
     let server
-    beforeEach(() => {
+
+    beforeEach(function (done) {
         server = require('./../server')
+
+        rimraf(path.join(outDir, '*'), {}, () => {
+            fx.mkdir(outDir, () => {
+                done()
+            })
+        })
+        // NOTE: I decided to get rid of mock-fs since it doesn't
+        // seem to  work well or at least not as I would expect
+        // it to work.
+        // File operations are now done in real file system!
+        // Don't forget to delete the directory after each test!
+        // Don't run different instances of this test suite in
+        // parallel as they will interfere with fs operations!
     })
 
-    afterEach(() => {
+    afterEach(function (done) {
         server.close()
+
+        rimraf(path.join(outDir, '*'), {}, () => {
+            fx.rmdir(outDir, () => {
+                done()
+            })
+        })
     })
 
     describe('GET /api/hello', () => {
         it('returns "Hello <name>!" if query parameter "name" is given', function (done) {
             chai.request(server)
-                .get('/api/hello?name=John')
+                .get('/api/hello')
+                .query({ name: 'John' })
                 .end((err, res) => {
                     should.not.exist(err)
 
@@ -124,7 +146,24 @@ describe('The usm.io render service', () => {
                     .request(server)
                     .post('/api/render/html')
                     .send({
-                        foo: 'bar'
+                        foo: 'this field is not "usm"'
+                    })
+                    .end((err, res) => {
+                        should.not.exist(err)
+
+                        should.exist(res)
+                        res.status.should.equal(400)
+
+                        done()
+                    })
+            })
+
+            it('answers with 400 (Bad Request) if content of field "usm" is not an object', function (done) {
+                chai
+                    .request(server)
+                    .post('/api/render/html')
+                    .send({
+                        usm: 'this is not an object'
                     })
                     .end((err, res) => {
                         should.not.exist(err)
@@ -138,33 +177,11 @@ describe('The usm.io render service', () => {
         })
 
         context('The JSON data is a valid description of an USM', function () {
-            const outDir = path.join(__dirname, '..', 'download')
-
-            beforeEach(function (done) {
-                const rawUsm = fs.readFileSync(
-                    path.join(__dirname, 'mock-data', 'mock-usm-full.json')
-                )
-                mockData.json.usmFull = JSON.parse(rawUsm)
-
-                rimraf(path.join(outDir, '*'), {}, () => {
-                    fx.mkdir(outDir, () => {
-                        done()
-                    })
-                })
-                // I decided to get rid of mock-fs since it doesn't
-                // seem to actually work or at least not as I expect
-                // it to work.
-                // File operations are now done in real file system!
-                // Don't forget to delete the directory after each test!
+            beforeEach(async function () {
+                mockData.json.usmFull = JSON.parse(await fs.readFile(path.join(__dirname, 'mock-data', 'mock-usm-full.json')))
             })
 
-            afterEach(function (done) {
-                rimraf(path.join(outDir, '*'), {}, () => {
-                    fx.rmdir(outDir, () => {
-                        done()
-                    })
-                })
-            })
+            afterEach(function () { })
 
             it('takes a json formatted USM', function (done) {
                 chai
@@ -184,30 +201,36 @@ describe('The usm.io render service', () => {
                     })
             })
 
-            it('creates the download directory if it doesn\'t already exist', function (done) {
+            it('creates the download directory if it doesn\'t already exist', async function () {
                 // For this test we explicitly expect
-                // the output dir to _not_exist:
-                if (fs.existsSync(outDir)) {
-                    fs.rmdirSync(outDir)
+                // the output dir to _not_ exist:
+                try {
+                    await fs.rmdir(outDir)
+                } catch (err) {
+                    if (err.code === 'ENOENT') {
+                        // Do nothing. To not have the directory is exactly what we want.
+                    } else {
+                        throw err
+                    }
                 }
 
                 expect(directory(outDir)).to.not.exist
 
-                chai
+                return chai
                     .request(server)
                     .post('/api/render/html')
                     .set('content-type', 'application/json')
                     .send({
                         usm: mockData.json.usmFull
                     })
-                    .end((err, res) => {
-                        if (err) {
+                    .then(
+                        (res) => {
+                            expect(directory(outDir)).to.exist
+                        },
+                        (err) => {
                             throw err
                         }
-                        expect(directory(outDir)).to.exist
-
-                        done()
-                    })
+                    )
             })
 
             it('stores the generated usm in a file on the server', function (done) {
@@ -217,12 +240,10 @@ describe('The usm.io render service', () => {
                     .post('/api/render/html')
                     .set('content-type', 'application/json')
                     .send({
-                        usm: 'foo'
+                        usm: {}
                     })
                     .end((err, res) => {
-                        if (err) {
-                            throw err
-                        }
+                        should.not.exist(err)
 
                         expect(directory(outDir)).to.not.be.empty
 
@@ -237,12 +258,10 @@ describe('The usm.io render service', () => {
                     .post('/api/render/html')
                     .set('content-type', 'application/json')
                     .send({
-                        usm: 'foo'
+                        usm: {}
                     })
                     .end((err, res) => {
-                        if (err) {
-                            throw err
-                        }
+                        should.not.exist(err)
 
                         expect(res.body.token).to.exist
                         downloadToken = res.body.token
@@ -270,12 +289,11 @@ describe('The usm.io render service', () => {
                             .post('/api/render/html')
                             .set('content-type', 'application/json')
                             .send({
-                                usm: 'foo'
+                                usm: {}
                             })
                             .end((err, res) => {
-                                if (err) {
-                                    throw err
-                                }
+                                should.not.exist(err)
+
                                 resolve(res.body.token)
                             })
                     })
@@ -302,16 +320,70 @@ describe('The usm.io render service', () => {
 
         //
     })
+
+    describe('GET /api/download', function () {
+        // it('is accessible', async function () {
+        //     return chai
+        //         .request(server)
+        //         .get('/api/download')
+        //         .then(
+        //             function (res) {
+        //                 should.exist(res)
+        //                 res.status.should.equal(200)
+        //             },
+        //             function (err) {
+        //                 throw err
+        //             })
+        // })
+
+        context('with valid download token', function (done) {
+            let downloadToken
+
+            beforeEach(async function () {
+                const jsonInput = JSON.parse(await fs.readFile(path.join(__dirname, 'mock-data', 'mock-usm-basic.json'), 'utf8'))
+
+                return chai.request(server)
+                    .post('/api/render/html')
+                    .set('content-type', 'application/json')
+                    .send({
+                        usm: jsonInput
+                    })
+                    .then(
+                        (res) => {
+                            expect(res.body.token).to.exist
+                            downloadToken = res.body.token
+                        },
+                        (err) => {
+                            throw err
+                        }
+                    )
+            })
+
+            it('returns a html string', async function () {
+                const expectedHtmlRaw = await fs.readFile(path.join(__dirname, 'mock-data', 'mock-usm-basic.html'), 'utf8')
+                const expectedHtmlStrippedForComparison = expectedHtmlRaw.replace(/\s/g, '')
+
+                return chai
+                    .request(server)
+                    .get('/api/download')
+                    .query({ token: downloadToken })
+                    .then(
+                        (res) => {
+                            let actualHtmlRaw = res.body.html
+                            let actualHtmlStrippedForComparison = actualHtmlRaw.replace(/\s/g, '')
+
+                            actualHtmlStrippedForComparison.should.equal(expectedHtmlStrippedForComparison)
+                        },
+                        (err) => {
+                            throw err
+                        }
+                    )
+
+                // NOTE: Whitespaces characters are stripped in this test
+                //       since indentation and newlines don't work well
+                //       but this is just cosmetics that has no impact
+                //       to the page as it is displayed in the browser.
+            })
+        })
+    })
 })
-
-// describe('GET /download', () => {
-
-// context('with valid download token', () => {
-
-//     it('returns a svg file')
-
-// })
-
-// })
-
-// })
