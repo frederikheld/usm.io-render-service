@@ -22,9 +22,6 @@ const app = express()
 const request = require('request-promise-native')
 
 app.use(express.static(path.join(__dirname, 'public')))
-// app.use(express.static('public'))
-// app.use('/assets', express.static(path.join(__dirname, 'public', 'assets')))
-// app.use('/assets', express.static(path.join(__dirname + 'public/assets')))
 app.get('/', async (req, res) => {
 
     // load json usm from file
