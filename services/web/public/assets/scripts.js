@@ -5,10 +5,17 @@ window.onload = function () {
 
     function createModal() {
         let body = document.querySelector('body')
+
         let modal = document.createElement('div')
-        modal.classList.add('card-modal')
+        modal.classList.add('modal')
         body.appendChild(modal)
+        
         modal.addEventListener('click', hideModal)
+
+        let modalCard = document.createElement('div')
+        modalCard.classList.add('modal-card')
+        modal.appendChild(modalCard)
+
         return modal
     }
     modal = createModal()
@@ -17,29 +24,30 @@ window.onload = function () {
 
         hideModal()
 
-        // empty modal:
-        while (modal.firstChild) {
-            modal.removeChild(modal.firstChild)
+        // empty modal card:
+        let modalCard = modal.querySelector('.modal-card')
+        while (modalCard.firstChild) {
+            modalCard.removeChild(modalCard.firstChild)
         }
 
-        // fill modal:
+        // fill modal card:
         let title = this.querySelector('h1')
         if (title) {
             let titleHtml = document.createElement('h1')
             titleHtml.innerHTML = title.innerHTML
-            modal.appendChild(titleHtml)
+            modalCard.appendChild(titleHtml)
         }
         let description = this.querySelector('.description')
         if (description) {
             let descriptionHtml = document.createElement('div')
             descriptionHtml.innerHTML = description.innerHTML
             console.log(description)
-            modal.appendChild(descriptionHtml)
+            modalCard.appendChild(descriptionHtml)
         }
+        modalCard.style.backgroundColor = getComputedStyle(this).backgroundColor
 
         // highlight active card:
-        console.log(this)
-        this.classList.add('card-is-active')
+        this.classList.add('card-is-selected')
 
         // show modal:
         modal.classList.add('show-modal')
@@ -49,7 +57,7 @@ window.onload = function () {
     function hideModal() {
         modal.classList.remove('show-modal')
         for (let i = 0; i < cards.length; i++) {
-            cards[i].classList.remove('card-is-active')
+            cards[i].classList.remove('card-is-selected')
         }
     }
 
