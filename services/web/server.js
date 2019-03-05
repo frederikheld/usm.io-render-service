@@ -32,7 +32,9 @@ app.get('/', async (req, res) => {
             method: 'POST',
             uri: config.renderServer.apiEndpoint + '/render/html',
             body: {
-                'usm': usmJson
+                'usm': usmJson,
+                'css': './styles.css',
+                'timeline': true
             },
             json: true
     })   

@@ -13,6 +13,7 @@ chai.use(chaiMatch)
 const chaiFiles = require('chai-files')
 chai.use(chaiFiles)
 
+const file = chaiFiles.file
 const directory = chaiFiles.dir
 
 const should = chai.should()
@@ -111,7 +112,7 @@ describe('The usm.io render service', () => {
                 })
         })
 
-        describe('error states', () => {
+        describe('error states ', function () {
             it('answers with 400 (Bad Request) if no data sent', function (done) {
                 chai
                     .request(server)
@@ -140,7 +141,9 @@ describe('The usm.io render service', () => {
                         done()
                     })
             })
+        })
 
+        describe('parameter usm', () => {
             it('answers with 400 (Bad Request) if field "usm" is missing', function (done) {
                 chai
                     .request(server)
@@ -174,151 +177,182 @@ describe('The usm.io render service', () => {
                         done()
                     })
             })
+
+            context('usm contains a valid description of an USM', function () {
+                beforeEach(async function () {
+                    mockData.json.usmFull = JSON.parse(await fs.readFile(path.join(__dirname, 'mock-data', 'mock-usm-full.json')))
+                })
+
+                afterEach(function () { })
+
+                it('takes a json formatted USM', function (done) {
+                    chai
+                        .request(server)
+                        .post('/api/render/html')
+                        .set('content-type', 'application/json')
+                        .send({
+                            usm: mockData.json.usmFull
+                        })
+                        .end((err, res) => {
+                            should.not.exist(err)
+
+                            should.exist(res)
+                            res.status.should.equal(200)
+
+                            done()
+                        })
+                })
+
+                it('creates the download directory if it doesn\'t already exist', async function () {
+                // For this test we explicitly expect
+                // the output dir to _not_ exist:
+                    try {
+                        await fs.rmdir(outDir)
+                    } catch (err) {
+                        if (err.code === 'ENOENT') {
+                        // Do nothing. To not have the directory is exactly what we want.
+                        } else {
+                            throw err
+                        }
+                    }
+
+                    expect(directory(outDir)).to.not.exist
+
+                    return chai
+                        .request(server)
+                        .post('/api/render/html')
+                        .set('content-type', 'application/json')
+                        .send({
+                            usm: mockData.json.usmFull
+                        })
+                        .then(
+                            (res) => {
+                                expect(directory(outDir)).to.exist
+                            },
+                            (err) => {
+                                throw err
+                            }
+                        )
+                })
+
+                it('stores the generated usm in a file on the server', function (done) {
+                    expect(directory(outDir)).to.be.empty
+
+                    chai.request(server)
+                        .post('/api/render/html')
+                        .set('content-type', 'application/json')
+                        .send({
+                            usm: {}
+                        })
+                        .end((err, res) => {
+                            should.not.exist(err)
+
+                            expect(directory(outDir)).to.not.be.empty
+
+                            done()
+                        })
+                })
+
+                it('returns a download token', function (done) {
+                    let downloadToken
+
+                    chai.request(server)
+                        .post('/api/render/html')
+                        .set('content-type', 'application/json')
+                        .send({
+                            usm: {}
+                        })
+                        .end((err, res) => {
+                            should.not.exist(err)
+
+                            expect(res.body.token).to.exist
+                            downloadToken = res.body.token
+
+                            done()
+                        })
+
+                    describe('The download token', function () {
+                        it('is exactly 20 characters long', function () {
+                            downloadToken.length.should.equal(20)
+                        })
+
+                        it('consists only of characters in the set [a-zA-Z0-9]', function () {
+                            downloadToken.should.match(/^[a-zA-Z0-9]*$/gm)
+                        })
+                    })
+                })
+
+                it('returns a different token with every call', async function () {
+                    this.slow(200)
+
+                    const receiveToken = () => {
+                        return new Promise((resolve, reject) => {
+                            chai.request(server)
+                                .post('/api/render/html')
+                                .set('content-type', 'application/json')
+                                .send({
+                                    usm: {}
+                                })
+                                .end((err, res) => {
+                                    should.not.exist(err)
+
+                                    resolve(res.body.token)
+                                })
+                        })
+                    }
+
+                    // receive tokens:
+                    let tokens = []
+                    for (let i = 0; i < 10; i++) {
+                        tokens.push(await receiveToken())
+                    }
+
+                    // check tokens for duplicates:
+                    tokens.forEach((item, index) => {
+                        tokens.lastIndexOf(item).should.equal(index)
+                    })
+
+                // NOTE: With a token length of 20 and this very small sample set,
+                //       this test would be very unlikely to fail, even if there
+                //       was no mechanism that prevented duplicates!
+                })
+            })
         })
 
-        context('The JSON data is a valid description of an USM', function () {
-            beforeEach(async function () {
-                mockData.json.usmFull = JSON.parse(await fs.readFile(path.join(__dirname, 'mock-data', 'mock-usm-full.json')))
-            })
-
-            afterEach(function () { })
-
-            it('takes a json formatted USM', function (done) {
+        describe('paramter css', function () {
+            it('is optional', function (done) {
                 chai
                     .request(server)
                     .post('/api/render/html')
-                    .set('content-type', 'application/json')
                     .send({
-                        usm: mockData.json.usmFull
+                        usm: {}
                     })
                     .end((err, res) => {
                         should.not.exist(err)
-
-                        should.exist(res)
                         res.status.should.equal(200)
 
                         done()
                     })
             })
 
-            it('creates the download directory if it doesn\'t already exist', async function () {
-                // For this test we explicitly expect
-                // the output dir to _not_ exist:
-                try {
-                    await fs.rmdir(outDir)
-                } catch (err) {
-                    if (err.code === 'ENOENT') {
-                        // Do nothing. To not have the directory is exactly what we want.
-                    } else {
-                        throw err
-                    }
-                }
+            // it('if not given, no stylesheet is embedded', function (done) {
+            //     chai
+            //         .request(server)
+            //         .post('/api/render/html')
+            //         .send({
+            //             usm: {}
+            //         })
+            //         .end(async (err, res) => {
+            //             should.not.exist(err)
 
-                expect(directory(outDir)).to.not.exist
+            //             res.status.should.equal(200)
+            //             expect(res.body.token).to.exist
+            //             expect(file(res.body.token)).to.equal(await fs.readFile('./mock-data/mock-usm-basic.html'))
 
-                return chai
-                    .request(server)
-                    .post('/api/render/html')
-                    .set('content-type', 'application/json')
-                    .send({
-                        usm: mockData.json.usmFull
-                    })
-                    .then(
-                        (res) => {
-                            expect(directory(outDir)).to.exist
-                        },
-                        (err) => {
-                            throw err
-                        }
-                    )
-            })
-
-            it('stores the generated usm in a file on the server', function (done) {
-                expect(directory(outDir)).to.be.empty
-
-                chai.request(server)
-                    .post('/api/render/html')
-                    .set('content-type', 'application/json')
-                    .send({
-                        usm: {}
-                    })
-                    .end((err, res) => {
-                        should.not.exist(err)
-
-                        expect(directory(outDir)).to.not.be.empty
-
-                        done()
-                    })
-            })
-
-            it('returns a download token', function (done) {
-                let downloadToken
-
-                chai.request(server)
-                    .post('/api/render/html')
-                    .set('content-type', 'application/json')
-                    .send({
-                        usm: {}
-                    })
-                    .end((err, res) => {
-                        should.not.exist(err)
-
-                        expect(res.body.token).to.exist
-                        downloadToken = res.body.token
-
-                        done()
-                    })
-
-                describe('The download token', function () {
-                    it('is exactly 20 characters long', function () {
-                        downloadToken.length.should.equal(20)
-                    })
-
-                    it('consists only of characters in the set [a-zA-Z0-9]', function () {
-                        downloadToken.should.match(/^[a-zA-Z0-9]*$/gm)
-                    })
-                })
-            })
-
-            it('returns a different token with every call', async function () {
-                this.slow(200)
-
-                const receiveToken = () => {
-                    return new Promise((resolve, reject) => {
-                        chai.request(server)
-                            .post('/api/render/html')
-                            .set('content-type', 'application/json')
-                            .send({
-                                usm: {}
-                            })
-                            .end((err, res) => {
-                                should.not.exist(err)
-
-                                resolve(res.body.token)
-                            })
-                    })
-                }
-
-                // receive tokens:
-                let tokens = []
-                for (let i = 0; i < 10; i++) {
-                    tokens.push(await receiveToken())
-                }
-
-                // check tokens for duplicates:
-                tokens.forEach((item, index) => {
-                    tokens.lastIndexOf(item).should.equal(index)
-                })
-
-                // NOTE: With a token length of 20 and this very small sample set,
-                //       this test would be very unlikely to fail, even if there
-                //       was no mechanism that prevented duplicates!
-            })
+            //             done()
+            //         })
+            // })
         })
-
-        //         context('The JSON data is a valid description of an USM', () => {
-
-        //
     })
 
     describe('GET /api/download', function () {

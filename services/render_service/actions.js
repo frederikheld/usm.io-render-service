@@ -51,7 +51,10 @@ actions.render.html = async (req, res) => {
 
     const usmJson = req.body.usm
 
-    const usm = new Usm(usmJson)
+    delete req.body.usm
+    const config = req.body
+
+    const usm = new Usm(usmJson, config)
     const usmHtml = usm.render()
 
     await fx.mkdir(path.join(__dirname, 'download'), {}, async () => {
