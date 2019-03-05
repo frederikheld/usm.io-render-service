@@ -41,7 +41,6 @@ window.onload = function () {
         if (description) {
             let descriptionHtml = document.createElement('div')
             descriptionHtml.innerHTML = description.innerHTML
-            console.log(description)
             modalCard.appendChild(descriptionHtml)
         }
         modalCard.style.backgroundColor = getComputedStyle(this).backgroundColor
