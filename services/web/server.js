@@ -33,7 +33,7 @@ app.get('/', async (req, res) => {
             uri: config.renderServer.apiEndpoint + '/render/html',
             body: {
                 'usm': usmJson,
-                'css': './styles.css',
+                'css': './assets/styles.css',
                 'timeline': true
             },
             json: true

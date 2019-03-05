@@ -4,5 +4,7 @@ coverage/
 
 services/render_service/download/
 
-services/web/public/
+services/web/public/*
+!services/web/public/assets/
+
 services/web/data/

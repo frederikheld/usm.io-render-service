@@ -1,0 +1,122 @@
+body {
+    font-size: 10px;
+    font-family: Verdana, Helvetica, sans-serif;
+    margin: 0;
+}
+
+
+/* -- USM -- */
+
+.usm {
+    background: pink;
+    padding: 0.4rem;
+    position: absolute;
+}
+
+
+/* -- CARD -- */
+
+.card {
+    width: 9rem;
+    height: 6rem;
+    /* border: 1px solid #000; */
+    margin: 0.4rem ;
+    padding: 0.6rem;
+    box-sizing: border-box;
+    background-color: #ee9 !important;
+    box-shadow: 0.2rem 0.2rem 0.5rem rgba(0,0,0,0.50);
+    cursor: pointer;
+}
+
+.card h1 {
+    font-size: 0.8rem;
+    line-height: 1.6em;
+    margin: 0;
+}
+
+
+/* -- ACTIVITIES CONTAINER -- */
+
+.activities {
+    /* background: darkorchid; */
+    display: flex;
+    flex-direction: row;
+}
+
+
+/* -- ACITIVITY -- */
+
+.activity {
+    /* background: darkmagenta; */
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+
+.activity > .card {
+    background-color: #9ae !important;
+}
+
+
+/* -- STEPS CONTAINER -- */
+
+.steps {
+    /* background: darkgreen; */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+
+/* -- STEP -- */
+
+.step {
+    /* background: lightgreen; */
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+
+.step > .card {
+    background-color: #9d9 !important;
+    margin-bottom: 1.2rem;
+}
+
+
+/* -- CARDS CONTAINER -- */
+
+.cards {
+    /* background: darkblue; */
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+
+
+/* -- CARD in general -- */
+
+.card {
+    background-color: inherit;
+    /* background-image: linear-gradient(340deg, rgba(0,0,0,0.30) 0%,rgba(0,0,0,0) 20%); */
+    background-image: linear-gradient(340deg, rgba(255,255,255,0.50) 0%,rgba(255,255,255,0) 30%);
+}
+
+/* -- timeline -- */
+
+.timeline {
+    height: 0.2rem;
+    width: calc(100% - 1.2rem);
+    background: #000;
+    position: absolute;
+    top: 14.3rem;
+    box-shadow: 0.2rem 0.2rem 0.5rem rgba(0,0,0,0.50);
+}
+.timeline::after {
+    content: "";
+    position: absolute;
+    top: -0.3rem;
+    right: -0.4rem;
+    border-style: solid;
+    border-width: 0.4rem 0 0.4rem 1.2rem;
+    border-color: transparent transparent transparent #000;
+}
