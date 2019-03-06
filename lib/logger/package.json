@@ -1,0 +1,17 @@
+{
+  "name": "logger",
+  "version": "1.0.0",
+  "description": "logger",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "logger"
+  ],
+  "author": "Frederik S. Held (kontakt@frederikheld.de)",
+  "license": "MIT"
+}

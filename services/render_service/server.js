@@ -9,7 +9,7 @@ const config = {
 
 // ============ //
 
-const logger = require('./../../lib/logger/logger')
+const logger = require('../../lib/logger')
 
 const express = require('express')
 const app = express()

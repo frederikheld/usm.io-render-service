@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  render_service:
+    build: services/render_service
+    ports:
+      - 5324:5324
+    volumes:
+      - ./lib:/app/lib:ro
+
+  web:
+    build: services/web
+    ports:
+      - 8080:8080
+    depends_on:
+      - render_service
+    volumes:
+      - ./lib:/app/lib:ro
+    restart: unless-stopped
+    environment:
+      - RENDER_SERVICE_HOSTNAME=render_service
+      - RENDER_SERVICE_PORT=5324
+        

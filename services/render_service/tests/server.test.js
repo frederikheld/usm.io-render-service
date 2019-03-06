@@ -13,7 +13,6 @@ chai.use(chaiMatch)
 const chaiFiles = require('chai-files')
 chai.use(chaiFiles)
 
-const file = chaiFiles.file
 const directory = chaiFiles.dir
 
 const should = chai.should()

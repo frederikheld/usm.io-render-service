@@ -1,0 +1,42 @@
+{
+  "name": "render_service",
+  "version": "1.0.0",
+  "description": "usm.io render service",
+  "main": "server.js",
+  "scripts": {
+    "start": "NODE_ENV=production node server.js",
+    "test": "NODE_ENV=testing mocha \"tests/*.test.js\" --exit",
+    "coverage": "nyc npm test",
+    "watch-test": "NODE_ENV=testing mocha --reporter=min --watch \"tests/*.test.js\"",
+    "version": "node -v && npm -v"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frederikheld/usm.io.git"
+  },
+  "keywords": [
+    "usm.io",
+    "service"
+  ],
+  "author": "Frederik S. Held (kontakt@frederikheld.de)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/frederikheld/usm.io/issues"
+  },
+  "homepage": "https://github.com/frederikheld/usm.io#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "mkdir-recursive": "^0.4.0",
+    "node": "^10.15.1"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-files": "^1.4.0",
+    "chai-http": "^4.2.1",
+    "chai-match": "^1.1.1",
+    "mocha": "^6.0.2",
+    "nyc": "^13.3.0",
+    "rimraf": "^2.6.3"
+  }
+}

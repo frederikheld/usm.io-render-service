@@ -1,12 +1,12 @@
 'use strict'
 
-const tokenizer = require('./../../lib/tokenizer/tokenizer')
+const tokenizer = require('../../lib/tokenizer')
 
 const fs = require('fs').promises
 const fx = require('mkdir-recursive')
 const path = require('path')
 
-const Usm = require('./../../lib/usm/usm')
+const Usm = require('../../lib/usm')
 
 let actions = {
     render: {}

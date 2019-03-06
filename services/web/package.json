@@ -1,0 +1,33 @@
+{
+  "name": "web",
+  "version": "1.0.0",
+  "description": "Web interface for usm.io",
+  "main": "server.js",
+  "scripts": {
+    "start": "NODE_ENV=production node server.js",
+    "version": "node -v && npm -v"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frederikheld/usm.io.git"
+  },
+  "keywords": [
+    "usm.io",
+    "service",
+    "web"
+  ],
+  "author": "Frederik S. Held (kontakt@frederikheld.de)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/frederikheld/usm.io/issues"
+  },
+  "homepage": "https://github.com/frederikheld/usm.io#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "minimist": "^1.2.0",
+    "node": "^10.15.1",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.7"
+  },
+  "devDependencies": {}
+}
