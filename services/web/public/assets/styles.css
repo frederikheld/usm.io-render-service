@@ -35,7 +35,6 @@ body {
 /* -- ACTIVITIES CONTAINER -- */
 
 .activities {
-    /* background: darkorchid; */
     display: flex;
     flex-direction: row;
 }
@@ -44,10 +43,14 @@ body {
 /* -- ACITIVITY -- */
 
 .activity {
-    /* background: darkmagenta; */
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
+    margin-left: 1.2rem;
+}
+
+.activity:first-child {
+    margin-left: 0; 
 }
 
 .activity > .card {
@@ -174,4 +177,14 @@ body {
     border-style: solid;
     border-width: 0.4rem 0 0.4rem 1.2rem;
     border-color: transparent transparent transparent #000;
+}
+
+/* == specific == */
+
+.release-mvt2019 {
+    background-color: green;
+}
+
+.release-intermediate {
+    background-color: blue;
 }
