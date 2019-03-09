@@ -6,7 +6,7 @@ const fs = require('fs').promises
 const fx = require('mkdir-recursive')
 const path = require('path')
 
-const Usm = require('../../lib/usm')
+const Usm = require('usm.io')
 
 let actions = {
     render: {}

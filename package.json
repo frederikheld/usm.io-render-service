@@ -1,5 +1,5 @@
 {
-  "name": "usm.io",
+  "name": "usm.io-render-service",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -9,15 +9,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/frederikheld/usm.io.git"
+    "url": "git+https://github.com/frederikheld/usm.io-render-service.git"
   },
   "author": "Frederik S. Held (kontakt@frederikheld.de)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/frederikheld/usm.io/issues"
+    "url": "https://github.com/frederikheld/usm.io-render-service/issues"
   },
-  "homepage": "https://github.com/frederikheld/usm.io#readme",
-  "dependencies": {},
+  "homepage": "https://github.com/frederikheld/usm.io-render-service#readme",
+  "dependencies": {
+    "usm.io": "^1.0.1"
+  },
   "devDependencies": {
     "ajv": "^6.9.2",
     "babel-eslint": "^10.0.1",
