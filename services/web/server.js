@@ -1,6 +1,6 @@
 'use strict'
 
-// == imports == //
+// -- imports
 
 const logger = require('../../lib/logger')
 
@@ -8,13 +8,12 @@ var argv = require('minimist')(process.argv.slice(2))
 
 const path = require('path')
 const fs = require('fs').promises
-
+const fsSync = require('fs')
 const express = require('express')
-
 const request = require('request-promise-native')
 
 
-// == config == //
+// -- config
 
 const config = {
     port: argv.port || argv.p || 8080,
@@ -26,7 +25,28 @@ const config = {
     }
 }
 
-// ============ //
+// -- copy assets
+
+/*
+    TODO: This should be done with a build tool later,
+          but in development this is the easiest solution
+          that enables quick development.
+*/
+
+
+console.log(path.join(__dirname, 'node_modules', 'usm.io', 'example', 'web', 'styles.css'))
+console.log(path.join(__dirname, 'assets', 'styles.css'))
+
+fsSync.copyFileSync(
+    path.join(__dirname, 'node_modules', 'usm.io', 'example', 'web', 'styles.css'),
+    path.join(__dirname, 'public', 'assets', 'styles.css')
+)
+fsSync.copyFileSync(
+    path.join(__dirname, 'node_modules', 'usm.io', 'example', 'web', 'scripts.js'),
+    path.join(__dirname, 'public', 'assets', 'scripts.js')
+)
+
+// -- start webserver
 
 config.renderServer.apiEndpoint = config.renderServer.apiProtocol + '://' + config.renderServer.apiHostname + ':' + config.renderServer.apiPort + config.renderServer.apiPath
 

@@ -17,9 +17,7 @@
     "url": "https://github.com/frederikheld/usm.io-render-service/issues"
   },
   "homepage": "https://github.com/frederikheld/usm.io-render-service#readme",
-  "dependencies": {
-    "usm.io": "^1.0.1"
-  },
+  "dependencies": {},
   "devDependencies": {
     "ajv": "^6.9.2",
     "babel-eslint": "^10.0.1",

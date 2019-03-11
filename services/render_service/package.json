@@ -28,7 +28,8 @@
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "mkdir-recursive": "^0.4.0",
-    "node": "^10.15.1"
+    "node": "^10.15.1",
+    "usm.io": "^2.0.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",
